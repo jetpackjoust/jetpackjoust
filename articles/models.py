@@ -22,6 +22,10 @@ class Author(models.Model):
     first_name = models.CharField("first name of author")
     email = models.EmailField("email address submitted for author")
 
+
 class Image(models.Model):
+    """Model that represents images related to Article model class.
     """
-    """
+    title = models.ForeignKey(Article)
+    source = model.ImageField()
+    caption = model.CharField(max_length=200)
