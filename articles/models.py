@@ -16,9 +16,11 @@ class Article(models.Model):
 
 
 class Author(models.Model):
+    """Model that represents author of instance of Article model class.
     """
-    """
-    last_name =
+    last_name = models.CharField("last name of author", max_length=35)
+    first_name = models.CharField("first name of author")
+    email = models.EmailField("email address submitted for author")
 
 class Image(models.Model):
     """
