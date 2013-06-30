@@ -26,6 +26,7 @@ class Author(models.Model):
 class Image(models.Model):
     """Model that represents images related to Article model class.
     """
-    title = models.ForeignKey(Article)
-    source = model.ImageField()
-    caption = model.CharField(max_length=200)
+    title = models.ForeignKey(Article,
+                              verbose_name="article related to images")
+    source = model.ImageField("location of image source")
+    caption = model.CharField("caption to be used with image", max_length=200)
