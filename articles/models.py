@@ -6,7 +6,7 @@ class Article(models.Model):
     jetpackjoust.com/articles.
     """
     title = models.CharField("title of article", max_length=70,
-                             primarykey=True)
+                             primary_key=True)
     author = models.ForeignKey(Author, verbose_name="author of article")
     content = models.TextField("body of article")
     summary = models.TextField("summary of article")
@@ -15,3 +15,11 @@ class Article(models.Model):
     last_modified = models.DateTimeField(auto_now=True)
 
 
+class Author(models.Model):
+    """
+    """
+    last_name =
+
+class Image(models.Model):
+    """
+    """
