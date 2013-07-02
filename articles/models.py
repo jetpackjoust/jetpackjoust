@@ -1,6 +1,18 @@
 from django.db import models
 
 
+class Author(models.Model):
+    """Model that represents author of instance of Article model class.
+    """
+    last_name = models.CharField("last name of author", max_length=35)
+    first_name = models.CharField("first name of author", max_length=35)
+    email = models.EmailField("email address submitted for author")
+
+    def __unicode__(self):
+        message =  "last name: {0}, first name: {1}"
+        return message.format(self.last_name, self.first_name)
+
+
 class Article(models.Model):
     """Model that represents an article to be inserted into
     jetpackjoust.com/articles.
@@ -14,13 +26,9 @@ class Article(models.Model):
     published = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
-
-class Author(models.Model):
-    """Model that represents author of instance of Article model class.
-    """
-    last_name = models.CharField("last name of author", max_length=35)
-    first_name = models.CharField("first name of author")
-    email = models.EmailField("email address submitted for author")
+    def __unicode__(self):
+        message =  "title: {0}, author: {1}"
+        return message.format(self.title, self.author)
 
 
 class Image(models.Model):
@@ -28,5 +36,10 @@ class Image(models.Model):
     """
     title = models.ForeignKey(Article,
                               verbose_name="article related to images")
-    source = model.ImageField("location of image source")
-    caption = model.CharField("caption to be used with image", max_length=200)
+    caption = models.CharField("caption to be used with image", max_length=200)
+    source = models.ImageField("location of image source",
+                               upload_to='articles')
+
+    def __unicode__(self):
+        message =  "{0}, caption: {1}"
+        return message.format(self.title, self.caption)
