@@ -8,7 +8,7 @@ class Author(models.Model):
     first_name = models.CharField("first name of author", max_length=35)
     email = models.EmailField("email address submitted for author")
 
-    def __unicode__(self):
+    def __str__(self):
         message =  "last name: {0}, first name: {1}"
         return message.format(self.last_name, self.first_name)
 
@@ -23,10 +23,12 @@ class Article(models.Model):
     content = models.TextField("body of article")
     summary = models.TextField("summary of article")
     category = models.CharField("sub category of article", max_length=20)
+    url = models.CharField("url string that points to article",
+                           max_length=40)
     published = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
-    def __unicode__(self):
+    def __str__(self):
         message =  "title: {0}, author: {1}"
         return message.format(self.title, self.author)
 
@@ -40,6 +42,6 @@ class Image(models.Model):
     source = models.ImageField("location of image source",
                                upload_to='articles')
 
-    def __unicode__(self):
+    def __str__(self):
         message =  "{0}, caption: {1}"
         return message.format(self.title, self.caption)
