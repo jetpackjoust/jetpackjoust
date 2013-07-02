@@ -24,7 +24,7 @@ class Article(models.Model):
     summary = models.TextField("summary of article")
     category = models.CharField("sub category of article", max_length=20)
     url = models.CharField("url string that points to article",
-                           max_length=40)
+                           max_length=50)
     published = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
