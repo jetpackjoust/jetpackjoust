@@ -37,8 +37,9 @@ class Article(models.Model):
 class Image(models.Model):
     """Model that represents images related to Article model class.
     """
+
     def get_image_path(instance, filename):
-        """Stores file to path /articles/images/url/filename.
+        """Stores file to path [media_root]/articles/images/url/filename.
         """
         return os.path.join('articles', 'images', str(instance.title.url),
                             filename)
