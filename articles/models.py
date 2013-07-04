@@ -1,3 +1,4 @@
+import os
 from django.db import models
 
 
@@ -36,11 +37,17 @@ class Article(models.Model):
 class Image(models.Model):
     """Model that represents images related to Article model class.
     """
+    def get_image_path(instance, filename):
+        """Stores file to path /articles/images/url/filename.
+        """
+        return os.path.join('articles', 'images', str(instance.title.url),
+                            filename)
+
     title = models.ForeignKey(Article,
                               verbose_name="article related to images")
     caption = models.CharField("caption to be used with image", max_length=200)
     source = models.ImageField("location of image source",
-                               upload_to='articles')
+                               upload_to=get_image_path)
 
     def __str__(self):
         message =  "{0}, caption: {1}"
