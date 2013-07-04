@@ -2,6 +2,18 @@ import os
 from django.db import models
 
 
+def pad_date(date):
+    """The variable date is a three-tuple of integers in the order year, month,
+    and date.  Function pads month and day with zeroes where appropriate and
+    returns 3-tuple of strings in same order.
+    """
+    year, month, day = date
+    year = "{0:04d}".format(year)
+    month = "{0:02d}".format(month)
+    day = "{0:02d}".format(day)
+    return (year, month, day)
+
+
 class Author(models.Model):
     """Model that represents author of instance of Article model class.
     """
@@ -10,8 +22,30 @@ class Author(models.Model):
     email = models.EmailField("email address submitted for author")
 
     def __str__(self):
-        message =  "last name: {0}, first name: {1}"
+        message = "last name: {0}, first name: {1}"
         return message.format(self.last_name, self.first_name)
+
+
+class Category(models.Model):
+    """Model that represents categories of types of articles.
+    """
+
+    def get_picture_path(instance, filename):
+        """Stores file to path [media_root]/articles/categories/[category]/
+        filename.
+        """
+        return os.path.join('articles', 'categories',
+                            str(instance.category), filename)
+
+    category = models.CharField("category of article", max_length=20)
+    description = models.TextField("description of category and content")
+    picture = models.ImageField("image representative of category",
+                                upload_to=get_picture_path)
+
+    def __str__(self):
+        message =  "category: {0}"
+        return message.format(self.category)
+
 
 
 class Article(models.Model):
@@ -23,7 +57,8 @@ class Article(models.Model):
     author = models.ForeignKey(Author, verbose_name="author of article")
     content = models.TextField("body of article")
     summary = models.TextField("summary of article")
-    category = models.CharField("sub category of article", max_length=20)
+    category = models.ForeignKey(Category,
+                                 verbose_name="subcategory of article")
     url = models.CharField("url string that points to article",
                            max_length=50)
     published = models.DateTimeField(auto_now_add=True)
@@ -41,10 +76,12 @@ class Image(models.Model):
     def get_image_path(instance, filename):
         """Stores file to path [media_root]/articles/images/url/filename.
         """
-        return os.path.join('articles', 'images', str(instance.title.url),
-                            filename)
+        date = instance.article.published.date().timetuple()[:3]
+        year, month, day = pad_date(date)
+        return os.path.join('articles', 'images', year, month, day,
+                        str(instance.article.url), filename)
 
-    title = models.ForeignKey(Article,
+    article = models.ForeignKey(Article,
                               verbose_name="article related to images")
     caption = models.CharField("caption to be used with image", max_length=200)
     source = models.ImageField("location of image source",
@@ -52,4 +89,4 @@ class Image(models.Model):
 
     def __str__(self):
         message =  "{0}, caption: {1}"
-        return message.format(self.title, self.caption)
+        return message.format(self.article, self.caption)
