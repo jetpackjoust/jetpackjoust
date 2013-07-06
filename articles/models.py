@@ -1,4 +1,5 @@
 import os
+import re
 from django.db import models
 
 
@@ -12,6 +13,19 @@ def pad_date(date):
     month = "{0:02d}".format(month)
     day = "{0:02d}".format(day)
     return (year, month, day)
+
+
+def urlify(title, length):
+    """Takes string title and removes spaces and returns first sequence of
+    characters whose length matches length of title allowing only characters
+    [A-Z][a-z][0-9].
+    """
+    title = title[:length].lower()
+    title = '-'.join(title.split(' ')[:-1])
+    for char in title[:]:
+        if not re.search('[a-z-]', char):
+            title = title.replace(char, '')
+    return title
 
 
 class Author(models.Model):
