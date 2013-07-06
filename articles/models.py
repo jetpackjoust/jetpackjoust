@@ -4,8 +4,8 @@ from django.db import models
 
 def pad_date(date):
     """The variable date is a three-tuple of integers in the order year, month,
-    and date.  Function pads month and day with zeroes where appropriate and
-    returns 3-tuple of strings in same order.
+    and date.  Function pads year, month, and day with zeroes where appropriate
+    and returns 3-tuple of strings in same order.
     """
     year, month, day = date
     year = "{0:04d}".format(year)
