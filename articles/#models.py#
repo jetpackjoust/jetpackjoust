@@ -53,7 +53,7 @@ class Category(models.Model):
 
     category = models.CharField("category of article", max_length=20)
     description = models.TextField("description of category and content")
-    picture = models.ImageField("image representative of category",
+z    picture = models.ImageField("image representative of category",
                                 upload_to=get_picture_path)
 
     def __str__(self):
