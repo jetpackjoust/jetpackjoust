@@ -36,5 +36,15 @@ def archive_by_day(request, year, month, day):
 
 def index(request):
     latest_articles = Article.objects.order_by('-published')[:10]
-    return HttpResponse("This is jousting with jetpacks.")
+    template = loader.get_template('articles/index.html')
+    context = RequestContext(request, {
+            'latest_articles': latest_articles,
+            })
+    return HttpResponse(template.render(context))
+
+
+def show_article(request, url):
+    article = Article.objects.get(url=url)
+    output = article.content
+    return HttpResponse(output)
 

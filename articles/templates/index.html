@@ -1,0 +1,13 @@
+{% if latest_articles %}
+    <ul>
+    {% for article in latest_poll_articles %}
+        <li><a href="/articles/
+		     {{ article.published__year }}/
+		     {{ article.published__month }}/
+		     {{ article.published__day }}/
+		     {{ article.url }}" >{{ article.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No articles are available.</p>
+{% endif %}
