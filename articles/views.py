@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
+from django.core.exceptions import ObjectDoesNotExist
 
-from articles.models import Article
+from articles.models import Article, Image
 
 
 def archive_by_year(request, year):
@@ -44,7 +45,17 @@ def index(request):
 
 
 def show_article(request, url):
-    article = Article.objects.get(url=url)
-    output = article.content
-    return HttpResponse(output)
+    try:
+        article = Article.objects.get(url=url)
+    except(ObjectDoesNotExist):
+        article = None
+
+    images = Image.objects.filter(article=article)
+
+    template = loader.get_template('articles/show_article.html')
+    context = RequestContext(request, {
+            'article': article,
+            'images': images,
+            })
+    return HttpResponse(template.render(context))
 

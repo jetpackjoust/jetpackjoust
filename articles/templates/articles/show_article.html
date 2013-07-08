@@ -1,0 +1,28 @@
+<html>
+{% if article %}
+    <head>
+      <title>{{ article.title }}</title>
+    </head>
+    <body>
+      {% block title %}<p>{{ article.title }}</p>
+      {% endblock %}
+
+      {% block author %}<p>{{ article.author.first_name}} {{article.author.last_name}}</p>
+      {% endblock %}
+
+      {% block images %}{% if images %}
+        {% for image in images %}
+          <img src={{ image.source}} >
+	  <p>{{ image.caption }}</p>
+        {% endfor %}
+      {% endif %}
+      {% endblock %}
+
+      {% block content %}<p>{{ article.content }}</p>
+      {% endblock %}
+      <p></p>
+    </body>
+{% else %}
+    <p>The article could not be found.</p>
+{% endif %}
+</html>
