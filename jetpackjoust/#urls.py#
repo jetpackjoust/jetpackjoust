@@ -10,3 +10,5 @@ urlpatterns = patterns('',
     url(r'^$', include('home.urls')),
     url(r'^articles/', include('articles.urls'))
 )
+
+

@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>Jetpack Joust</title>
+    <style>
+      ul
+      {
+      list-style-type:none;
+      margin:0;
+      padding:0;
+      }
+      li
+      {
+      display:inline;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="gridContainer clearfix">
+      <div id="LayoutDiv1">
+	<div id="header">
+	  <div id="menu">
+            <h1>Jetpack Joust</h1>
+	    <div id="menu-wrap">
+	      <ul id="navigation-main">
+		<li>
+		  <a href="">Home</a>
+		</li>
+		<li>
+		  <a href="">Articles</a>
+		</li>
+		<li>
+		  <a href="">Videos</a>
+		</li>
+		<li>
+		  <a href="">Podcasts</a>
+		</li>
+	      </ul><!--end navigation-menu-->
+	    </div><!--end menu-wrap-->
+	  </div>
+	</div>
+      </div>
+    </div>
+
+    <div id="content">
+      {% block body %}{% endblock %}
+    </div>
+
+  </body>
+</html>
+
+
