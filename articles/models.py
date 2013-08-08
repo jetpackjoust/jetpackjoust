@@ -1,5 +1,6 @@
 import os
 import re
+from django.utils.text import slugify
 from django.db import models
 
 
@@ -13,19 +14,6 @@ def pad_date(date):
     month = "{0:02d}".format(month)
     day = "{0:02d}".format(day)
     return (year, month, day)
-
-
-def urlify(title, length):
-    """Takes string title and removes spaces and returns first sequence of
-    characters whose length matches length of title allowing only characters
-    [A-Z][a-z][0-9].
-    """
-    title = title[:length].lower()
-    title = '-'.join(title.split(' ')[:-1])
-    for char in title[:]:
-        if not re.search('[a-z-]', char):
-            title = title.replace(char, '')
-    return title
 
 
 class Author(models.Model):
@@ -74,12 +62,17 @@ class Article(models.Model):
     category = models.ForeignKey(Category,
                                  verbose_name="subcategory of article")
 
-    url_max_length = 50
-    url = models.CharField("url string that points to article",
-                           max_length=url_max_length)
+    slug = models.SlugField("url string that points to article")
 
     published = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if not self.title:
+            # Newly created object, so set slug.
+            self.slug = slugify(self.q)
+
+        super(Article, self).save(*args, **kwargs)
 
     def __str__(self):
         message =  "title: {0}, author: {1}"
