@@ -49,7 +49,6 @@ class Category(models.Model):
         return message.format(self.category)
 
 
-
 class Article(models.Model):
     """Model that represents an article to be inserted into
     jetpackjoust.com/articles.
