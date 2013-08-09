@@ -9,11 +9,10 @@ def pad_date(date):
     and date.  Function pads year, month, and day with zeroes where appropriate
     and returns 3-tuple of strings in same order.
     """
-    year, month, day = date
+    year, month = date
     year = "{0:04d}".format(year)
     month = "{0:02d}".format(month)
-    day = "{0:02d}".format(day)
-    return (year, month, day)
+    return (year, month)
 
 
 class Author(models.Model):
@@ -83,12 +82,12 @@ class Image(models.Model):
     """
 
     def get_image_path(instance, filename):
-        """Stores file to path [media_root]/articles/images/url/filename.
+        """Stores file to path [media_root]/articles/images/slug/filename.
         """
-        date = instance.article.published.date().timetuple()[:3]
-        year, month, day = pad_date(date)
-        return os.path.join('articles', 'images', year, month, day,
-                        str(instance.article.url), filename)
+        date = instance.article.published.date().timetuple()[:2]
+        year, month = pad_date(date)
+        return os.path.join('articles', 'images', year, month,
+                        str(instance.article.slug), filename)
 
     article = models.ForeignKey(Article,
                               verbose_name="article related to images")
