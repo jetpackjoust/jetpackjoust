@@ -3,6 +3,9 @@ import re
 from django.utils.text import slugify
 from django.db import models
 
+from taggit.managers import TaggableManager
+from taggit.models import TaggedItemBase
+
 
 def pad_date(date):
     """The variable date is a two-tuple of integers in the order year and
@@ -48,6 +51,12 @@ class Category(models.Model):
         return message.format(self.category)
 
 
+class TaggedArticle(TaggedItemBase):
+    """Necessary object to use non-integer based primary keys.
+    """
+    content_object = models.ForeignKey('Article')
+
+
 class Article(models.Model):
     """Model that represents an article to be inserted into
     jetpackjoust.com/articles.
@@ -61,6 +70,7 @@ class Article(models.Model):
                                  verbose_name="subcategory of article")
 
     slug = models.SlugField("url string that points to article")
+    tags = TaggableManager(through=TaggedArticle)
 
     published = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
