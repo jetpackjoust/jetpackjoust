@@ -8,14 +8,15 @@ from taggit.models import TaggedItemBase
 
 
 def pad_date(date):
-    """The variable date is a two-tuple of integers in the order year and
-    month.  Function pads year and month with zeroes where appropriate and
-    returns 2-tuple of strings in same order.
+    """The variable date is a three-tuple of integers in the order year,
+    month, and day.  Function pads year, month, and day with zeroes where
+    appropriate and returns three-tuple of strings in same order.
     """
-    year, month = date
+    year, month, day = date
     year = "{0:04d}".format(year)
     month = "{0:02d}".format(month)
-    return (year, month)
+    day = "{0:02d}".format(day)
+    return (year, month, day)
 
 
 class Author(models.Model):
@@ -92,11 +93,12 @@ class Image(models.Model):
     """
 
     def get_image_path(instance, filename):
-        """Stores file to path [media_root]/articles/images/slug/filename.
+        """Stores file to path [media_root]/articles/images/
+        year/month/day/slug/filename.
         """
         date = instance.article.published.date().timetuple()[:2]
         year, month = pad_date(date)
-        return os.path.join('articles', 'images', year, month,
+        return os.path.join('articles', 'images', year, month, day,
                         str(instance.article.slug), filename)
 
     article = models.ForeignKey(Article,
