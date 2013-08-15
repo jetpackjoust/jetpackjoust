@@ -1,4 +1,5 @@
+SECRET_FILE
 settings.py
 *.pyc
-.*~
+*.*~
 #*
