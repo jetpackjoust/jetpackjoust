@@ -96,8 +96,8 @@ class Image(models.Model):
         """Stores file to path [media_root]/articles/images/
         year/month/day/slug/filename.
         """
-        date = instance.article.published.date().timetuple()[:2]
-        year, month = pad_date(date)
+        date = instance.article.published.date().timetuple()[:3]
+        year, month, day = pad_date(date)
         return os.path.join('articles', 'images', year, month, day,
                         str(instance.article.slug), filename)
 
