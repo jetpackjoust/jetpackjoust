@@ -22,8 +22,8 @@ SECRET_FILE = normpath(join(SITE_ROOT, 'deploy', 'SECRET_FILE'))
 # Add all necessary filesystem paths to our system path so that we can use
 # python import statements.
 sys.path.append(SITE_ROOT)
-sys.path.append(normpath(join(DJANGO_ROOT, 'apps')))
-sys.path.append(normpath(join(DJANGO_ROOT, 'libs')))
+sys.path.append(normpath(join(SITE_ROOT, 'apps')))
+sys.path.append(normpath(join(SITE_ROOT, 'libs')))
 
 ########## END PATH CONFIGURATION
 
