@@ -1,9 +1,0 @@
-{% if latest_articles %}
-    <ul>
-    {% for articles in latest_articles %}
-        <li><a href="/polls/{{ poll.id }}/">{{ article.url }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
