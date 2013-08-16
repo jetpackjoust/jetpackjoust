@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     url(r'(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/$',
         views.archive_by_day, name='by_day'),
 
-    url(r'(\d{4})/(\d{2})/(\d{2})/(?P<url>[^/]+)$',
+    url(r'(\d{4})/(\d{2})/(\d{2})/(?P<slug>[^/]+)$',
         views.show_article, name='show_article'),
 
                        )

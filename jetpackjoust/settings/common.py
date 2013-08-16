@@ -75,7 +75,11 @@ USE_I18N = False
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale.
-USE_L10N = True
+USE_L10N = False
+
+# Sets the date format to ISO standards.
+DATE_FORMAT = 'Y-m-d'
+DATETIME_FORMAT = 'Y-m-d H:m:s'
 
 ########## END GENERAL CONFIGURATION
 
@@ -132,6 +136,7 @@ TEMPLATE_LOADERS = (
 # Directories to search when loading templates.
 TEMPLATE_DIRS = (
     normpath(join(SITE_ROOT, 'templates')),
+    normpath(join(SITE_ROOT, 'apps', 'articles', 'templates')),
 )
 
 ########## END TEMPLATE CONFIGURATION
@@ -177,7 +182,7 @@ INSTALLED_APPS = (
 
 ########## URL CONFIGURATION
 
-ROOT_URLCONF = 'jetpackjoust.urls'#'{}.urls'.format(SITE_NAME)
+ROOT_URLCONF = '{}.urls'.format(SITE_NAME)
 
 ########## END URL CONFIGURATION
 
