@@ -1,6 +1,7 @@
 """Common settings and globals."""
 
 import sys
+import os
 from os.path import abspath, basename, dirname, join, normpath
 
 
@@ -17,7 +18,14 @@ SITE_ROOT = dirname(DJANGO_ROOT)
 
 # Absolute filesystem path to the secret file which holds this project's
 # SECRET_KEY. Will be auto-generated the first time this file is interpreted.
-SECRET_FILE = normpath(join(SITE_ROOT, 'deploy', 'SECRET_FILE'))
+
+SECRET_DIR = normpath(join(SITE_ROOT, 'deploy'))
+
+if not SECRET_DIR:
+    os.makedirs(SECRET_DIR)
+
+SECRET_FILE = normpath(join(SECRET_DIR, 'SECRET_FILE'))
+
 
 # Add all necessary filesystem paths to our system path so that we can use
 # python import statements.

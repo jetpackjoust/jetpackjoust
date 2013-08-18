@@ -78,10 +78,11 @@ class Article(models.Model):
     last_modified = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        if not self.title:
-            # Newly created object, so set slug.
-            self.slug = slugify(self.title)
-
+        """Since title will only be created once, we can save the slug
+        as the title each time on save without worrying about the slug used
+        to create the permalink ever changing as the title cannot be changed.
+        """
+        self.slug = slugify(self.title)
         super(Article, self).save(*args, **kwargs)
 
     def __str__(self):
