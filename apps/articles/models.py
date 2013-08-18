@@ -70,7 +70,8 @@ class Article(models.Model):
     category = models.ForeignKey(Category,
                                  verbose_name="subcategory of article")
 
-    slug = models.SlugField("url string that points to article")
+    slug = models.SlugField("url string that points to article",
+                            editable=False)
     tags = TaggableManager(through=TaggedArticle)
 
     published = models.DateTimeField(auto_now_add=True)
@@ -79,7 +80,7 @@ class Article(models.Model):
     def save(self, *args, **kwargs):
         if not self.title:
             # Newly created object, so set slug.
-            self.slug = slugify(self.q)
+            self.slug = slugify(self.title)
 
         super(Article, self).save(*args, **kwargs)
 

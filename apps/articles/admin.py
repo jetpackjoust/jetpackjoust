@@ -8,8 +8,7 @@ class ImageAdminInline(admin.TabularInline):
     model = Image
 
 class ArticleAdmin(admin.ModelAdmin):
-    inlines = (ImageAdminInline, )
-    prepopulated_fields = {'slug': ('title',)}
+    inlines = (ImageAdminInline,)
 
 admin.site.register(Author)
 admin.site.register(Category)
