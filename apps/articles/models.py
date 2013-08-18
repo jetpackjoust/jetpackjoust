@@ -73,7 +73,6 @@ class Article(models.Model):
     slug = models.SlugField("url string that points to article",
                             editable=False)
     tags = TaggableManager(through=TaggedArticle)
-
     published = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
@@ -84,6 +83,12 @@ class Article(models.Model):
         """
         self.slug = slugify(self.title)
         super(Article, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        date = self.published.date().timetuple()[:3]
+        year, month, day = pad_date(date)
+        url = '/'.join('/articles', year, month, day, self.slug)
+        return url
 
     def __str__(self):
         message =  "title: {0}, author: {1}"
