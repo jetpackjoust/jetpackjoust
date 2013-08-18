@@ -87,7 +87,7 @@ class Article(models.Model):
     def get_absolute_url(self):
         date = self.published.date().timetuple()[:3]
         year, month, day = pad_date(date)
-        url = '/'.join('/articles', year, month, day, self.slug)
+        url = '/'.join(['/articles', year, month, day, self.slug])
         return url
 
     def __str__(self):
