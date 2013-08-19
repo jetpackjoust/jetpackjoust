@@ -111,7 +111,7 @@ MEDIA_URL = 'media/'
 STATIC_ROOT = normpath(join(SITE_ROOT, 'static'))
 
 # URL prefix for static files.
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 ADMIN_MEDIA_PREFIX = '/static/admin/'

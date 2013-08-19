@@ -115,10 +115,6 @@ class Image(models.Model):
     source = models.ImageField("location of image source",
                                upload_to=get_image_path)
 
-    def get_absolute_url(self):
-        url = settings.MEDIA_URL + str(self.source).lstrip('/')
-        return url
-
     def __str__(self):
         message =  "{0}, caption: {1}"
         return message.format(self.article, self.caption)

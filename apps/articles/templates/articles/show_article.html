@@ -1,5 +1,4 @@
 <html>
-{% if article %}
     <head>
       <title>{{ article.title }}</title>
     </head>
@@ -12,7 +11,7 @@
 
       {% block images %}{% if images %}
         {% for image in images %}
-          <img src={{ image.source}} >
+          <img src=http://127.0.0.1:8000/{{ image.source.url}} >
 	  <p>{{ image.caption }}</p>
         {% endfor %}
       {% endif %}
@@ -22,7 +21,4 @@
       {% endblock %}
       <p></p>
     </body>
-{% else %}
-    <p>The article could not be found.</p>
-{% endif %}
 </html>
