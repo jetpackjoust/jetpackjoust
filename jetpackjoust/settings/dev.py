@@ -10,6 +10,14 @@ TEMPLATE_DEBUG = DEBUG
 
 ########## END DEBUG CONFIGURATION
 
+
+########## MEDIA CONFIGURATION
+
+MEDIA_URL = 'http://127.0.0.1:8000/media/'
+
+########## END MEDIA CONFIGURATION
+
+
 ########## EMAIL CONFIGURATION
 
 EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'

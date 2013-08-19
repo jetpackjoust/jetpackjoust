@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, include, url, static
 from django.conf import settings
 
 from django.contrib import admin
@@ -19,5 +19,4 @@ if settings.DEBUG:
         url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
             {'document_root': settings.STATIC_ROOT})
         )
-
 

@@ -11,7 +11,7 @@
 
       {% block images %}{% if images %}
         {% for image in images %}
-          <img src=http://127.0.0.1:8000/{{ image.source.url}} >
+          <img src={{ image.source.url}} >
 	  <p>{{ image.caption }}</p>
         {% endfor %}
       {% endif %}
