@@ -1,5 +1,6 @@
 import os
 import re
+from django.conf import settings
 from django.utils.text import slugify
 from django.db import models
 
@@ -113,6 +114,10 @@ class Image(models.Model):
     caption = models.CharField("caption to be used with image", max_length=200)
     source = models.ImageField("location of image source",
                                upload_to=get_image_path)
+
+    def get_absolute_url(self):
+        url = settings.MEDIA_URL + str(self.source).lstrip('/')
+        return url
 
     def __str__(self):
         message =  "{0}, caption: {1}"

@@ -98,7 +98,7 @@ DATETIME_FORMAT = 'Y-m-d H:m:s'
 MEDIA_ROOT = normpath(join(SITE_ROOT, 'media'))
 
 # URL that handles the media served from MEDIA_ROOT.
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 
 ########## END MEDIA CONFIGURATION
 
@@ -111,14 +111,13 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = normpath(join(SITE_ROOT, 'static'))
 
 # URL prefix for static files.
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files.
 STATICFILES_DIRS = (
-    normpath(join(DJANGO_ROOT, 'assets')),
 )
 
 # List of finder classes that know how to find static files in various
@@ -146,6 +145,15 @@ TEMPLATE_DIRS = (
     normpath(join(SITE_ROOT, 'templates')),
     normpath(join(SITE_ROOT, 'apps', 'articles', 'templates')),
 )
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages")
 
 ########## END TEMPLATE CONFIGURATION
 

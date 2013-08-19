@@ -52,6 +52,9 @@ def show_article(request, slug):
 
     images = Image.objects.filter(article=article)
 
+    for image in images:
+        image.get_absolute_url()
+
     template = loader.get_template('articles/show_article.html')
     context = RequestContext(request, {
             'article': article,
