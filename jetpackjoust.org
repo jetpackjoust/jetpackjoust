@@ -1,0 +1,16 @@
+* Tasks
+
+** TODO Install South to be implemented in website.
+** TODO Remove Category model from articles.models and all related objects.
+** TODO Add tags to articles.views.show_article view.
+** TODO Install pagination to be used in multiple page views.
+** TODO Finish list views in articles.views.
+*** Implement tags for each article in summary
+*** Implement page views with pagination for each list view
+** TODO Finish templates for every view in articles.views.
+** TODO Complete css for ~/articles section and ~/home section
+
+* Site Overview
+
+Below is an overview of the different sections of the website and their
+functionality.
