@@ -21,7 +21,7 @@ SITE_ROOT = dirname(DJANGO_ROOT)
 
 SECRET_DIR = normpath(join(SITE_ROOT, 'deploy'))
 
-if not SECRET_DIR:
+if not os.path.isdir(SECRET_DIR):
     os.makedirs(SECRET_DIR)
 
 SECRET_FILE = normpath(join(SECRET_DIR, 'SECRET_FILE'))
