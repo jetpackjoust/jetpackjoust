@@ -1,7 +1,17 @@
 * Tasks
 
-** TODO Install South to be implemented in website.
-** TODO Remove Category model from articles.models and all related objects.
+** DONE Install South to be implemented in website.
+   CLOSED: [2013-08-31 Sat 16:12]
+   - CLOSING NOTE [2013-08-31 Sat 16:12] \\
+     South 0.8 has been installed on local machine and added to settings.common to be used in the future.
+** DONE Remove Category model from articles.models and all related objects.
+   CLOSED: [2013-08-31 Sat 16:26]
+   - CLOSING NOTE [2013-08-31 Sat 16:27] \\
+     Category model removed along with fixtures and databased has been synced.
+** DONE Create initial schemamigration for South.
+   CLOSED: [2013-08-31 Sat 16:27]
+   - CLOSING NOTE [2013-08-31 Sat 16:28] \\
+     Initial migration has been created for articles app and home app.
 ** TODO Add tags to articles.views.show_article view.
 ** TODO Install pagination to be used in multiple page views.
 ** TODO Finish list views in articles.views.

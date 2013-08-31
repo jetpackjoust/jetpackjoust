@@ -32,27 +32,6 @@ class Author(models.Model):
         return message.format(self.last_name, self.first_name)
 
 
-class Category(models.Model):
-    """Model that represents categories of types of articles.
-    """
-
-    def get_picture_path(instance, filename):
-        """Stores file to path [media_root]/articles/categories/[category]/
-        filename.
-        """
-        return os.path.join('articles', 'categories',
-                            str(instance.category), filename)
-
-    category = models.CharField("category of article", max_length=20)
-    description = models.TextField("description of category and content")
-    picture = models.ImageField("image representative of category",
-                                upload_to=get_picture_path)
-
-    def __str__(self):
-        message =  "category: {0}"
-        return message.format(self.category)
-
-
 class TaggedArticle(TaggedItemBase):
     """Necessary object to use non-integer based primary keys.
     """
@@ -68,8 +47,6 @@ class Article(models.Model):
     author = models.ForeignKey(Author, verbose_name="author of article")
     content = models.TextField("body of article")
     summary = models.TextField("summary of article")
-    category = models.ForeignKey(Category,
-                                 verbose_name="subcategory of article")
 
     slug = models.SlugField("url string that points to article",
                             editable=False)
