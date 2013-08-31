@@ -12,6 +12,9 @@
    CLOSED: [2013-08-31 Sat 16:27]
    - CLOSING NOTE [2013-08-31 Sat 16:28] \\
      Initial migration has been created for articles app and home app.
+** TODO Create 27 sample articles to test views with by adding fixtures.
+*** This number was chosen pseudo-randomly.  We need at least eleven articles
+to test the pagination app with and I want a large sample size to work with.
 ** TODO Add tags to articles.views.show_article view.
 ** TODO Install pagination to be used in multiple page views.
 ** TODO Finish list views in articles.views.
