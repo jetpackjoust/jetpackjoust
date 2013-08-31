@@ -186,8 +186,12 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
 
+    # Third party apps
     # django-taggit for tagging of articles.
     'taggit',
+
+    # South for database schema migrations.
+    'south',
 
     # apps used by website.
     'home',

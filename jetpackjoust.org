@@ -10,6 +10,18 @@
 ** TODO Finish templates for every view in articles.views.
 ** TODO Complete css for ~/articles section and ~/home section
 
+
+* Site Requirements
+** Python 2.7
+*** Django relies on Python 2.7.
+** Django 1.5
+*** Site is built using the web framework Django.
+** django-taggit 0.10
+*** Package that handles tagging system on site.
+** South 0.8
+*** Package that handles database schema migrations and changes.
+*** Future versions of Django will have schema migration ability by default.
+
 * Site Overview
 
 Below is an overview of the different sections of the website and their
