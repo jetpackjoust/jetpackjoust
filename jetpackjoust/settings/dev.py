@@ -38,7 +38,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': normpath(join(SITE_ROOT, 'dev_database', 'content.db')),
+        'NAME': normpath(join(SITE_ROOT, 'development', 'database', 'content.db')),
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
