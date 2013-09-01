@@ -19,6 +19,12 @@
 
       {% block content %}<p>{{ article.content }}</p>
       {% endblock %}
+
+      {% block tags %}
+	  {% for tag in tags %}
+	  <p>{{ tag }}</p>
+	  {% endfor %}
+      {% endblock %}
       <p></p>
     </body>
 </html>

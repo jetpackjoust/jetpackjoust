@@ -54,6 +54,7 @@ def show_article(request, slug):
     context = RequestContext(request, {
             'article': article,
             'images': images,
+            'tags': article.tags.all()
             })
     return HttpResponse(template.render(context))
 
