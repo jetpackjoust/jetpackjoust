@@ -11,8 +11,11 @@
 ** DONE Create initial schemamigration for South.
    CLOSED: [2013-08-31 Sat 16:27]
    - CLOSING NOTE [2013-08-31 Sat 16:28] \\
-     Initial migration has been created for articles app and home app.
-** TODO Create 27 sample articles to test views with by adding fixtures.
+     Initial migration has been created for articles app and home app.**
+** DONE Create 27 sample articles to test views with by adding fixtures.
+   CLOSED: [2013-08-31 Sat 20:42]
+   - CLOSING NOTE [2013-08-31 Sat 20:43] \\
+     So, 27 articles was a lot to create, so I made 13 articles for the fixtures.  13 is a lucky number, right?
 *** This number was chosen pseudo-randomly.  We need at least eleven articles
 to test the pagination app with and I want a large sample size to work with.
 ** TODO Add tags to articles.views.show_article view.
