@@ -22,7 +22,7 @@
 
       {% block tags %}
 	  {% for tag in tags %}
-	  <p>{{ tag }}</p>
+	  <a href={{ tag.url }}>{{ tag.name }}</a>
 	  {% endfor %}
       {% endblock %}
       <p></p>

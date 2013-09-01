@@ -5,7 +5,7 @@ from articles import views
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
 
-    url(r'tags/', views.index_tags, name='index_tags'),
+    url(r'tags/$', views.index_tags, name='index_tags'),
 
     url(r'tags/(?P<tag_slug>[^/]+)$', views.show_tag, name='show_tag'),
 

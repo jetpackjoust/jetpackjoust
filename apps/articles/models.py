@@ -68,6 +68,16 @@ class Article(models.Model):
         url = '/'.join(['/articles', year, month, day, self.slug])
         return url
 
+    def get_tags_urls(self):
+        """Takes each tag in self.tags and returns list of dictionaries
+        containing name of tag and associated url of each tag.
+        """
+        tags = []
+        for tag in self.tags.all():
+            tags.append({'name': tag.name,
+                         'url': '/'.join(['/articles', 'tags', tag.slug])})
+        return tags
+
     def __str__(self):
         message =  "title: {0}, author: {1}"
         return message.format(self.title, self.author)

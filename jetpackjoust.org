@@ -18,8 +18,16 @@
      So, 27 articles was a lot to create, so I made 13 articles for the fixtures.  13 is a lucky number, right?
 *** This number was chosen pseudo-randomly.  We need at least eleven articles
 to test the pagination app with and I want a large sample size to work with.
-** IN-PROGRESS Add tags to articles.views.show_article view.
-** IN-PROGRESS Create url-conf for tags.
+** DONE Add tags to articles.views.show_article view.
+   CLOSED: [2013-09-01 Sun 14:41]
+   - CLOSING NOTE [2013-09-01 Sun 14:41] \\
+     Tags have been added to show_article.html
+** DONE Create url-conf for tags.
+   CLOSED: [2013-09-01 Sun 14:41]
+   - CLOSING NOTE [2013-09-01 Sun 14:42] \\
+     Url structure for tags has been created and will be outlined at a later date.
+** IN-PROGRESS Complete tags views: index_tags, which shows each tag and links to
+the show_tag view and show_tag, which shows list of articles containing tag.
 ** TODO Install pagination to be used in multiple page views.
 ** TODO Finish list views in articles.views.
 *** Implement tags for each article in summary
