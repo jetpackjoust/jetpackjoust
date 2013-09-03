@@ -8,10 +8,10 @@ from taggit.models import Tag
 
 
 def index(request):
-    latest_articles = Article.objects.order_by('-published')
-    template = loader.get_template('articles/index.html')
+    articles = Article.objects.order_by('-published')
+    template = loader.get_template('articles/index_articles.html')
     context = RequestContext(request, {
-            'latest_articles': latest_articles,
+            'articles': articles,
             })
     return HttpResponse(template.render(context))
 
@@ -19,31 +19,40 @@ def index(request):
 def index_by_year(request, year):
     """Returns list of articles archived by year.
     """
-    articles = Article.objects.get(published__year=year)
+    articles = Article.objects.filter(published__year=year)
     articles = articles.order_by('-published', 'title')
-    output = "\n".join([article.title for article in articles])
-    return HttpResponse(output)
+    template = loader.get_template('articles/index_articles.html')
+    context = RequestContext(request, {
+            'articles': articles,
+            })
+    return HttpResponse(template.render(context))
 
 
 def index_by_month(request, year, month):
     """Returns list of articles archived by month.
     """
-    articles = Article.objects.get(published__year=year,
+    articles = Article.objects.filter(published__year=year,
                                       published__month=month)
     articles = articles.order_by('-published', 'title')
-    output = "\n".join([article.title for article in articles])
-    return HttpResponse(output)
+    template = loader.get_template('articles/index_articles.html')
+    context = RequestContext(request, {
+            'articles': articles,
+            })
+    return HttpResponse(template.render(context))
 
 
 def index_by_day(request, year, month, day):
     """Returns list of articles archived by day.
     """
-    articles = Article.objects.get(published__year=year,
+    articles = Article.objects.filter(published__year=year,
                                       published__month=month,
                                       published__day=day)
     articles = articles.order_by('-published', 'title')
-    output = "\n".join([article.title for article in articles])
-    return HttpResponse(output)
+    template = loader.get_template('articles/index_articles.html')
+    context = RequestContext(request, {
+            'articles': articles,
+            })
+    return HttpResponse(template.render(context))
 
 
 def index_tags(request):
