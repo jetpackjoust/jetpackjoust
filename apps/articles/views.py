@@ -59,11 +59,14 @@ def index_tags(request):
     """Returns list of all tags in database and links to said tags.
     """
     tags = []
-    for tag in Tag.objects.all():
+    for tag in Tag.objects.all().order_by('name'):
         tags.append({'name': tag.name,
                      'url': '/'.join(['/articles', 'tags', tag.slug])})
-    output = "\n".join([str(tag) for tag in tags])
-    return HttpResponse(output)
+    template = loader.get_template('articles/index_tags.html')
+    context = RequestContext(request, {
+            'tags': tags,
+            })
+    return HttpResponse(template.render(context))
 
 
 def show_article(request, slug):
