@@ -1,6 +1,22 @@
-<ul>
-  {% for article in articles %}
-    <li><a href={{ article.get_absolute_url }}>{{ article.title }}</a></li>
-  {% endfor %}
-</ul>
+{% extends "base.html" %}
 
+{% block body %}
+{% if articles %}
+  <ul>
+    {% for article in articles %}
+      <li><a href={{ article.get_absolute_url }}>{{ article.title }}</a></li>
+      <p>by {{ article.author.first_name }}  {{ article.author.last_name }}</p>
+      <p>{{ article.summary }}</p>
+      <p>tags:
+      {% for tag in article.get_tags_urls %}
+        <a href={{ tag.url }}>{{ tag.name }}</a>
+      {% endfor %}
+      </p>
+      <p></p>
+      <p></p>
+    {% endfor %}
+  </ul>
+{% else %}
+  No articles.
+{% endif %}
+{% endblock %}

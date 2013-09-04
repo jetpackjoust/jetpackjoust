@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block body %}
 <html>
     <head>
       <title>{{ article.title }}</title>
@@ -19,12 +22,14 @@
 
       {% block content %}<p>{{ article.content }}</p>
       {% endblock %}
-
+      <p>tags:
       {% block tags %}
 	  {% for tag in tags %}
 	  <a href={{ tag.url }}>{{ tag.name }}</a>
 	  {% endfor %}
       {% endblock %}
+      </p>
       <p></p>
     </body>
 </html>
+{% endblock %}

@@ -8,6 +8,8 @@ from taggit.models import Tag
 
 
 def index(request):
+    """Returns list of all articles ordered by most recent.
+    """
     articles = Article.objects.order_by('-published')
     template = loader.get_template('articles/index_articles.html')
     context = RequestContext(request, {
