@@ -91,6 +91,11 @@ def show_article(request, slug):
 def show_tag(request, tag_slug):
     """Displays list of links to articles that have the associated tag_slug.
     """
-    output = ""
-    return HttpResponse(output)
+    articles = Article.objects.filter(tags__slug__iexact = tag_slug)
+    articles = articles.order_by('-published', 'title')
+    template = loader.get_template('articles/index_articles.html')
+    context = RequestContext(request, {
+            'articles': articles,
+            })
+    return HttpResponse(template.render(context))
 

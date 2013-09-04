@@ -28,15 +28,20 @@
    CLOSED: [2013-09-02 Mon 22:10]
    - CLOSING NOTE [2013-09-02 Mon 22:10] \\
      Index for tags has been completed and links to appropriate tag.
-** IN-PROGRESS Complete show_tag view which shows list of articles containing given tag.
+** DONE Complete show_tag view which shows list of articles containing given tag.
+   CLOSED: [2013-09-03 Tue 21:02]
+   - CLOSING NOTE [2013-09-03 Tue 21:27] \\
+     show_tag view has been implemented.
 ** TODO Install pagination to be used in multiple page views.
-** TODO Finish list views in articles.views.
+** IN-PROGRESS Finish list views in articles.views.
 *** Implement tags for each article in summary
 *** Implement page views with pagination for each list view
 ** TODO Finish templates for every view in articles.views.
 ** TODO Complete css for ~/articles section and ~/home section
 
+
 * Site Requirements
+
 ** Python 2.7
 *** Django relies on Python 2.7.
 ** Django 1.5
@@ -46,6 +51,7 @@
 ** South 0.8
 *** Package that handles database schema migrations and changes.
 *** Future versions of Django will have schema migration ability by default.
+
 
 * Site Overview
 
