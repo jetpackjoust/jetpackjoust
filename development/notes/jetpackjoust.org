@@ -41,6 +41,7 @@
    - CLOSING NOTE [2013-09-03 Tue 22:18] \\
      All data is being outputted to page correctly.
 ** IN-PROGRESS Implement page views with pagination for each list view.
+*** Consult the docs: https://docs.djangoproject.com/en/dev/topics/pagination/
 ** TODO Get thumbnails for articles lists views.
 ** TODO Finish templates for every view in articles.views.
 ** TODO Complete css for ~/articles section and ~/home section
