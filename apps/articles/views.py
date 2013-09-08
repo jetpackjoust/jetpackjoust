@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 
 from articles.models import Article, Image, TaggedArticle
@@ -11,6 +12,20 @@ def index(request):
     """Returns list of all articles ordered by most recent.
     """
     articles = Article.objects.order_by('-published')
+
+    number_per_page = 10
+    paginator = Paginator(articles, number_per_page)
+
+    page = request.GET.get('page')
+    try:
+        articles = paginator.page(page)
+    except(PageNotAnInteger):
+        # If page is not an integer, default to first page.
+        articles = paginator.page(1)
+    except(EmptyPage):
+        # If page is out of range, default to last page.
+        articles = paginator.page(paginator.num_pages)
+
     template = loader.get_template('articles/index_articles.html')
     context = RequestContext(request, {
             'articles': articles,
