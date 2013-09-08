@@ -7,98 +7,27 @@ from django.shortcuts import get_object_or_404
 from articles.models import Article, Image, TaggedArticle
 from taggit.models import Tag
 
+from utils.paginator import QuerySetDiggPaginator
 
-def index(request):
-    """Returns list of all articles ordered by most recent.
+NUMBER_PER_PAGE = 3
+
+
+def index(request, **kwargs):
+    """Returns list of articles archived by filtering parameters
+    passed in kwargs.
     """
-    articles = Article.objects.order_by('-published')
 
-    number_per_page = 10
-    paginator = Paginator(articles, number_per_page)
+    filter_parameters = {"published__{0}".format(key):
+                         int(kwargs[key]) for key in kwargs}
 
-    page = request.GET.get('page')
+    if filter_parameters:
+        articles = Article.objects.filter(**filter_parameters)
+    else:
+        articles = Article.objects.all()
 
-    try:
-        articles = paginator.page(page)
-    except(PageNotAnInteger):
-        # If page is not an integer, default to first page.
-        articles = paginator.page(1)
-    except(EmptyPage):
-        # If page is out of range, default to last page.
-        articles = paginator.page(paginator.num_pages)
-
-    template = loader.get_template('articles/index_articles.html')
-    context = RequestContext(request, {
-            'articles': articles,
-            })
-    return HttpResponse(template.render(context))
-
-
-def index_by_year(request, year):
-    """Returns list of articles archived by year.
-    """
-    articles = Article.objects.filter(published__year=year)
     articles = articles.order_by('-published', 'title')
 
-    number_per_page = 10
-    paginator = Paginator(articles, number_per_page)
-
-    page = request.GET.get('page')
-
-    try:
-        articles = paginator.page(page)
-    except(PageNotAnInteger):
-        # If page is not an integer, default to first page.
-        articles = paginator.page(1)
-    except(EmptyPage):
-        # If page is out of range, default to last page.
-        articles = paginator.page(paginator.num_pages)
-
-    template = loader.get_template('articles/index_articles.html')
-    context = RequestContext(request, {
-            'articles': articles,
-            })
-    return HttpResponse(template.render(context))
-
-
-def index_by_month(request, year, month):
-    """Returns list of articles archived by month.
-    """
-    articles = Article.objects.filter(published__year=year,
-                                      published__month=month)
-    articles = articles.order_by('-published', 'title')
-
-    number_per_page = 10
-    paginator = Paginator(articles, number_per_page)
-
-    page = request.GET.get('page')
-
-    try:
-        articles = paginator.page(page)
-    except(PageNotAnInteger):
-        # If page is not an integer, default to first page.
-        articles = paginator.page(1)
-    except(EmptyPage):
-        # If page is out of range, default to last page.
-        articles = paginator.page(paginator.num_pages)
-
-    template = loader.get_template('articles/index_articles.html')
-    context = RequestContext(request, {
-            'articles': articles,
-            })
-    return HttpResponse(template.render(context))
-
-
-def index_by_day(request, year, month, day):
-    """Returns list of articles archived by day.
-    """
-    articles = Article.objects.filter(published__year=year,
-                                      published__month=month,
-                                      published__day=day)
-    articles = articles.order_by('-published', 'title')
-
-    number_per_page = 10
-    paginator = Paginator(articles, number_per_page)
+    paginator = Paginator(articles, NUMBER_PER_PAGE)
 
     page = request.GET.get('page')
 
@@ -158,8 +87,7 @@ def show_tag(request, tag_slug):
     articles = Article.objects.filter(tags__slug__iexact = tag_slug)
     articles = articles.order_by('-published', 'title')
 
-    number_per_page = 10
-    paginator = Paginator(articles, number_per_page)
+    paginator = Paginator(articles, NUMBER_PER_PAGE)
 
     page = request.GET.get('page')
 
