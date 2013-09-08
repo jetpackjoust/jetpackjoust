@@ -7,10 +7,9 @@ from django.shortcuts import get_object_or_404
 from articles.models import Article, Image, TaggedArticle
 from taggit.models import Tag
 
-from utils.paginator import QuerySetDiggPaginator
+from utils.paginator import DiggPaginator
 
-NUMBER_PER_PAGE = 3
-
+NUMBER_PER_PAGE = 1
 
 def index(request, **kwargs):
     """Returns list of articles archived by filtering parameters
@@ -27,9 +26,14 @@ def index(request, **kwargs):
 
     articles = articles.order_by('-published', 'title')
 
-    paginator = Paginator(articles, NUMBER_PER_PAGE)
+
+    paginator = DiggPaginator(articles, NUMBER_PER_PAGE, body=5,
+                              padding=2, margin=2)
 
     page = request.GET.get('page')
+    # Default to first page if no parameters is passed.
+    if not page:
+        page = 1
 
     try:
         articles = paginator.page(page)
@@ -42,7 +46,7 @@ def index(request, **kwargs):
 
     template = loader.get_template('articles/index_articles.html')
     context = RequestContext(request, {
-            'articles': articles,
+            'articles': articles
             })
     return HttpResponse(template.render(context))
 
@@ -87,9 +91,13 @@ def show_tag(request, tag_slug):
     articles = Article.objects.filter(tags__slug__iexact = tag_slug)
     articles = articles.order_by('-published', 'title')
 
-    paginator = Paginator(articles, NUMBER_PER_PAGE)
+    paginator = DiggPaginator(articles, NUMBER_PER_PAGE, body=5,
+                              padding=1, margin=2)
 
     page = request.GET.get('page')
+    # Default to first page if no parameters is passed.
+    if not page:
+        page = 1
 
     try:
         articles = paginator.page(page)

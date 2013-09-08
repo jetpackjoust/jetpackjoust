@@ -20,6 +20,7 @@
   No articles.
 {% endif %}
 
+{% if articles %}
 <div class="pagination">
     <span class="step-links">
         {% if articles.has_previous %}
@@ -27,12 +28,30 @@
         {% endif %}
 
         <span class="current">
-            Page {{ articles.number }} of {{ articles.paginator.num_pages }}.
-        </span>
+	  {% if articles.leading_range %}
+	    {% for page in articles.leading_range %}
+	      <a href="?page={{ page }}">{{ page }}</a>
+	    {% endfor %}
+	    {# Place dots after leading_range list. #}
+	    ...
+	  {% endif %}
 
+	  {% for page in articles.main_range %}
+	    <a href="?page={{ page }}">{{ page }}</a>
+	  {% endfor %}
+
+	  {% if articles.trailing_range %}
+	    {# Place dots before trailing_range list. #}
+	    ...
+	    {% for page in articles.trailing_range %}
+	      <a href="?page={{ page }}">{{ page }}</a>
+	    {% endfor %}
+	  {% endif %}
+        </span>
         {% if articles.has_next %}
             <a href="?page={{ articles.next_page_number }}">next</a>
         {% endif %}
     </span>
 </div>
+{% endif %}
 {% endblock %}
