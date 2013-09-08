@@ -17,6 +17,7 @@ def index(request):
     paginator = Paginator(articles, number_per_page)
 
     page = request.GET.get('page')
+
     try:
         articles = paginator.page(page)
     except(PageNotAnInteger):
@@ -38,6 +39,21 @@ def index_by_year(request, year):
     """
     articles = Article.objects.filter(published__year=year)
     articles = articles.order_by('-published', 'title')
+
+    number_per_page = 10
+    paginator = Paginator(articles, number_per_page)
+
+    page = request.GET.get('page')
+
+    try:
+        articles = paginator.page(page)
+    except(PageNotAnInteger):
+        # If page is not an integer, default to first page.
+        articles = paginator.page(1)
+    except(EmptyPage):
+        # If page is out of range, default to last page.
+        articles = paginator.page(paginator.num_pages)
+
     template = loader.get_template('articles/index_articles.html')
     context = RequestContext(request, {
             'articles': articles,
@@ -51,6 +67,21 @@ def index_by_month(request, year, month):
     articles = Article.objects.filter(published__year=year,
                                       published__month=month)
     articles = articles.order_by('-published', 'title')
+
+    number_per_page = 10
+    paginator = Paginator(articles, number_per_page)
+
+    page = request.GET.get('page')
+
+    try:
+        articles = paginator.page(page)
+    except(PageNotAnInteger):
+        # If page is not an integer, default to first page.
+        articles = paginator.page(1)
+    except(EmptyPage):
+        # If page is out of range, default to last page.
+        articles = paginator.page(paginator.num_pages)
+
     template = loader.get_template('articles/index_articles.html')
     context = RequestContext(request, {
             'articles': articles,
@@ -65,6 +96,21 @@ def index_by_day(request, year, month, day):
                                       published__month=month,
                                       published__day=day)
     articles = articles.order_by('-published', 'title')
+
+    number_per_page = 10
+    paginator = Paginator(articles, number_per_page)
+
+    page = request.GET.get('page')
+
+    try:
+        articles = paginator.page(page)
+    except(PageNotAnInteger):
+        # If page is not an integer, default to first page.
+        articles = paginator.page(1)
+    except(EmptyPage):
+        # If page is out of range, default to last page.
+        articles = paginator.page(paginator.num_pages)
+
     template = loader.get_template('articles/index_articles.html')
     context = RequestContext(request, {
             'articles': articles,
