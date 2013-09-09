@@ -46,6 +46,7 @@
      Pagination added for all index_articles views.
 *** Consult the docs: https://docs.djangoproject.com/en/dev/topics/pagination/
 ** IN-PROGRESS Implement tag cloud for index_tags view.
+** TODO Add url conf and views for articles written by a contributor.
 ** TODO Get thumbnails for articles lists views.
 ** TODO Finish templates for every view in articles.views.
 ** TODO Complete css for ~/articles section and ~/home section
