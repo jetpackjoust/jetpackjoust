@@ -49,6 +49,7 @@
 ** TODO Add url conf and views for articles written by a contributor.
 ** TODO Create 404.html and 500.html templates and implement http exception handling in articles.views. 
 *** Consult the docs: https://docs.djangoproject.com/en/1.2/topics/http/views/
+** TODO Create footer for base.html to be used sitewide and put link to source code repo and nod to Django in footer.  
 ** TODO Get thumbnails for articles lists views.
 ** TODO Finish templates for every view in articles.views.
 ** TODO Complete css for ~/articles section and ~/home section
