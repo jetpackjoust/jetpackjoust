@@ -26,6 +26,19 @@ class Author(models.Model):
     last_name = models.CharField("last name of author", max_length=35)
     first_name = models.CharField("first name of author", max_length=35)
     email = models.EmailField("email address submitted for author")
+    contributor_slug = models.CharField("slug to identify author",
+                                        max_length=71)
+
+    def save(self, *args, **kwargs):
+        self.contributor_slug = slugify(u'{0}-{1}'.format(self.first_name,
+                                                          self.last_name))
+        super(Author, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        """Return absolute url of all articles written by author.
+        """
+        url = '/'.join(['/articles', 'contributors', self.contributor_slug])
+        return url
 
     def __str__(self):
         message = "last name: {0}, first name: {1}"
@@ -63,6 +76,8 @@ class Article(models.Model):
         super(Article, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
+        """Return absolute url of article.
+        """
         date = self.published.date().timetuple()[:3]
         year, month, day = pad_date(date)
         url = '/'.join(['/articles', year, month, day, self.slug])
