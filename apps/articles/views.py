@@ -11,6 +11,36 @@ from utils.paginator import DiggPaginator
 
 NUMBER_PER_PAGE = 10
 
+
+class PaginationHandler(DiggPaginator):
+    """Class to handle creating pagination objects.  It is a subclass of
+    DiggPaginator.
+    
+    Ex: 
+    >>> articles = Article.objects.all()
+    >>> articles = PaginationHandler(articles, 10, body=5, padding=2, margin=2)
+    >>> articles = articles.get_page()
+    
+    and then pass articles to templates to use as expected with DiggPaginator.
+    """
+    
+    def __init__(self, request):
+        number = request.GET.get('page') if request.GET.get('page') else 1
+        self.page_instance = number
+        
+    def get_page(self):
+        """Returns a pagination object listing items of iterable on the
+        current page.
+        """
+        try:
+            pagination = self.page(self.page_instance)
+        except(PageNotAnInteger):
+            pagination = self.page(1)
+        except(EmptyPage):
+            pagination = self.page(self.num_pages)
+        return pagination
+
+
 def index_articles(request, **kwargs):
     """Returns list of articles archived by filtering parameters
     passed in kwargs.
