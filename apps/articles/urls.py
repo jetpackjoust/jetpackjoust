@@ -9,6 +9,11 @@ urlpatterns = patterns('',
 
     url(r'tags/(?P<tag_slug>[^/]+)$', views.show_tag, name='show_tag'),
 
+    url(r'contributors/$', views.index_contributors, name='index_contributors'),
+
+    url(r'contributors/(?P<contributor_slug>[^/]+)$', views.show_contributor,
+        name='show_contributor'),
+
     url(r'(?P<year>\d{4})/$', views.index_articles, name='by_year'),
 
     url(r'(?P<year>\d{4})/(?P<month>\d{2})/$', views.index_articles, name='by_month'),

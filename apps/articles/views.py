@@ -51,6 +51,12 @@ def index_articles(request, **kwargs):
     return HttpResponse(template.render(context))
 
 
+def index_contributors(request):
+    """Display links to all contributors on the site.
+    """
+    return HttpResponse("pass")
+
+
 def index_tags(request):
     """Returns list of all tags in database and links to said tags.
     """
@@ -83,6 +89,13 @@ def show_article(request, slug):
             'tags': tags
             })
     return HttpResponse(template.render(context))
+
+
+def show_contributor(request, contributor_slug):
+    """Displays all articles written by contributor as identified
+    by contributor_slug.
+    """
+    return HttpResponse("pass")
 
 
 def show_tag(request, tag_slug):
