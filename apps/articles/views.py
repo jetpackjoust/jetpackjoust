@@ -4,7 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 
-from articles.models import Article, Image, TaggedArticle
+from articles.models import Author, Article, Image, TaggedArticle
 from taggit.models import Tag
 
 from utils.paginator import DiggPaginator
@@ -54,7 +54,30 @@ def index_articles(request, **kwargs):
 def index_contributors(request):
     """Display links to all contributors on the site.
     """
-    return HttpResponse("pass")
+    authors = Author.objects.all()
+
+    paginator = DiggPaginator(authors, NUMBER_PER_PAGE, body=5,
+                              padding=2, margin=2)
+
+    page = request.GET.get('page')
+    # Default to first page if no parameters is passed.
+    if not page:
+        page = 1
+
+    try:
+        authors = paginator.page(page)
+    except(PageNotAnInteger):
+        # If page is not an integer, default to first page.
+        authors = paginator.page(1)
+    except(EmptyPage):
+        # If page is out of range, default to last page.
+        authors = paginator.page(paginator.num_pages)
+
+    template = loader.get_template('articles/index_contributors.html')
+    context = RequestContext(request, {
+            'authors': authors
+            })
+    return HttpResponse(template.render(context))
 
 
 def index_tags(request):
@@ -98,6 +121,7 @@ def show_contributor(request, contributor_slug):
     articles = Article.objects.filter(author__contributor_slug__iexact=
                                       contributor_slug)
 
+    articles.order_by('-published', 'title')
 
     paginator = DiggPaginator(articles, NUMBER_PER_PAGE, body=5,
                               padding=2, margin=2)
@@ -121,8 +145,6 @@ def show_contributor(request, contributor_slug):
             'articles': articles
             })
     return HttpResponse(template.render(context))
-
-    return HttpResponse("pass")
 
 
 def show_tag(request, tag_slug):
