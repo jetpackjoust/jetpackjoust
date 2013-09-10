@@ -9,9 +9,9 @@ from taggit.models import Tag
 
 from utils.paginator import DiggPaginator
 
-NUMBER_PER_PAGE = 1
+NUMBER_PER_PAGE = 10
 
-def index(request, **kwargs):
+def index_articles(request, **kwargs):
     """Returns list of articles archived by filtering parameters
     passed in kwargs.
     """
