@@ -5,7 +5,8 @@
   <ul>
     {% for article in articles %}
       <li><a href={{ article.get_absolute_url }}>{{ article.title }}</a></li>
-      <p>by {{ article.author.first_name }}  {{ article.author.last_name }}</p>
+      <p>by <a href={{article.author.get_absolute_url }}>
+	  {{ article.author.first_name }}  {{ article.author.last_name }}</a></p>
       <p>{{ article.summary }}</p>
       <p>tags:
       {% for tag in article.get_tags_urls %}

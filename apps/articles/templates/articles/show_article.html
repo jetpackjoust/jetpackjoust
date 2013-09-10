@@ -9,7 +9,8 @@
       {% block title %}<p>{{ article.title }}</p>
       {% endblock %}
 
-      {% block author %}<p>{{ article.author.first_name}} {{article.author.last_name}}</p>
+      {% block author %}<p>by <a href={{ article.author.get_absolute_url}}>
+	  {{ article.author.first_name}} {{article.author.last_name}}</a></p>
       {% endblock %}
 
       {% block images %}{% if images %}

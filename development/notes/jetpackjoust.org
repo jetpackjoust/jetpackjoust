@@ -46,10 +46,17 @@
      Pagination added for all index_articles views.
 *** Consult the docs: https://docs.djangoproject.com/en/dev/topics/pagination/
 ** TODO Implement tag cloud for index_tags view.
-** TODO Add url conf and views for articles written by a contributor.
-** TODO Create 404.html and 500.html templates and implement http exception handling in articles.views. 
+** DONE Add url conf and views for articles written by a contributor.
+   CLOSED: [2013-09-10 Tue 00:02]
+   - CLOSING NOTE [2013-09-10 Tue 00:03] \\
+     Views have been added and all templates adjusted to have links to articles written by author.
+
+     Urls ~/articles/contributors/ links to all authors of site, and ~/articles/contributors/contributor-slug
+     links to all articles written by author that is associated with contributor-slug,
+     where contributor-slug is first_name-last_name of author.
+** TODO Create 404.html and 500.html templates and implement http exception handling in articles.views.
 *** Consult the docs: https://docs.djangoproject.com/en/1.2/topics/http/views/
-** TODO Create footer for base.html to be used sitewide and put link to source code repo and nod to Django in footer.  
+** TODO Create footer for base.html to be used sitewide and put link to source code repo and nod to Django in footer.
 ** TODO Get thumbnails for articles lists views.
 ** TODO Finish templates for every view in articles.views.
 ** TODO Complete css for ~/articles section and ~/home section
