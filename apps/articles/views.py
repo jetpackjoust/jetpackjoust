@@ -26,14 +26,14 @@ class PaginationHandler(DiggPaginator):
     
     def __init__(self, request):
         number = request.GET.get('page') if request.GET.get('page') else 1
-        self.page_instance = number
+        self.page_number = number
         
     def get_page(self):
         """Returns a pagination object listing items of iterable on the
         current page.
         """
         try:
-            pagination = self.page(self.page_instance)
+            pagination = self.page(self.page_number)
         except(PageNotAnInteger):
             pagination = self.page(1)
         except(EmptyPage):
