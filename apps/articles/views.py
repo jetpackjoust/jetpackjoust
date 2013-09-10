@@ -95,13 +95,40 @@ def show_contributor(request, contributor_slug):
     """Displays all articles written by contributor as identified
     by contributor_slug.
     """
+    articles = Article.objects.filter(author__contributor_slug__iexact=
+                                      contributor_slug)
+
+
+    paginator = DiggPaginator(articles, NUMBER_PER_PAGE, body=5,
+                              padding=2, margin=2)
+
+    page = request.GET.get('page')
+    # Default to first page if no parameters is passed.
+    if not page:
+        page = 1
+
+    try:
+        articles = paginator.page(page)
+    except(PageNotAnInteger):
+        # If page is not an integer, default to first page.
+        articles = paginator.page(1)
+    except(EmptyPage):
+        # If page is out of range, default to last page.
+        articles = paginator.page(paginator.num_pages)
+
+    template = loader.get_template('articles/index_articles.html')
+    context = RequestContext(request, {
+            'articles': articles
+            })
+    return HttpResponse(template.render(context))
+
     return HttpResponse("pass")
 
 
 def show_tag(request, tag_slug):
     """Displays list of links to articles that have the associated tag_slug.
     """
-    articles = Article.objects.filter(tags__slug__iexact = tag_slug)
+    articles = Article.objects.filter(tags__slug__iexact=tag_slug)
     articles = articles.order_by('-published', 'title')
 
     paginator = DiggPaginator(articles, NUMBER_PER_PAGE, body=5,
