@@ -12,33 +12,25 @@ from utils.paginator import DiggPaginator
 NUMBER_PER_PAGE = 10
 
 
-class PaginationHandler(DiggPaginator):
-    """Class to handle creating pagination objects.  It is a subclass of
-    DiggPaginator.
-    
-    Ex: 
-    >>> articles = Article.objects.all()
-    >>> articles = PaginationHandler(articles, 10, body=5, padding=2, margin=2)
-    >>> articles = articles.get_page()
-    
-    and then pass articles to templates to use as expected with DiggPaginator.
-    """
-    
-    def __init__(self, request):
-        number = request.GET.get('page') if request.GET.get('page') else 1
-        self.page_number = number
-        
-    def get_page(self):
-        """Returns a pagination object listing items of iterable on the
-        current page.
-        """
-        try:
-            pagination = self.page(self.page_number)
-        except(PageNotAnInteger):
-            pagination = self.page(1)
-        except(EmptyPage):
-            pagination = self.page(self.num_pages)
-        return pagination
+def get_page(iterable, request, per_page=10):
+    paginator = DiggPaginator(iterable, per_page, body=5,
+                             padding=2, margin=2)
+
+    page = request.GET.get('page')
+    # Default to first page if no parameters is passed.
+    if not page:
+        page = 1
+
+    try:
+        iterable = paginator.page(page)
+    except(PageNotAnInteger):
+        # If page is not an integer, default to first page.
+        iterable = paginator.page(1)
+    except(EmptyPage):
+        # If page is out of range, default to last page.
+        iterable = paginator.page(iterable.num_pages)
+
+    return iterable
 
 
 def index_articles(request, **kwargs):
@@ -56,23 +48,7 @@ def index_articles(request, **kwargs):
 
     articles = articles.order_by('-published', 'title')
 
-
-    paginator = DiggPaginator(articles, NUMBER_PER_PAGE, body=5,
-                              padding=2, margin=2)
-
-    page = request.GET.get('page')
-    # Default to first page if no parameters is passed.
-    if not page:
-        page = 1
-
-    try:
-        articles = paginator.page(page)
-    except(PageNotAnInteger):
-        # If page is not an integer, default to first page.
-        articles = paginator.page(1)
-    except(EmptyPage):
-        # If page is out of range, default to last page.
-        articles = paginator.page(paginator.num_pages)
+    articles = get_page(articles, request)
 
     template = loader.get_template('articles/index_articles.html')
     context = RequestContext(request, {
@@ -85,23 +61,7 @@ def index_contributors(request):
     """Display links to all contributors on the site.
     """
     authors = Author.objects.all()
-
-    paginator = DiggPaginator(authors, NUMBER_PER_PAGE, body=5,
-                              padding=2, margin=2)
-
-    page = request.GET.get('page')
-    # Default to first page if no parameters is passed.
-    if not page:
-        page = 1
-
-    try:
-        authors = paginator.page(page)
-    except(PageNotAnInteger):
-        # If page is not an integer, default to first page.
-        authors = paginator.page(1)
-    except(EmptyPage):
-        # If page is out of range, default to last page.
-        authors = paginator.page(paginator.num_pages)
+    authors = get_page(authors, request)
 
     template = loader.get_template('articles/index_contributors.html')
     context = RequestContext(request, {
@@ -150,25 +110,9 @@ def show_contributor(request, contributor_slug):
     """
     articles = Article.objects.filter(author__contributor_slug__iexact=
                                       contributor_slug)
-
     articles.order_by('-published', 'title')
 
-    paginator = DiggPaginator(articles, NUMBER_PER_PAGE, body=5,
-                              padding=2, margin=2)
-
-    page = request.GET.get('page')
-    # Default to first page if no parameters is passed.
-    if not page:
-        page = 1
-
-    try:
-        articles = paginator.page(page)
-    except(PageNotAnInteger):
-        # If page is not an integer, default to first page.
-        articles = paginator.page(1)
-    except(EmptyPage):
-        # If page is out of range, default to last page.
-        articles = paginator.page(paginator.num_pages)
+    articles = get_page(articles, request)
 
     template = loader.get_template('articles/index_articles.html')
     context = RequestContext(request, {
@@ -183,22 +127,7 @@ def show_tag(request, tag_slug):
     articles = Article.objects.filter(tags__slug__iexact=tag_slug)
     articles = articles.order_by('-published', 'title')
 
-    paginator = DiggPaginator(articles, NUMBER_PER_PAGE, body=5,
-                              padding=1, margin=2)
-
-    page = request.GET.get('page')
-    # Default to first page if no parameters is passed.
-    if not page:
-        page = 1
-
-    try:
-        articles = paginator.page(page)
-    except(PageNotAnInteger):
-        # If page is not an integer, default to first page.
-        articles = paginator.page(1)
-    except(EmptyPage):
-        # If page is out of range, default to last page.
-        articles = paginator.page(paginator.num_pages)
+    articles = get_page(articles, request)
 
     template = loader.get_template('articles/index_articles.html')
     context = RequestContext(request, {
