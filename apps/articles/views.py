@@ -9,9 +9,6 @@ from taggit.models import Tag
 
 from utils.paginator import DiggPaginator
 
-NUMBER_PER_PAGE = 10
-
-
 def get_page(iterable, request, per_page=10):
     paginator = DiggPaginator(iterable, per_page, body=5,
                              padding=2, margin=2)
