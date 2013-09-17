@@ -45,6 +45,7 @@
    - CLOSING NOTE [2013-09-07 Sat 23:38] \\
      Pagination added for all index_articles views.
 *** Consult the docs: https://docs.djangoproject.com/en/dev/topics/pagination/
+** TODO Move articles.templates to parent templates filed at base directory and update settings.common
 ** TODO Implement tag cloud for index_tags view.
 ** DONE Add url conf and views for articles written by a contributor.
    CLOSED: [2013-09-10 Tue 00:02]
