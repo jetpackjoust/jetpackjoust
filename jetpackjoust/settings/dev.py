@@ -11,6 +11,13 @@ TEMPLATE_DEBUG = DEBUG
 ########## END DEBUG CONFIGURATION
 
 
+########## ALLOWED HOSTS CONFIGURATION
+
+ALLOWED_HOSTS = ['localhost']
+
+########## END ALLOWED HOSTS
+
+
 ######### SITE CONFIGURATION
 
 # primary key from django_site table is 2 for localhost:8000

@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 
+<head>
+  {% block title %}{{ article.title }}{% endblock %}
+</head>
 {% block body %}
-<html>
-    <head>
-      <title>{{ article.title }}</title>
-    </head>
-    <body>
-      {% block title %}<p>{{ article.title }}</p>
+      {% block header %}<p>{{ article.title }}</p>
       {% endblock %}
 
       {% block author %}<p>by <a href={{ article.author.get_absolute_url}}>
@@ -15,7 +13,7 @@
 
       {% block images %}{% if images %}
         {% for image in images %}
-          <img src={{ image.source.url}} >
+          <img src={{image.source.url}} >
 	  <p>{{ image.caption }}</p>
         {% endfor %}
       {% endif %}
@@ -29,8 +27,4 @@
 	  <a href={{ tag.url }}>{{ tag.name }}</a>
 	  {% endfor %}
       {% endblock %}
-      </p>
-      <p></p>
-    </body>
-</html>
 {% endblock %}

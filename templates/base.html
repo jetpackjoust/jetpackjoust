@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Jetpack Joust</title>
+    <title>{% block title %}Jetpack Joust{% endblock %}</title>
     <style>
       ul
       {
@@ -43,7 +43,7 @@
     </div>
 
     <div id="content">
-      {% block body %}{% endblock %}
+      {% block body %}{% endblock%}
     </div>
   </body>
 </html>
