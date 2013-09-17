@@ -1,15 +1,18 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 
 from articles.models import Author, Article, Image, TaggedArticle
 from taggit.models import Tag
 
 from utils.paginator import DiggPaginator
 
+
 def get_page(iterable, request, per_page=10):
+    """Function used to return iterable with DiggPaginator
+    handler to be passed to templates.
+    """
     paginator = DiggPaginator(iterable, per_page, body=5,
                              padding=2, margin=2)
 
@@ -39,11 +42,9 @@ def index_articles(request, **kwargs):
                          int(kwargs[key]) for key in kwargs}
 
     if filter_parameters:
-        articles = Article.objects.filter(**filter_parameters)
+        articles = get_list_or_404(Article.objects.filter(**filter_parameters))
     else:
-        articles = Article.objects.all()
-
-    articles = articles.order_by('-published', 'title')
+        articles = get_list_or_404(Article.objects.all())
 
     articles = get_page(articles, request)
 
@@ -57,7 +58,7 @@ def index_articles(request, **kwargs):
 def index_contributors(request):
     """Display links to all contributors on the site.
     """
-    authors = Author.objects.all()
+    authors = get_list_or_404(Author.objects.all())
     authors = get_page(authors, request)
 
     template = loader.get_template('articles/index_contributors.html')
@@ -70,8 +71,11 @@ def index_contributors(request):
 def index_tags(request):
     """Returns list of all tags in database and links to said tags.
     """
+    tag_list = get_list_or_404(Tag.objects.all().order_by('name'))
+
     tags = []
-    for tag in Tag.objects.all().order_by('name'):
+
+    for tag in tag_list:
         tags.append({'name': tag.name,
                      'url': '/'.join(['/articles', 'tags', tag.slug])})
 
@@ -105,9 +109,9 @@ def show_contributor(request, contributor_slug):
     """Displays all articles written by contributor as identified
     by contributor_slug.
     """
-    articles = Article.objects.filter(author__contributor_slug__iexact=
-                                      contributor_slug)
-    articles.order_by('-published', 'title')
+    articles = get_list_or_404(Article.objects
+                               .filter(author__contributor_slug__iexact=
+                                       contributor_slug))
 
     articles = get_page(articles, request)
 
@@ -121,8 +125,8 @@ def show_contributor(request, contributor_slug):
 def show_tag(request, tag_slug):
     """Displays list of links to articles that have the associated tag_slug.
     """
-    articles = Article.objects.filter(tags__slug__iexact=tag_slug)
-    articles = articles.order_by('-published', 'title')
+    articles = get_list_or_404(Article.objects.filter(tags__slug__iexact=
+                                                      tag_slug))
 
     articles = get_page(articles, request)
 

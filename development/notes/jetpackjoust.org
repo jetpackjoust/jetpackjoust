@@ -49,7 +49,6 @@
    CLOSED: [2013-09-16 Mon 20:51]
    - CLOSING NOTE [2013-09-16 Mon 20:52] \\
      Template files moved to parent directory.
-** TODO Implement tag cloud for index_tags view.
 ** DONE Add url conf and views for articles written by a contributor.
    CLOSED: [2013-09-10 Tue 00:02]
    - CLOSING NOTE [2013-09-10 Tue 00:03] \\
@@ -58,8 +57,15 @@
      Urls ~/articles/contributors/ links to all authors of site, and ~/articles/contributors/contributor-slug
      links to all articles written by author that is associated with contributor-slug,
      where contributor-slug is first_name-last_name of author.
-** TODO Create 404.html and 500.html templates and implement http exception handling in articles.views.
+** DONE Create 404.html and 500.html templates and implement http exception handling in articles.views.
+   CLOSED: [2013-09-16 Mon 22:06]
+   - CLOSING NOTE [2013-09-16 Mon 22:12] \\
+     Exception templates have been created and placed in jetpackjoust/templates.
+     Each view in apps.articles.views now uses get_object_or_404 or get_list_or_404
+     where appropriate.
 *** Consult the docs: https://docs.djangoproject.com/en/1.2/topics/http/views/
+** IN-PROGRESS Learn html and organize implement each template with new knowledge.
+** TODO Implement tag cloud for index_tags view.
 ** TODO Create footer for base.html to be used sitewide and put link to source code repo and nod to Django in footer.
 ** TODO Get thumbnails for articles lists views.
 ** TODO Finish templates for every view in articles.views.

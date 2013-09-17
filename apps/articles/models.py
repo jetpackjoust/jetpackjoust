@@ -67,6 +67,9 @@ class Article(models.Model):
     published = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-published']
+
     def save(self, *args, **kwargs):
         """Since title will only be created once, we can save the slug
         as the title each time on save without worrying about the slug used
