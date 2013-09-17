@@ -6,31 +6,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from articles.models import Author, Article, Image, TaggedArticle
 from taggit.models import Tag
 
-from utils.paginator import DiggPaginator
-
-
-def get_page(iterable, request, per_page=10):
-    """Function used to return iterable with DiggPaginator
-    handler to be passed to templates.
-    """
-    paginator = DiggPaginator(iterable, per_page, body=5,
-                             padding=2, margin=2)
-
-    page = request.GET.get('page')
-    # Default to first page if no parameters is passed.
-    if not page:
-        page = 1
-
-    try:
-        iterable = paginator.page(page)
-    except(PageNotAnInteger):
-        # If page is not an integer, default to first page.
-        iterable = paginator.page(1)
-    except(EmptyPage):
-        # If page is out of range, default to last page.
-        iterable = paginator.page(iterable.num_pages)
-
-    return iterable
+from utils.paginator import DiggPaginator, get_page_request as get_page
 
 
 def index_articles(request, **kwargs):
