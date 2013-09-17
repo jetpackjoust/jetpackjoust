@@ -144,7 +144,6 @@ TEMPLATE_LOADERS = (
 # Directories to search when loading templates.
 TEMPLATE_DIRS = (
     normpath(join(SITE_ROOT, 'templates')),
-    normpath(join(SITE_ROOT, 'apps', 'articles', 'templates')),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
