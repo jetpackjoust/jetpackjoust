@@ -6,12 +6,14 @@ import math
 from django.core.paginator import \
     Paginator, QuerySetPaginator, Page, InvalidPage
 
+
 __all__ = (
     'InvalidPage',
     'ExPaginator',
     'DiggPaginator',
     'QuerySetDiggPaginator',
 )
+
 
 class ExPaginator(Paginator):
     """Adds a ``softlimit`` option to ``page()``. If True, querying a
@@ -52,6 +54,7 @@ class ExPaginator(Paginator):
                 return self.page(self.num_pages, softlimit=False)
             else:
                 raise e
+
 
 class DiggPaginator(ExPaginator):
     """
@@ -268,6 +271,7 @@ class DiggPaginator(ExPaginator):
         page.__class__ = DiggPage
         return page
 
+
 class DiggPage(Page):
     def __str__(self):
         return " ... ".join(filter(None, [
@@ -275,5 +279,30 @@ class DiggPage(Page):
                             " ".join(map(str, self.main_range)),
                             " ".join(map(str, self.trailing_range))]))
 
+
 class QuerySetDiggPaginator(DiggPaginator, QuerySetPaginator):
     pass
+
+
+def get_page(iterable, request, per_page=10):
+    """Function used to return iterable with DiggPaginator
+    handler to be passed to templates.
+    """
+    paginator = DiggPaginator(iterable, per_page, body=5,
+                             padding=2, margin=2)
+
+    page = request.GET.get('page')
+    # Default to first page if no parameters is passed.
+    if not page:
+        page = 1
+
+    try:
+        iterable = paginator.page(page)
+    except(PageNotAnInteger):
+        # If page is not an integer, default to first page.
+        iterable = paginator.page(1)
+    except(EmptyPage):
+        # If page is out of range, default to last page.
+        iterable = paginator.page(iterable.num_pages)
+
+    return iterable
