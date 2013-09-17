@@ -1,0 +1,5 @@
+"""requirements/common.txt"""
+
+Django==1.5
+django-taggit=0.10
+South=0.8
