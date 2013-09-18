@@ -64,10 +64,12 @@
      Each view in apps.articles.views now uses get_object_or_404 or get_list_or_404
      where appropriate.
 *** Consult the docs: https://docs.djangoproject.com/en/1.2/topics/http/views/
-** IN-PROGRESS Learn html and organize implement each template with new knowledge.
+** IN-PROGRESS Learn html and implement each template with new knowledge.
 ** TODO Implement tag cloud for index_tags view.
+*** Use django-taggit-templatetags foir this.  Install via pip install django-taggit-templatetags.
 ** TODO Create footer for base.html to be used sitewide and put link to source code repo and nod to Django in footer.
 ** TODO Get thumbnails for articles lists views.
+*** Use sorl-thumbnail for this.  Install via pip install sorl-thumbnail.
 ** TODO Finish templates for every view in articles.views.
 ** TODO Complete css for ~/articles section and ~/home section
 
