@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from articles.models import Author, Article, Image, TaggedArticle
 from taggit.models import Tag
 
-from utils.paginator import DiggPaginator, get_page_request as get_page
+from utils.paginator import DiggPaginator, get_page
 
 
 def index_articles(request, **kwargs):
