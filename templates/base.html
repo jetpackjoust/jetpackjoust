@@ -1,49 +1,26 @@
 <html>
   <head>
     <title>{% block title %}Jetpack Joust{% endblock %}</title>
-    <style>
-      ul
-      {
-      list-style-type:none;
-      margin:0;
-      padding:0;
-      }
-      li
-      {
-      display:inline;
-      }
-    </style>
   </head>
   <body>
-
-    <div class="gridContainer clearfix">
-      <div id="LayoutDiv1">
-	<div id="header">
-	  <div id="menu">
-            <h1>Jetpack Joust</h1>
-	    <div id="menu-wrap">
-	      <ul id="navigation-main">
-		<li>
-		  <a href="/">Home</a>
-		</li>
-		<li>
-		  <a href="/articles/">Articles</a>
-		</li>
-		<li>
-		  <a href="/videos/">Videos</a>
-		</li>
-		<li>
-		  <a href="/podcasts/">Podcasts</a>
-		</li>
-	      </ul><!--end navigation-menu-->
-	    </div><!--end menu-wrap-->
-	  </div>
-	</div>
+    <div id="header">
+      Jetpack Joust
+      <div id="navbar">
+	<ul>
+	  <li><a href="/">Home</a></li>
+	  <li><a href="/articles">Articles</a></li>
+	  <li><a href="/videos">Videos</a></li>
+	  <li><a href="/podcasts">Podcasts</a></li>
+	</ul>
       </div>
     </div>
-
     <div id="content">
       {% block body %}{% endblock%}
+    </div>
+    <div id="footer">
+      About Us will go here.
+      Jetpack Joust is open source!  <a href="https://github.com/jetpackjoust/jetpackjoust">Github</a>
+      Powered by <a href="https://www.djangoproject.com/">Django</a>
     </div>
   </body>
 </html>
