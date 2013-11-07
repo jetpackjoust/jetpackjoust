@@ -30,8 +30,8 @@ class Author(models.Model):
                                         max_length=71)
 
     def save(self, *args, **kwargs):
-        self.contributor_slug = slugify(u'{0}-{1}'.format(self.first_name,
-                                                          self.last_name))
+        self.contributor_slug = slugify('{0}-{1}'.format(self.first_name,
+                                                         self.last_name))
         super(Author, self).save(*args, **kwargs)
 
     def get_absolute_url(self):

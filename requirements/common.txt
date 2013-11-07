@@ -1,6 +1,0 @@
-"""requirements/common.txt"""
-
-Django==1.5
-django-taggit==0.10
-django-taggit-templatetags==0.2.5
-South==0.8
