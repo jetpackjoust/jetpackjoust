@@ -1,4 +1,5 @@
 SECRET_FILE
+db_credentials
 settings.py
 jetpackjoust.org_archive
 *.pyc

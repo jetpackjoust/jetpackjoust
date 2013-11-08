@@ -43,12 +43,32 @@ EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
 ########## DATABASE CONFIGURATION
 
+
+def get_db_credentials():
+    """Helper function to grab username and password from relative path
+    ../../../deploy/db_credentials and returns dictionary containing keys
+    "user" and "password", which are the first entries of the lines in file.
+    """
+    location = os.path.join(dirname(dirname(dirname(realpath(__file__)))),
+                            'deploy', 'db_credentials')
+    try:
+        with open(location) as f:
+            lines = [line.strip('\n').split('\t') for line in f.readlines()]
+            credentials = {line[0]: line[1] for line in lines}
+    except(IOError):
+        sys.exit(1)
+    return credentials
+
+
+credentials = get_db_credentials()
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': normpath(join(SITE_ROOT, 'development', 'database', 'content.db')),
-        'USER': '',
-        'PASSWORD': '',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'jpj_content',
+        'USER': credentials['user'],
+        'PASSWORD': credentials['password'],
         'HOST': '',
         'PORT': '',
     }

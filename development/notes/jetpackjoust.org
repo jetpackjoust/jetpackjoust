@@ -1,84 +1,13 @@
 * Tasks
 
-** DONE Install South to be implemented in website.
-   CLOSED: [2013-08-31 Sat 16:12]
-   - CLOSING NOTE [2013-08-31 Sat 16:12] \\
-     South 0.8 has been installed on local machine and added to settings.common to be used in the future.
-** DONE Remove Category model from articles.models and all related objects.
-   CLOSED: [2013-08-31 Sat 16:26]
-   - CLOSING NOTE [2013-08-31 Sat 16:27] \\
-     Category model removed along with fixtures and databased has been synced.
-** DONE Create initial schemamigration for South.
-   CLOSED: [2013-08-31 Sat 16:27]
-   - CLOSING NOTE [2013-08-31 Sat 16:28] \\
-     Initial migration has been created for articles app and home app.
-** DONE Create 27 sample articles to test views with by adding fixtures.
-   CLOSED: [2013-08-31 Sat 20:42]
-   - CLOSING NOTE [2013-08-31 Sat 20:43] \\
-     So, 27 articles was a lot to create, so I made 13 articles for the fixtures.  13 is a lucky number, right?
-** DONE Add tags to articles.views.show_article view.
-   CLOSED: [2013-09-01 Sun 14:41]
-   - CLOSING NOTE [2013-09-01 Sun 14:41] \\
-     Tags have been added to show_article.html
-** DONE Create url-conf for tags.
-   CLOSED: [2013-09-01 Sun 14:41]
-   - CLOSING NOTE [2013-09-01 Sun 14:42] \\
-     Url structure for tags has been created and will be outlined at a later date.
-** DONE Complete index_tags view which shows each tag and links to the show_tag view
-   CLOSED: [2013-09-02 Mon 22:10]
-   - CLOSING NOTE [2013-09-02 Mon 22:10] \\
-     Index for tags has been completed and links to appropriate tag.
-** DONE Complete show_tag view which shows list of articles containing given tag.
-   CLOSED: [2013-09-03 Tue 21:02]
-   - CLOSING NOTE [2013-09-03 Tue 21:27] \\
-     show_tag view has been implemented.
-** DONE Install pagination to be used in multiple page views.
-   CLOSED: [2013-09-03 Tue 21:34]
-   - CLOSING NOTE [2013-09-03 Tue 21:34] \\
-     pagination is installed by default with django.
-** DONE Finish data output for articles.views.
-   CLOSED: [2013-09-03 Tue 22:18]
-   - CLOSING NOTE [2013-09-03 Tue 22:18] \\
-     All data is being outputted to page correctly.
-** DONE Implement page views with pagination for each list view.
-   CLOSED: [2013-09-07 Sat 23:38]
-   - CLOSING NOTE [2013-09-07 Sat 23:38] \\
-     Pagination added for all index_articles views.
-*** Consult the docs: https://docs.djangoproject.com/en/dev/topics/pagination/
-** DONE Move articles.templates to parent templates filed at base directory and update settings.common
-   CLOSED: [2013-09-16 Mon 20:51]
-   - CLOSING NOTE [2013-09-16 Mon 20:52] \\
-     Template files moved to parent directory.
-** DONE Add url conf and views for articles written by a contributor.
-   CLOSED: [2013-09-10 Tue 00:02]
-   - CLOSING NOTE [2013-09-10 Tue 00:03] \\
-     Views have been added and all templates adjusted to have links to articles written by author.
-
-     Urls ~/articles/contributors/ links to all authors of site, and ~/articles/contributors/contributor-slug
-     links to all articles written by author that is associated with contributor-slug,
-     where contributor-slug is first_name-last_name of author.
-** DONE Create 404.html and 500.html templates and implement http exception handling in articles.views.
-   CLOSED: [2013-09-16 Mon 22:06]
-   - CLOSING NOTE [2013-09-16 Mon 22:12] \\
-     Exception templates have been created and placed in jetpackjoust/templates.
-     Each view in apps.articles.views now uses get_object_or_404 or get_list_or_404
-     where appropriate.
-*** Consult the docs: https://docs.djangoproject.com/en/1.2/topics/http/views/
-** IN-PROGRESS Learn html and implement each template with new knowledge.
-** TODO Implement tag cloud for index_tags view.
-*** Use django-taggit-templatetags foir this.  Install via pip install django-taggit-templatetags.
-** TODO Create footer for base.html to be used sitewide and put link to source code repo and nod to Django in footer.
-** TODO Get thumbnails for articles lists views.
-*** Use sorl-thumbnail for this.  Install via pip install sorl-thumbnail.
-** TODO Finish templates for every view in articles.views.
-** TODO Complete css for ~/articles section and ~/home section
-
+** Add primary boolean column to Images to determine main picture
+** create tests for all models.
 
 * Site Requirements
 
-** Python 2.7
-*** Django relies on Python 2.7.
-** Django 1.5
+** Python 3.2
+*** Django relies on Python 3.2.
+** Django 1.6
 *** Site is built using the web framework Django.
 ** django-taggit 0.10
 *** Package that handles tagging system on site.
@@ -86,7 +15,12 @@
 *** Package that handles database schema migrations and changes.
 *** Future versions of Django will have schema migration ability by default.
 
+** MySQL 5.5.31
+** python-mysqldb
+** MySQL-for-Python3
+*** This must be installed from source inside current virtualenv in order to use mysql with python3
 
+** Pillow 2.2.1
 * Site Overview
 
 Below is an overview of the different sections of the website and their
