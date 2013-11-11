@@ -3,6 +3,8 @@
 ** Add primary boolean column to Images to determine main picture
 ** create tests for all models.
 
+
+
 * Site Requirements
 
 ** Python 3.2
@@ -21,6 +23,8 @@
 *** This must be installed from source inside current virtualenv in order to use mysql with python3
 
 ** Pillow 2.2.1
+
+
 * Site Overview
 
 Below is an overview of the different sections of the website and their

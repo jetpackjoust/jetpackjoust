@@ -23,7 +23,7 @@ ALLOWED_HOSTS = ['localhost']
 
 # primary key from django_site table is 2 for localhost:8000
 
-SITE_ID = 2
+#SITE_ID = 2
 
 ######## END SITE CONFIGURATION
 

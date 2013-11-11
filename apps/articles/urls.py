@@ -9,19 +9,21 @@ urlpatterns = patterns('',
 
     url(r'tags/(?P<tag_slug>[^/]+)$', views.show_tag, name='show_tag'),
 
-    url(r'contributors/$', views.index_contributors, name='index_contributors'),
+    url(r'contributors/$', views.index_contributors,
+        name='index_contributors'),
 
     url(r'contributors/(?P<contributor_slug>[^/]+)$', views.show_contributor,
         name='show_contributor'),
 
     url(r'(?P<year>\d{4})/$', views.index_articles, name='by_year'),
 
-    url(r'(?P<year>\d{4})/(?P<month>\d{2})/$', views.index_articles, name='by_month'),
+    url(r'(?P<year>\d{4})/(?P<month>\d{2})/$', views.index_articles,
+        name='by_month'),
 
     url(r'(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/$',
         views.index_articles, name='by_day'),
 
-    url(r'\d{4}/\d{2}/\d{2}/(?P<slug>[^/]+)$',
+    url(r'(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<slug>[^/]+)$',
         views.show_article, name='show_article'),
 
                        )
