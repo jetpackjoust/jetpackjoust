@@ -126,20 +126,34 @@ class Article(models.Model):
         return message.format(self.title, self.author)
 
 
-class Album(models.Model):
-    """Model that represents album of images related to Article class.
+class CoverImage(models.Model):
+    """Model that represents cover image related to Album model class.
     """
-    article = models.ForeignKey(Article,
-                                verbose_name="article related to album")
-    default_image = models.ForeignKey('Image',
-                                      blank=True,
-                                      null=True,
-                                      related_name="default_image",
-                                      verbose_name="default image for album")
+
+    def get_image_path(instance, filename):
+        """Stores file to path [media_root]/articles/images/
+        year/month/day/slug/filename.
+        """
+        article = instance.article
+        date = article.published.date().strftime('%Y-%m-%d')
+        slug = str(article.slug)
+        filename = slugify_file(filename)
+        return os.path.join('articles', 'images', date, slug, 'cover_image',
+                            filename)
+
+    article = models.OneToOneField(Article,
+                                   verbose_name="article of image")
+    source = models.ImageField(verbose_name="location of image source",
+                               upload_to=get_image_path)
+    caption = models.CharField("caption to be used with image",
+                               blank=True,
+                               null=True,
+                               max_length=200)
 
     def __str__(self):
-        message = "article: {0}"
-        return message.format(self.article)
+        filename = str(self.source).split('/')[-1]
+        message =  "source: {0}, caption: {1}"
+        return message.format(filename, self.caption)
 
 
 class Image(models.Model):
@@ -150,17 +164,15 @@ class Image(models.Model):
         """Stores file to path [media_root]/articles/images/
         year/month/day/slug/filename.
         """
-        article = instance.album.article
-        date = article.published.date().timetuple()[:3]
-        year, month, day = pad_date(date)
+        article = instance.article
+        date = article.published.date().strftime('%Y-%m-%d')
         slug = str(article.slug)
         filename = slugify_file(filename)
-        return os.path.join('articles', 'images', year, month, day, slug,
-                            filename)
+        return os.path.join('articles', 'images', date, slug, filename)
 
-    album = models.ForeignKey(Album,
-                              related_name="album",
-                              verbose_name="album to contain images")
+    article = models.ForeignKey(Article,
+                              related_name="article",
+                              verbose_name="article to contain images")
     source = models.ImageField(verbose_name="location of image source",
                                upload_to=get_image_path)
     caption = models.CharField("caption to be used with image",
@@ -170,7 +182,7 @@ class Image(models.Model):
 
     def __str__(self):
         filename = str(self.source).split('/')[-1]
-        title = str(self.album.article.title)
+        title = str(self.article.title)
         message =  "title: {0}, source: {1}, caption: {2}"
         return message.format(title, filename, self.caption)
 

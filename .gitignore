@@ -1,3 +1,4 @@
+media/
 SECRET_FILE
 db_credentials
 settings.py
