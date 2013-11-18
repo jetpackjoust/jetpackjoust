@@ -44,6 +44,7 @@ class Author(models.Model):
 
     class Meta():
         ordering = ['last_name']
+        app_label = 'articles'
 
     def save(self, *args, **kwargs):
         self.contributor_slug = slugify('{0}-{1}'.format(self.first_name,
@@ -66,6 +67,9 @@ class TaggedArticle(TaggedItemBase):
     """
     content_object = models.ForeignKey('Article')
 
+    class Meta():
+        app_label  = 'articles'
+
 
 class Article(models.Model):
     """Model that represents an article to be inserted into
@@ -86,6 +90,7 @@ class Article(models.Model):
 
     class Meta():
         ordering = ['-published']
+        app_label  = 'articles'
 
     def save(self, *args, **kwargs):
         """Since title will only be created once, we can save the slug
@@ -150,6 +155,9 @@ class CoverImage(models.Model):
                                null=True,
                                max_length=200)
 
+    class Meta():
+        app_label = 'articles'
+
     def __str__(self):
         filename = str(self.source).split('/')[-1]
         message =  "source: {0}, caption: {1}"
@@ -179,6 +187,9 @@ class Image(models.Model):
                                blank=True,
                                null=True,
                                max_length=200)
+
+    class Meta():
+        app_label = 'articles'
 
     def __str__(self):
         filename = str(self.source).split('/')[-1]
