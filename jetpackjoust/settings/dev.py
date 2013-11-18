@@ -1,8 +1,9 @@
 """Development settings and globals."""
+import os
 import sys
 from os.path import dirname, join, normpath, realpath
-sys.path.append(dirname(realpath(__file__)))
-from common import *
+
+from jetpackjoust.settings.common import *
 
 ########## DEBUG CONFIGURATION
 
