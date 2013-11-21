@@ -22,16 +22,16 @@ ALLOWED_HOSTS = ['localhost']
 
 ######### SITE CONFIGURATION
 
-# primary key from django_site table is 2 for localhost:8000
+# primary key from django_site table is 1 for localhost:8000
 
-#SITE_ID = 2
+SITE_ID = 1
 
 ######## END SITE CONFIGURATION
 
 
 ########## MEDIA CONFIGURATION
 
-MEDIA_URL = 'http://127.0.0.1:8000/media/'
+MEDIA_URL = '/media/'
 
 ########## END MEDIA CONFIGURATION
 
