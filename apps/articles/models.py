@@ -53,7 +53,7 @@ class Author(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        """Return absolute url of all articles written by author.
+         """Return absolute url of all articles written by author.
         """
         return ('show_contributor', (), {'contributor_slug': self.contributor_slug})
 

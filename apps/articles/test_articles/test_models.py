@@ -71,4 +71,3 @@ class TaggedArticleThreeTagsFactory(ArticleFactory):
     tag_2 = factory.RelatedFactory(TaggedArticleFactory, 'content_object')
     tag_3 = factory.RelatedFactory(TaggedArticleFactory, 'content_object')
 
-TaggedArticleThreeTagsFactory()
