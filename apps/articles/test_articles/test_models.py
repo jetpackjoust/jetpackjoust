@@ -6,6 +6,8 @@ import apps.articles.models as models
 import taggit.models
 import factory
 import random
+import os
+
 
 def random_word(n):
     letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ "
@@ -48,6 +50,31 @@ class TagFactory(factory.django.DjangoModelFactory):
     slug = factory.LazyAttribute(lambda n: slugify(n.name))
 
 
+class CoverImageFactory(factory.django.DjangoModelFactory):
+    """Factory for model Cover Image in articles app
+    """
+    FACTORY_FOR = models.CoverImage
+    article = factory.SubFactory(ArticleFactory)
+    source = factory.django.ImageField(from_path=os.path.join(os.getcwd(),
+                                                              'development',
+                                                              'test_images',
+                                                              'test_image_1.jpg'))
+    caption = factory.Sequence(lambda n: "Test caption {0}".format(n))
+
+
+class ImageFactory(factory.django.DjangoModelFactory):
+    """Factory for model Image in articles app
+    """
+    FACTORY_FOR = models.Image
+
+    article = factory.SubFactory(ArticleFactory)
+    source = factory.django.ImageField(from_path=os.path.join(os.getcwd(),
+                                                              'development',
+                                                              'test_images',
+                                                              'test_image_2.jpg'))
+    caption = factory.Sequence(lambda n: "Test caption {0}".format(n))
+
+
 class TaggedArticleFactory(factory.django.DjangoModelFactory):
     """Factory for through model that links many to many tags to articles.
     """
@@ -70,4 +97,5 @@ class TaggedArticleThreeTagsFactory(ArticleFactory):
     tag_1 = factory.RelatedFactory(TaggedArticleFactory, 'content_object')
     tag_2 = factory.RelatedFactory(TaggedArticleFactory, 'content_object')
     tag_3 = factory.RelatedFactory(TaggedArticleFactory, 'content_object')
+
 

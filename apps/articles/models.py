@@ -53,7 +53,7 @@ class Author(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-         """Return absolute url of all articles written by author.
+        """Return absolute url of all articles written by author.
         """
         return ('show_contributor', (), {'contributor_slug': self.contributor_slug})
 
@@ -179,8 +179,8 @@ class Image(models.Model):
         return os.path.join('articles', 'images', date, slug, filename)
 
     article = models.ForeignKey(Article,
-                              related_name="article",
-                              verbose_name="article to contain images")
+                                related_name="article",
+                                verbose_name="article to contain images")
     source = models.ImageField(verbose_name="location of image source",
                                upload_to=get_image_path)
     caption = models.CharField("caption to be used with image",
