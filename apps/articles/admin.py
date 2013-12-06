@@ -8,6 +8,7 @@ from articles.models import Image
 class CoverImageAdminInline(admin.TabularInline):
     model = CoverImage
 
+
 class ImageAdminInline(admin.TabularInline):
     model = Image
 

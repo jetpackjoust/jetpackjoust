@@ -1,12 +1,16 @@
-from datetime import datetime
-from django.utils.text import slugify
-from django.test import TestCase
-from factory.fuzzy import FuzzyNaiveDateTime
 import apps.articles.models as models
 import taggit.models
 import factory
 import random
 import os
+import unittest
+from datetime import datetime
+
+from django.core.exceptions import ValidationError
+from django.utils.text import slugify
+from django.test import TestCase
+
+from factory.fuzzy import FuzzyNaiveDateTime
 
 
 def random_word(n):
@@ -99,3 +103,35 @@ class TaggedArticleThreeTagsFactory(ArticleFactory):
     tag_3 = factory.RelatedFactory(TaggedArticleFactory, 'content_object')
 
 
+class TestPadDate(unittest.TestCase):
+    """Tests function articles.models.pad_date that adds takes datetime tuples
+    and returns tuple of strings with padded zeroes to create pretty dates.
+    """
+    def setUp(self):
+        self.date_1 = (2013, 1, 1)
+        self.date_2 = (2013, 11, 11)
+
+
+    def test_pad_date(self):
+        padded_date_1 = models.pad_date(self.date_1)
+        padded_date_2 = models.pad_date(self.date_2)
+        self.assertEqual(('2013', '01', '01'), padded_date_1)
+        self.assertEqual(('2013', '11', '11'), padded_date_2)
+
+
+class TestSlugifyFile(unittest.TestCase):
+    """Tests function articles.models.slugify_file to ensure that the
+    string filename gets returned slugified and with extension intact.
+    """
+    def setUp(self):
+        self.none = "manning face"
+        self.single = "manning face.png"
+        self.multiple = "manning . face. png"
+
+    def test_slugify_file(self):
+        slugified_none = models.slugify_file(self.none)
+        slugified_single = models.slugify_file(self.single)
+        slugified_multiple = models.slugify_file(self.multiple)
+        self.assertEqual("manning-face", slugified_none)
+        self.assertEqual("manning-face.png", slugified_single)
+        self.assertEqual("manning-face.png", slugified_multiple)

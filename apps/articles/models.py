@@ -1,5 +1,7 @@
 import os
 import re
+
+from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.utils.text import slugify
 from django.db import models
@@ -12,6 +14,8 @@ def pad_date(date):
     """The variable date is a three-tuple of integers in the order year,
     month, and day.  Function pads year, month, and day with zeroes where
     appropriate and returns three-tuple of strings in same order.
+
+    The function was created to be used in conjunction with datetime tuples.
     """
     year, month, day = date
     year = "{0:04d}".format(year)
@@ -23,13 +27,13 @@ def pad_date(date):
 def slugify_file(filename):
     """Returns string of filename slugified with extension intact.
     """
-    if filename.count(".") > 1:
-        message = "There can only be one '.' in the filename for the "
-        message += "extension."
-        raise ValidationError(message)
-
-    filename, extension = tuple(filename.split('.'))
-    return "{0}.{1}".format(slugify(filename), extension)
+    if "." in filename:
+        name = "".join(filename.split('.')[:-1])
+        extension = ".{0}".format(filename.split('.')[-1].strip())
+    else:
+        name = filename
+        extension = ""
+    return "{0}{1}".format(slugify(name), extension)
 
 
 class Author(models.Model):
@@ -167,7 +171,6 @@ class CoverImage(models.Model):
 class Image(models.Model):
     """Model that represents images related to Album model class.
     """
-
     def get_image_path(instance, filename):
         """Stores file to path [media_root]/articles/images/
         year/month/day/slug/filename.
