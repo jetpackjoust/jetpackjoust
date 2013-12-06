@@ -62,7 +62,7 @@ class CoverImageFactory(factory.django.DjangoModelFactory):
     source = factory.django.ImageField(from_path=os.path.join(os.getcwd(),
                                                               'development',
                                                               'test_images',
-                                                              'test_image_1.jpg'))
+                                                              'test image 1.jpg'))
     caption = factory.Sequence(lambda n: "Test caption {0}".format(n))
 
 
@@ -75,7 +75,7 @@ class ImageFactory(factory.django.DjangoModelFactory):
     source = factory.django.ImageField(from_path=os.path.join(os.getcwd(),
                                                               'development',
                                                               'test_images',
-                                                              'test_image_2.jpg'))
+                                                              'test image 2.jpg'))
     caption = factory.Sequence(lambda n: "Test caption {0}".format(n))
 
 
@@ -135,3 +135,69 @@ class TestSlugifyFile(unittest.TestCase):
         self.assertEqual("manning-face", slugified_none)
         self.assertEqual("manning-face.png", slugified_single)
         self.assertEqual("manning-face.png", slugified_multiple)
+
+
+class TestArticle(unittest.TestCase):
+    """Tests related to model articles.models.Article.
+    """
+    def setUp(self):
+        instance = datetime(2013, 12, 6, 6, 48)
+        self.article = TaggedArticleThreeTagsFactory(published=instance)
+
+    def test_get_absolute_url(self):
+        url = '/articles/2013/12/06/{0}'.format(self.article.slug)
+        self.assertEqual(url, self.article.get_absolute_url())
+
+    def test_get_tags_urls(self):
+        template = '/articles/tags/{0}'
+        tags = [{'name': tag.name, 'url': template.format(slugify(str(tag)))}
+                for tag in self.article.tags.all()]
+        self.assertEqual(tags, self.article.get_tags_urls())
+
+    def test_slugify(self):
+        self.assertEqual(slugify(self.article.title), self.article.slug)
+
+
+class TestAuthor(unittest.TestCase):
+    """Tests related to model articles.models.Author.
+    """
+    def setUp(self):
+        self.author = AuthorFactory(last_name="Gauss",
+                                    first_name="Carl")
+
+    def test_get_absolute_url(self):
+        url = '/articles/contributors/carl-gauss'
+        self.assertEqual(url, self.author.get_absolute_url())
+
+    def test_slugify(self):
+        self.assertEqual("carl-gauss", self.author.contributor_slug)
+
+
+class TestCoverImage(unittest.TestCase):
+    """Tests related to model articles.models.CoverImage.
+    """
+    def setUp(self):
+        self.cover_image = CoverImageFactory()
+
+    def test_get_image_path(self):
+        date_string = self.cover_image.article.published.date().strftime('%Y-%m-%d')
+        slug = self.cover_image.article.slug
+        location = os.path.join('articles', 'images', date_string, slug,
+                                'cover_image', 'test-image-1.jpg')
+        result = self.cover_image.get_image_path('test image 1.jpg')
+        self.assertEqual(location, result)
+
+
+class TestImage(unittest.TestCase):
+    """Tests related to model articles.models.Image.
+    """
+    def setUp(self):
+        self.image = ImageFactory()
+
+    def test_get_image_path(self):
+        date_string = self.image.article.published.date().strftime('%Y-%m-%d')
+        slug = self.image.article.slug
+        location = os.path.join('articles', 'images', date_string, slug,
+                                'test-image-2.jpg')
+        result = self.image.get_image_path('test image 2.jpg')
+        self.assertEqual(location, result)
