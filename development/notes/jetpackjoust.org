@@ -21,7 +21,7 @@
 ** python-mysqldb
 ** MySQL-for-Python3
 *** This must be installed from source inside current virtualenv in order to use mysql with python3
-
+*** Here is the github source https://github.com/davispuh/MySQL-for-Python-3
 ** Pillow 2.2.1
 
 
