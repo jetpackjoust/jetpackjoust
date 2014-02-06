@@ -141,11 +141,15 @@ class TestArticle(unittest.TestCase):
     """Tests related to model articles.models.Article.
     """
     def setUp(self):
-        instance = datetime(2013, 12, 6, 6, 48)
-        self.article = TaggedArticleThreeTagsFactory(published=instance)
+        self.today = datetime.today()
+        self.article = TaggedArticleThreeTagsFactory()
 
     def test_get_absolute_url(self):
-        url = '/articles/2013/12/06/{0}'.format(self.article.slug)
+        url_parameters = [self.today.year,
+                         self.today.month,
+                         self.today.day,
+                         self.article.slug]
+        url = '/articles/{0}/{1:02d}/{2:02d}/{3}'.format(*url_parameters)
         self.assertEqual(url, self.article.get_absolute_url())
 
     def test_get_tags_urls(self):
