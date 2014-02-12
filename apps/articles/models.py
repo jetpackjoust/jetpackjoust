@@ -39,8 +39,10 @@ def slugify_file(filename):
 class AuthorManager(models.Manager):
     """Model Manager for Author model.
     """
+    use_for_related_fields = True
+
     def contributor(self, **kwargs):
-        return self.filter(contributor_slug=**kwargs[contributor_slug])
+        return self.filter(contributor_slug=kwargs['contributor_slug'])
 
 
 class Author(models.Model):

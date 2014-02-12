@@ -1,5 +1,3 @@
-import apps.articles.models as models
-import taggit.models
 import factory
 import random
 import os
@@ -9,8 +7,10 @@ from datetime import datetime
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 from django.test import TestCase
-
+import taggit.models
 from factory.fuzzy import FuzzyNaiveDateTime
+
+import apps.articles.models as models
 
 
 def random_word(n):
@@ -166,8 +166,7 @@ class TestAuthor(unittest.TestCase):
     """Tests related to model articles.models.Author.
     """
     def setUp(self):
-        self.author = AuthorFactory(last_name="Gauss",
-                                    first_name="Carl")
+        self.author = AuthorFactory(last_name="Gauss", first_name="Carl")
 
     def test_get_absolute_url(self):
         url = '/articles/contributors/carl-gauss'
@@ -175,6 +174,22 @@ class TestAuthor(unittest.TestCase):
 
     def test_slugify(self):
         self.assertEqual("carl-gauss", self.author.contributor_slug)
+
+
+class TestAuthorManager(unittest.TestCase):
+    """Tests related to model manager for model articles.models.Author.
+    """
+    def setUp(self):
+        self.author = AuthorFactory(last_name="Reed", first_name="Ed")
+
+    def test_contributor_filter(self):
+        kwargs = {"contributor_slug": "ed-reed"}
+        slug = kwargs['contributor_slug']
+        model_set = models.Author.objects.filter(contributor_slug=slug)
+        manager_set = models.Author.objects.contributor(**kwargs)
+        model_pks = [obj.pk for obj in model_set]
+        manager_pks = [obj.pk for obj in manager_set]
+        self.assertEqual(model_pks, manager_pks)
 
 
 class TestCoverImage(unittest.TestCase):
