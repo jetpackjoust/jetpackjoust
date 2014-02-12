@@ -36,6 +36,13 @@ def slugify_file(filename):
     return "{0}{1}".format(slugify(name), extension)
 
 
+class AuthorManager(models.Manager):
+    """Model Manager for Author model.
+    """
+    def contributor(self, **kwargs):
+        return self.filter(contributor_slug=**kwargs[contributor_slug])
+
+
 class Author(models.Model):
     """Model that represents author of instance of Article model class.
     """
@@ -45,6 +52,7 @@ class Author(models.Model):
     contributor_slug = models.CharField("slug to identify author",
                                         editable=False,
                                         max_length=71)
+    objects = AuthorManager()
 
     class Meta():
         ordering = ['last_name']
