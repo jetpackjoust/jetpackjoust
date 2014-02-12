@@ -62,15 +62,12 @@ def index_tags(request):
     return HttpResponse(template.render(context))
 
 
-def show_article(request, year, month, day, slug):
+def show_article(request, **kwargs):
     """Displays article that has the provided slug using the show_article
     template.
     """
 
-    article =  get_object_or_404(Article, slug=slug,
-                                 published__year=year,
-                                 published__month=month,
-                                 published__day=day)
+    article =  get_object_or_404(Article, slug=kwargs['slug'])
 
     images = Image.objects.filter(article=article)
 
@@ -79,7 +76,7 @@ def show_article(request, year, month, day, slug):
     template = loader.get_template('articles/show_article.html')
     context = RequestContext(request, {
             'article': article,
-            'images': image,
+            'images': images,
             'tags': tags
             })
     return HttpResponse(template.render(context))

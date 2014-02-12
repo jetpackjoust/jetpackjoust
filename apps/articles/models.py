@@ -45,6 +45,20 @@ class AuthorManager(models.Manager):
         return self.filter(contributor_slug=kwargs['contributor_slug'])
 
 
+class ArticleManager(models.Manager):
+    """Model Manager for Article model.
+    """
+    use_for_related_fields = True
+
+    def published(self, **kwargs):
+        parameters = {'published__{0}'.format(key):
+                      int(kwargs[key]) for key in kwargs}
+        return self.filter(**parameters)
+
+    def article_title(self, **kwargs):
+        return self.filter(slug=kwargs['slug'])
+
+
 class Author(models.Model):
     """Model that represents author of instance of Article model class.
     """
@@ -98,9 +112,9 @@ class Article(models.Model):
 
     slug = models.SlugField("url string that points to article",
                             editable=False)
-
     published = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+    objects = ArticleManager()
 
     class Meta():
         ordering = ['-published']

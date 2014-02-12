@@ -162,6 +162,33 @@ class TestArticle(unittest.TestCase):
         self.assertEqual(slugify(self.article.title), self.article.slug)
 
 
+class TestArticleManager(unittest.TestCase):
+    """Tests related to model manager for model articles.models.Article.
+    """
+    def setUp(self):
+        self.article = TaggedArticleThreeTagsFactory()
+        self.dates = {'year': self.article.published.year,
+                      'month': self.article.published.month,
+                      'day': self.article.published.day}
+        self.slugs = {'slug': self.article.slug}
+
+    def test_published(self):
+        model_set = models.Article.objects.filter(published__year=self.dates['year'],
+                                                  published__month=self.dates['month'],
+                                                  published__day=self.dates['day'])
+        manager_set = models.Article.objects.published(**self.dates)
+        model_pks = [obj.pk for obj in model_set]
+        manager_pks = [obj.pk for obj in manager_set]
+        self.assertEqual(model_pks, manager_pks)
+
+    def test_article_title(self):
+        model_set = models.Article.objects.filter(slug=self.article.slug)
+        manager_set = models.Article.objects.article_title(**self.slugs)
+        model_pks = [obj.pk for obj in model_set]
+        manager_pks = [obj.pk for obj in manager_set]
+        self.assertEqual(model_pks, manager_pks)
+
+
 class TestAuthor(unittest.TestCase):
     """Tests related to model articles.models.Author.
     """
@@ -181,12 +208,12 @@ class TestAuthorManager(unittest.TestCase):
     """
     def setUp(self):
         self.author = AuthorFactory(last_name="Reed", first_name="Ed")
+        self.slugs = {"contributor_slug": "ed-reed"}
 
     def test_contributor_filter(self):
-        kwargs = {"contributor_slug": "ed-reed"}
-        slug = kwargs['contributor_slug']
+        slug = self.slugs['contributor_slug']
         model_set = models.Author.objects.filter(contributor_slug=slug)
-        manager_set = models.Author.objects.contributor(**kwargs)
+        manager_set = models.Author.objects.contributor(**self.slugs)
         model_pks = [obj.pk for obj in model_set]
         manager_pks = [obj.pk for obj in manager_set]
         self.assertEqual(model_pks, manager_pks)
