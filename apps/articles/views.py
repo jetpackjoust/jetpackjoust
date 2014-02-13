@@ -69,15 +69,14 @@ def show_article(request, **kwargs):
 
     article =  get_object_or_404(Article, slug=kwargs['slug'])
 
-    images = Image.objects.filter(article=article)
+    article = Article.objects.article_title(**kwargs)
 
-    tags = article.get_tags_urls()
+    images = Image.objects.filter(article=article)
 
     template = loader.get_template('articles/show_article.html')
     context = RequestContext(request, {
             'article': article,
-            'images': images,
-            'tags': tags
+            'images': images
             })
     return HttpResponse(template.render(context))
 

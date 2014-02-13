@@ -182,11 +182,9 @@ class TestArticleManager(unittest.TestCase):
         self.assertEqual(model_pks, manager_pks)
 
     def test_article_title(self):
-        model_set = models.Article.objects.filter(slug=self.article.slug)
-        manager_set = models.Article.objects.article_title(**self.slugs)
-        model_pks = [obj.pk for obj in model_set]
-        manager_pks = [obj.pk for obj in manager_set]
-        self.assertEqual(model_pks, manager_pks)
+        model = models.Article.objects.filter(slug=self.article.slug)[0]
+        manager = models.Article.objects.article_title(**self.slugs)
+        self.assertEqual(model.pk, manager.pk)
 
 
 class TestAuthor(unittest.TestCase):

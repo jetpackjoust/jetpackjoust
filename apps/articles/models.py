@@ -56,7 +56,11 @@ class ArticleManager(models.Manager):
         return self.filter(**parameters)
 
     def article_title(self, **kwargs):
-        return self.filter(slug=kwargs['slug'])
+        """Return set of objects that matches slug.  Since slug for article
+        should be unique, this should be a set with one element, so return
+        its only element.
+        """
+        return self.filter(slug=kwargs['slug'])[0]
 
 
 class Author(models.Model):
