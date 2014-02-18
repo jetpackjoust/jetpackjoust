@@ -56,7 +56,7 @@ class ArticleManager(models.Manager):
         return self.filter(**parameters)
 
     def article_title(self, **kwargs):
-        """Return set of objects that matches slug.  Since slug for article
+        """Get set of objects that matches slug.  Since slug for article
         should be unique, this should be a set with one element, so return
         its only element.
         """
