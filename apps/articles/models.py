@@ -69,7 +69,7 @@ class Author(models.Model):
     last_name = models.CharField("last name of author", max_length=35)
     first_name = models.CharField("first name of author", max_length=35)
     email = models.EmailField("email address submitted for author")
-    contributor_slug = models.CharField("slug to identify author",
+    contributor_slug = models.SlugField("slug to identify author",
                                         editable=False,
                                         max_length=71)
     objects = AuthorManager()
@@ -150,7 +150,7 @@ class Article(models.Model):
 
         @models.permalink
         def get_tag_url(tag):
-            return ('show_tag', (), {'tag_slug': tag.slug})
+            return ('show_tag', (), {'slug': tag.slug})
 
         tags = []
         for tag in self.tags.all():

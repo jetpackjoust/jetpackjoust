@@ -43,7 +43,6 @@ class AuthorListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(AuthorListView, self).get_context_data(**kwargs)
-        print(context)
         return context
 
 
@@ -53,7 +52,8 @@ class TagDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(TagDetailView, self).get_context_data(**kwargs)
-        print(context)
+        tagged_articles = TaggedArticle.objects.filter(tag_id=context['tag'].id)
+        context['articles'] = Article.objects.filter(tags=tagged_articles)
         return context
 
 
@@ -63,7 +63,6 @@ class TagListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(TagListView, self).get_context_data(**kwargs)
-        print(context)
         return context
 
 

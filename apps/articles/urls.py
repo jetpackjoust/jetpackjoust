@@ -7,7 +7,7 @@ urlpatterns = patterns('',
 
     url(r'tags/$', views.TagListView.as_view(), name='index_tags'),
 
-    url(r'tags/(?P<tag_slug>[^/]+)$', views.TagDetailView.as_view(), name='show_tag'),
+    url(r'tags/(?P<slug>[^/]+)$', views.TagDetailView.as_view(), name='show_tag'),
 
     url(r'contributors/$', views.AuthorListView.as_view(),
         name='index_contributors'),
@@ -26,5 +26,4 @@ urlpatterns = patterns('',
 
     url(r'(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<slug>[^/]+)$',
         views.ArticleDetailView.as_view(), name='show_article'),
-
                        )

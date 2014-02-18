@@ -245,3 +245,6 @@ class TestImage(unittest.TestCase):
                                 'test-image-2.jpg')
         result = self.image.get_image_path('test image 2.jpg')
         self.assertEqual(location, result)
+
+
+
