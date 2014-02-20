@@ -1,14 +1,12 @@
-import factory
-import random
-import os
-import unittest
 from datetime import datetime
+import os
+import random
+import unittest
 
-from django.core.exceptions import ValidationError
 from django.utils.text import slugify
-from django.test import TestCase
-import taggit.models
+import factory
 from factory.fuzzy import FuzzyNaiveDateTime
+import taggit.models
 
 import apps.articles.models as models
 
