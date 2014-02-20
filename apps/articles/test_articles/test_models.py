@@ -27,8 +27,8 @@ class AuthorFactory(factory.django.DjangoModelFactory):
     first_name = factory.Sequence(lambda n: "Test first name {0}".format(n))
     email = factory.LazyAttribute(lambda n: "{0}.{1}@example.com".format(n.first_name,
                                                                          n.last_name))
-    contributor_slug = factory.LazyAttribute(lambda n: slugify("{0}-{1}".format(n.first_name,
-                                                                                n.last_name)))
+    slug = factory.LazyAttribute(lambda n: slugify("{0}-{1}".format(n.first_name,
+                                                                    n.last_name)))
 
 
 class ArticleFactory(factory.django.DjangoModelFactory):
@@ -198,7 +198,7 @@ class TestAuthor(unittest.TestCase):
         self.assertEqual(url, self.author.get_absolute_url())
 
     def test_slugify(self):
-        self.assertEqual("carl-gauss", self.author.contributor_slug)
+        self.assertEqual("carl-gauss", self.author.slug)
 
 
 class TestAuthorManager(unittest.TestCase):
@@ -206,11 +206,11 @@ class TestAuthorManager(unittest.TestCase):
     """
     def setUp(self):
         self.author = AuthorFactory(last_name="Reed", first_name="Ed")
-        self.slugs = {"contributor_slug": "ed-reed"}
+        self.slugs = {"slug": "ed-reed"}
 
     def test_contributor_filter(self):
-        slug = self.slugs['contributor_slug']
-        model_set = models.Author.objects.filter(contributor_slug=slug)
+        slug = self.slugs['slug']
+        model_set = models.Author.objects.filter(slug=slug)
         manager_set = models.Author.objects.contributor(**self.slugs)
         model_pks = [obj.pk for obj in model_set]
         manager_pks = [obj.pk for obj in manager_set]

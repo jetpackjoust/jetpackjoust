@@ -42,7 +42,7 @@ class AuthorManager(models.Manager):
     use_for_related_fields = True
 
     def contributor(self, **kwargs):
-        return self.filter(contributor_slug=kwargs['contributor_slug'])
+        return self.filter(slug=kwargs['slug'])
 
 
 class ArticleManager(models.Manager):
@@ -69,7 +69,7 @@ class Author(models.Model):
     last_name = models.CharField("last name of author", max_length=35)
     first_name = models.CharField("first name of author", max_length=35)
     email = models.EmailField("email address submitted for author")
-    contributor_slug = models.SlugField("slug to identify author",
+    slug = models.SlugField("slug to identify author",
                                         editable=False,
                                         max_length=71)
     objects = AuthorManager()
@@ -79,7 +79,7 @@ class Author(models.Model):
         app_label = 'articles'
 
     def save(self, *args, **kwargs):
-        self.contributor_slug = slugify('{0}-{1}'.format(self.first_name,
+        self.slug = slugify('{0}-{1}'.format(self.first_name,
                                                          self.last_name))
         super(Author, self).save(*args, **kwargs)
 
@@ -87,7 +87,7 @@ class Author(models.Model):
     def get_absolute_url(self):
         """Return absolute url of all articles written by author.
         """
-        return ('show_contributor', (), {'contributor_slug': self.contributor_slug})
+        return ('show_contributor', (), {'slug': self.slug})
 
     def __str__(self):
         message = "last name: {0}, first name: {1}"

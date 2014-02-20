@@ -14,7 +14,7 @@ class Migration(SchemaMigration):
             ('last_name', self.gf('django.db.models.fields.CharField')(max_length=35)),
             ('first_name', self.gf('django.db.models.fields.CharField')(max_length=35)),
             ('email', self.gf('django.db.models.fields.EmailField')(max_length=75)),
-            ('contributor_slug', self.gf('django.db.models.fields.SlugField')(max_length=71)),
+            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=71)),
         ))
         db.send_create_signal('articles', ['Author'])
 
@@ -87,11 +87,11 @@ class Migration(SchemaMigration):
         },
         'articles.author': {
             'Meta': {'ordering': "['last_name']", 'object_name': 'Author'},
-            'contributor_slug': ('django.db.models.fields.SlugField', [], {'max_length': '71'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '35'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '35'})
+            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '35'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '71'})
         },
         'articles.coverimage': {
             'Meta': {'object_name': 'CoverImage'},

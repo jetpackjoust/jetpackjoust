@@ -27,10 +27,9 @@ class ArticleListView(ListView):
 class AuthorDetailView(DetailView):
     model = Author
     template_name = 'articles/index_contributors.html'
-    slug_field = 'contributor_slug'
+    slug_field = 'slug'
 
     def get_context_data(self, **kwargs):
-        print(kwargs)
         context = super(AuthorDetailView, self).get_context_data(**kwargs)
         return context
 

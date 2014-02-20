@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     url(r'contributors/$', views.AuthorListView.as_view(),
         name='index_contributors'),
 
-    url(r'contributors/(?P<contributor_slug>[^/]+)$',
+    url(r'contributors/(?P<slug>[^/]+)$',
         views.AuthorDetailView.as_view(), name='show_contributor'),
 
     url(r'(?P<year>\d{4})/$', views.ArticleListView.as_view(),
