@@ -3,26 +3,26 @@ from django.conf.urls import patterns, include, url
 from articles import views
 
 urlpatterns = patterns('',
-    url(r'^$', views.ArticleListView.as_view(), name='index'),
+    url(r'^$', views.ArticleListView.as_view(), name='list_articles'),
 
-    url(r'tags/$', views.TagListView.as_view(), name='index_tags'),
+    url(r'tags/$', views.TagListView.as_view(), name='list_tags'),
 
     url(r'tags/(?P<slug>[^/]+)$', views.TagDetailView.as_view(), name='show_tag'),
 
     url(r'contributors/$', views.AuthorListView.as_view(),
-        name='index_contributors'),
+        name='list_contributors'),
 
     url(r'contributors/(?P<slug>[^/]+)$',
         views.AuthorDetailView.as_view(), name='show_contributor'),
 
     url(r'(?P<year>\d{4})/$', views.ArticleListView.as_view(),
-        name='by_year'),
+        name='list_articles_by_year'),
 
     url(r'(?P<year>\d{4})/(?P<month>\d{2})/$', views.ArticleListView.as_view(),
-        name='by_month'),
+        name='list_articles_by_month'),
 
     url(r'(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/$',
-        views.ArticleListView.as_view(), name='by_day'),
+        views.ArticleListView.as_view(), name='list_articles_by_day'),
 
     url(r'(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<slug>[^/]+)$',
         views.ArticleDetailView.as_view(), name='show_article'),
