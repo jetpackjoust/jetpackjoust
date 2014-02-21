@@ -38,3 +38,31 @@ class TestArticleDetailView(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template_name[0], self.template_name)
         self.assertEqual(response.context_data['article'].pk, self.article.pk)
+
+
+class TestAuthorDetailView(unittest.TestCase):
+    """Tests related to view AuthorDetailView.
+    """
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.author = test_models.AuthorFactory()
+        self.template_name = views.AuthorDetailView.template_name
+        self.url_parameters = {'slug': self.author.slug}
+
+
+    def test_details(self):
+        """Test to be certain that view returns desired object in context_data,
+        correct template name, and returns a status code of 200 for a
+        successful GET HTTP response.
+        """
+        url = reverse('show_contributor', urlconf=urls, kwargs=self.url_parameters)
+
+        request = self.factory.get(url)
+
+        view = views.AuthorDetailView.as_view()
+
+        response = view(request, slug=self.author.slug)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.template_name[0], self.template_name)
+        self.assertEqual(response.context_data['author'].pk, self.author.pk)
