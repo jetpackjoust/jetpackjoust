@@ -66,3 +66,46 @@ class TestAuthorDetailView(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template_name[0], self.template_name)
         self.assertEqual(response.context_data['author'].pk, self.author.pk)
+
+
+class TestTagDetailView(unittest.TestCase):
+    """Tests related to view TagDetailView.
+    """
+    def setUp(self):
+        tagged_article = models.TaggedArticle
+        article = models.Article
+
+        self.factory = RequestFactory()
+        self.tag = test_models.TagFactory()
+        self.template_name = views.TagDetailView.template_name
+        self.url_parameters = {'slug': self.tag.slug}
+
+        """Create 5 taggedarticle instances with tag self.tag"""
+        for i in range(5):
+            test_models.TaggedArticleFactory(tag=self.tag)
+
+        self.tagged_articles = tagged_article.objects.filter(tag_id=self.tag.id)
+        self.articles = article.objects.filter(tags=self.tagged_articles)
+        self.articles_pks = set([article.pk for article in self.articles])
+
+    def test_details(self):
+        """Test to be certain that view returns desired object in context_data,
+        correct template name, and returns a status code of 200 for a
+        successful GET HTTP response.
+        """
+        url = reverse('show_tag', urlconf=urls, kwargs=self.url_parameters)
+
+        request = self.factory.get(url)
+
+        view = views.TagDetailView.as_view()
+
+        response = view(request, slug=self.tag.slug)
+        context = response.context_data
+        articles_pks = set([article.pk for article in
+                            response.context_data['articles']])
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.template_name[0], self.template_name)
+        self.assertEqual(context['tag'].pk, self.tag.pk)
+        self.assertEqual(articles_pks, self.articles_pks)
+
