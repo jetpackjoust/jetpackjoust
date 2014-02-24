@@ -15,12 +15,14 @@ class TestArticleDetailView(unittest.TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         self.article = test_models.TaggedArticleTwoTagsFactory()
+        self.image_list = [test_models.ImageFactory(article=self.article)
+                           for i in range(3)]
+        self.images = {self.article.pk: self.image_list}
         self.template_name = views.ArticleDetailView.template_name
         self.url_parameters = {'year': "{0:04d}".format(self.article.published.year),
                                'month': "{0:02d}".format(self.article.published.month),
                                'day': "{0:02d}".format(self.article.published.day),
                                'slug': self.article.slug}
-
 
     def test_details(self):
         """Test to be certain that view returns desired object in context_data,
@@ -34,10 +36,16 @@ class TestArticleDetailView(unittest.TestCase):
         view = views.ArticleDetailView.as_view()
 
         response = view(request, slug=self.article.slug)
+        context_data = response.context_data
+        article_pk = context_data['article'].pk
+        images_pks = set([image.pk for image in self.images[self.article.pk]])
+        response_images_pks = set([image.pk for image in
+                                   context_data['images'][article_pk]])
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template_name[0], self.template_name)
-        self.assertEqual(response.context_data['article'].pk, self.article.pk)
+        self.assertEqual(context_data['article'].pk, self.article.pk)
+        self.assertEqual(response_images_pks, images_pks)
 
 
 class TestAuthorDetailView(unittest.TestCase):
@@ -80,7 +88,7 @@ class TestTagDetailView(unittest.TestCase):
         self.template_name = views.TagDetailView.template_name
         self.url_parameters = {'slug': self.tag.slug}
 
-        """Create 5 taggedarticle instances with tag self.tag"""
+        """Create 5 TaggedArticle instances with tag self.tag"""
         for i in range(5):
             test_models.TaggedArticleFactory(tag=self.tag)
 

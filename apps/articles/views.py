@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import DetailView, ListView
 
-from articles.models import Article, Author, TaggedArticle
+from articles.models import Article, Author, TaggedArticle, Image
 from taggit.models import Tag
 
 
@@ -12,6 +12,9 @@ class ArticleDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
+        article_pk = context['article'].pk
+        context['images'] = {article_pk:
+                             Image.objects.filter(article=article_pk)}
         return context
 
 
@@ -50,7 +53,7 @@ class TagDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(TagDetailView, self).get_context_data(**kwargs)
-        tagged_articles = TaggedArticle.objects.filter(tag_id=context['tag'].id)
+        tagged_articles = TaggedArticle.objects.filter(tag_id=context['tag'].pk)
         context['articles'] = Article.objects.filter(tags=tagged_articles)
         return context
 
