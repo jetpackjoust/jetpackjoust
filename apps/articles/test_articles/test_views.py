@@ -18,6 +18,8 @@ class TestArticleDetailView(unittest.TestCase):
         self.image_list = [test_models.ImageFactory(article=self.article)
                            for i in range(3)]
         self.images = {self.article.pk: self.image_list}
+        self.cover_image = {self.article.pk:
+                            [test_models.CoverImageFactory(article=self.article)]}
         self.template_name = views.ArticleDetailView.template_name
         self.url_parameters = {'year': "{0:04d}".format(self.article.published.year),
                                'month': "{0:02d}".format(self.article.published.month),
@@ -37,7 +39,12 @@ class TestArticleDetailView(unittest.TestCase):
 
         response = view(request, slug=self.article.slug)
         context_data = response.context_data
+
         article_pk = context_data['article'].pk
+        cover_image_pk = set([image.pk for image in
+                              self.cover_image[self.article.pk]])
+        response_cover_image_pk = set([image.pk for image in
+                                       context_data['cover_image'][article_pk]])
         images_pks = set([image.pk for image in self.images[self.article.pk]])
         response_images_pks = set([image.pk for image in
                                    context_data['images'][article_pk]])
@@ -46,6 +53,7 @@ class TestArticleDetailView(unittest.TestCase):
         self.assertEqual(response.template_name[0], self.template_name)
         self.assertEqual(context_data['article'].pk, self.article.pk)
         self.assertEqual(response_images_pks, images_pks)
+        self.assertEqual(response_cover_image_pk, cover_image_pk)
 
 
 class TestAuthorDetailView(unittest.TestCase):

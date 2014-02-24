@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import DetailView, ListView
 
-from articles.models import Article, Author, TaggedArticle, Image
+from articles.models import Article, Author, TaggedArticle, Image, CoverImage
 from taggit.models import Tag
 
 
@@ -15,6 +15,8 @@ class ArticleDetailView(DetailView):
         article_pk = context['article'].pk
         context['images'] = {article_pk:
                              Image.objects.filter(article=article_pk)}
+        context['cover_image'] = {article_pk:
+                                  CoverImage.objects.filter(article=article_pk)}
         return context
 
 
