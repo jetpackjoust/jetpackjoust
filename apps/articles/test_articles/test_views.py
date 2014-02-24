@@ -52,8 +52,8 @@ class TestArticleDetailView(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template_name[0], self.template_name)
         self.assertEqual(context_data['article'].pk, self.article.pk)
-        self.assertEqual(response_images_pks, images_pks)
         self.assertEqual(response_cover_image_pk, cover_image_pk)
+        self.assertEqual(response_images_pks, images_pks)
 
 
 class TestAuthorDetailView(unittest.TestCase):
