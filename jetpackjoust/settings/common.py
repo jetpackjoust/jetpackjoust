@@ -212,14 +212,14 @@ ROOT_URLCONF = '{}.urls'.format(SITE_NAME)
 # a random SECRET_KEY and save it into our SECRET_FILE for future loading. If
 # everything fails, then just raise an exception.
 try:
-    SECRET_KEY = open(SECRET_FILE).read().strip()
+    with open(SECRET_FILE, 'r') as f:
+        SECRET_KEY = f.read().strip()
 except IOError:
     try:
         import random
         SECRET_KEY = ''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)') for i in range(50)])
-        secret = file(SECRET_FILE, 'w')
-        secret.write(SECRET_KEY)
-        secret.close()
+        with open(SECRET_FILE, 'w') as f:
+            f.write(SECRET_KEY)
     except IOError:
         raise Exception('Cannot open file `{}` for writing.'.format(SECRET_FILE))
 
