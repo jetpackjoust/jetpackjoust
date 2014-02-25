@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import DetailView, ListView
 
-from articles.models import Article, Author, TaggedArticle, Image, CoverImage
+from articles.models import Article, Author, TaggedArticle, CoverImage, Image
 from taggit.models import Tag
 
 
