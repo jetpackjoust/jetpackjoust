@@ -1,9 +1,7 @@
 * Tasks
 
-** Add primary boolean column to Images to determine main picture
-** create tests for all models.
-
-
+** Complete articles.views
+*** Add pagination to all List views and views that return lists of objects.
 
 * Site Requirements
 
@@ -13,15 +11,15 @@
 *** Site is built using the web framework Django.
 ** django-taggit 0.10
 *** Package that handles tagging system on site.
+** django-taggit-templatetags 0.2.5
+*** Package that server as syntactic sugar for django taggit.
 ** South 0.8
 *** Package that handles database schema migrations and changes.
 *** Future versions of Django will have schema migration ability by default.
 
-** MySQL 5.5.31
-** python-mysqldb
-** MySQL-for-Python3
-*** This must be installed from source inside current virtualenv in order to use mysql with python3
-*** Here is the github source https://github.com/davispuh/MySQL-for-Python-3
+** PyMySQL 0.6.1
+*** Pure Python library that replaces default MySQL drivers.
+*** Needed to be able to use MySQL in Django.
 ** Pillow 2.2.1
 
 
