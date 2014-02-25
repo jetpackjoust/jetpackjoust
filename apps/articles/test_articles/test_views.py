@@ -38,11 +38,11 @@ class TestArticleDetailView(unittest.TestCase):
         view = views.ArticleDetailView.as_view()
 
         response = view(request, slug=self.article.slug)
-        context_data = response.context_data
+        context = response.context_data
 
-        article = context_data['article']
-        cover_image = context_data['cover_image']
-        images = context_data['images']
+        article = context['article']
+        cover_image = context['cover_image']
+        images = context['images']
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template_name[0], self.template_name)
@@ -79,12 +79,13 @@ class TestAuthorDetailView(unittest.TestCase):
         view = views.AuthorDetailView.as_view()
 
         response = view(request, slug=self.author.slug)
-        articles = response.context_data['articles']
-        cover_images = response.context_data['cover_images']
+        context = response.context_data
+        articles = context['articles']
+        cover_images = context['cover_images']
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template_name[0], self.template_name)
-        self.assertEqual(response.context_data['author'].pk, self.author.pk)
+        self.assertEqual(context['author'], self.author)
         self.assertEqual(set([a.pk for a in articles]),
                          set([a.pk for a in self.articles]))
         self.assertEqual(cover_images, self.cover_images)
@@ -126,12 +127,13 @@ class TestTagDetailView(unittest.TestCase):
 
         response = view(request, slug=self.tag.slug)
         context = response.context_data
-        articles = response.context_data['articles']
+
+        articles = context['articles']
         cover_images = context['cover_images']
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template_name[0], self.template_name)
-        self.assertEqual(context['tag'].pk, self.tag.pk)
+        self.assertEqual(context['tag'], self.tag)
         self.assertEqual(set([a.pk for a in articles]),
                          set([a.pk for a in self.articles]))
         self.assertEqual(cover_images, self.cover_images)
