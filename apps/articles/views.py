@@ -16,7 +16,7 @@ class ArticleDetailView(DetailView):
         context['images'] = {article_pk:
                              Image.objects.filter(article=article_pk)}
         context['cover_image'] = {article_pk:
-                                  CoverImage.objects.filter(article=article_pk)}
+                                  CoverImage.objects.get(article=article_pk)}
         return context
 
 
