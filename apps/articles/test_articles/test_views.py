@@ -15,14 +15,15 @@ class TestArticleDetailView(unittest.TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         self.article = test_models.TaggedArticleTwoTagsFactory()
+        self.published = self.article.published
         self.image_list = [test_models.ImageFactory(article=self.article)
                            for i in range(3)]
         self.images = self.image_list
         self.cover_image = test_models.CoverImageFactory(article=self.article)
         self.template_name = views.ArticleDetailView.template_name
-        self.url_parameters = {'year': "{0:04d}".format(self.article.published.year),
-                               'month': "{0:02d}".format(self.article.published.month),
-                               'day': "{0:02d}".format(self.article.published.day),
+        self.url_parameters = {'year': "{0:04d}".format(self.published.year),
+                               'month': "{0:02d}".format(self.published.month),
+                               'day': "{0:02d}".format(self.published.day),
                                'slug': self.article.slug}
 
     def test_details(self):
@@ -70,7 +71,8 @@ class TestAuthorDetailView(unittest.TestCase):
         correct template name, and returns a status code of 200 for a
         successful GET HTTP response.
         """
-        url = reverse('show_contributor', urlconf=urls, kwargs=self.url_parameters)
+        url = reverse('show_contributor', urlconf=urls,
+                      kwargs=self.url_parameters)
 
         request = self.factory.get(url)
 
@@ -104,7 +106,8 @@ class TestTagDetailView(unittest.TestCase):
         for i in range(5):
             test_models.TaggedArticleFactory(tag=self.tag)
 
-        self.tagged_articles = tagged_article.objects.filter(tag_id=self.tag.id)
+        self.tagged_articles = tagged_article.objects.filter(tag_id=
+                                                             self.tag.id)
         self.articles = article.objects.filter(tags=self.tagged_articles)
         self.cover_images = {article:
                              test_models.CoverImageFactory(article=article)
