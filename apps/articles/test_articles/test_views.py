@@ -101,6 +101,9 @@ class TestTagDetailView(unittest.TestCase):
         self.tagged_articles = tagged_article.objects.filter(tag_id=self.tag.id)
         self.articles = article.objects.filter(tags=self.tagged_articles)
         self.articles_pks = set([article.pk for article in self.articles])
+        self.cover_images = {article.pk:
+                             test_models.CoverImageFactory(article=article)
+                             for article in self.articles}
 
     def test_details(self):
         """Test to be certain that view returns desired object in context_data,
@@ -117,8 +120,10 @@ class TestTagDetailView(unittest.TestCase):
         context = response.context_data
         articles_pks = set([article.pk for article in
                             response.context_data['articles']])
+        cover_images = context['cover_images']
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template_name[0], self.template_name)
         self.assertEqual(context['tag'].pk, self.tag.pk)
         self.assertEqual(articles_pks, self.articles_pks)
+        self.assertEqual(cover_images, self.cover_images)

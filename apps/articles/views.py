@@ -57,6 +57,9 @@ class TagDetailView(DetailView):
         context = super(TagDetailView, self).get_context_data(**kwargs)
         tagged_articles = TaggedArticle.objects.filter(tag_id=context['tag'].pk)
         context['articles'] = Article.objects.filter(tags=tagged_articles)
+        context['cover_images'] = {article.pk:
+                                   CoverImage.objects.get(article=article.pk)
+                                   for article in context['articles']}
         return context
 
 
@@ -67,5 +70,4 @@ class TagListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(TagListView, self).get_context_data(**kwargs)
         return context
-
 
