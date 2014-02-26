@@ -1,6 +1,8 @@
 * Tasks
 
 ** Complete articles.views
+*** Override get_queryset in all List views and in AuthorDetailView and TagDetail view.
+*** Add in tags to ArticleDetailView using get_queryset.
 *** Add pagination to all List views and views that return lists of objects.
 
 * Site Requirements
