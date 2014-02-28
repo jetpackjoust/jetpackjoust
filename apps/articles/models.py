@@ -60,7 +60,7 @@ class ArticleManager(models.Manager):
         should be unique, this should be a set with one element, so return
         its only element.
         """
-        return self.filter(slug=kwargs['slug'])[0]
+        return self.get(slug=kwargs['slug'])
 
 
 class Author(models.Model):
@@ -158,6 +158,24 @@ class Article(models.Model):
                          'url': get_tag_url(tag)})
         return tags
 
+    def get_cover_image(self):
+        """Return cover_image if it can be found.
+        """
+        try:
+            cover_image = CoverImage.objects.get(article=self.title)
+        except(CoverImage.DoesNotExist):
+            cover_image = None
+        return cover_image
+
+    def get_images(self):
+        """Return images if they can be found.
+        """
+        try:
+            images = Image.objects.filter(article=self.title)
+        except(Image.DoesNotExist):
+            images = None
+        return images
+
     def __str__(self):
         message =  "title: {0}, author: {1}"
         return message.format(self.title, self.author)
@@ -210,7 +228,6 @@ class Image(models.Model):
         return os.path.join('articles', 'images', date, slug, filename)
 
     article = models.ForeignKey(Article,
-                                related_name="article",
                                 verbose_name="article to contain images")
     source = models.ImageField(verbose_name="location of image source",
                                upload_to=get_image_path)

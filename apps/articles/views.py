@@ -1,5 +1,7 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView
+
 
 from articles.models import Article, Author, TaggedArticle, CoverImage, Image
 from taggit.models import Tag
@@ -13,8 +15,9 @@ class ArticleDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
         article = context['article']
-        context['images'] = Image.objects.filter(article=article)
-        context['cover_image'] = CoverImage.objects.get(article=article)
+        context['tags'] = article.get_tags_urls()
+        context['cover_image'] = article.get_cover_image()
+        context['images'] = article.get_images()
         return context
 
 
