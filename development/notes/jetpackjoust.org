@@ -1,10 +1,7 @@
 * Tasks
-** Rewrite models.py to include album to key off of for images
-*** make album model to store images on.
-*** make cover image be a foriegn key to articles since it should not be used
-    without article itself.
-*** make images become foreign key to album so that you must create an album
-    and then assign album to article.
+** Add get_images() and get_cover_image() method to Article model.
+*** method will try to filter on Image and CoverImage models and return
+    empty set if cannot be found.
 ** Complete articles.views
 *** Override get_queryset in all List views and in AuthorDetailView and TagDetail view.
 *** Add in tags to ArticleDetailView using get_queryset.
