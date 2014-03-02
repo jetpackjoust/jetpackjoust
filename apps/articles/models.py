@@ -51,16 +51,36 @@ class ArticleManager(models.Manager):
     use_for_related_fields = True
 
     def published(self, **kwargs):
+        """kwargs contains potentially year, month, day as keys and their
+        values.  Return all articles with published date that matches
+        key values.
+        """
         parameters = {'published__{0}'.format(key):
                       int(kwargs[key]) for key in kwargs}
         return self.filter(**parameters)
 
-    def article_title(self, **kwargs):
+    def article_title(self, slug):
         """Get set of objects that matches slug.  Since slug for article
         should be unique, this should be a set with one element, so return
         its only element.
         """
-        return self.get(slug=kwargs['slug'])
+        return self.get(slug=slug)
+
+    def cover_image(self, article):
+        """Return CoverImage object related to article object if exists,
+        else return None.
+        """
+        try:
+            cover_image = CoverImage.objects.get(article=article)
+        except(CoverImage.DoesNotExist):
+            cover_image = None
+        return cover_image
+
+    def images(self, article):
+        """Return Image queryset filtered on article object if exists,
+        else return None.
+        """
+        return Image.objects.filter(article=article)
 
 
 class Author(models.Model):
@@ -143,38 +163,19 @@ class Article(models.Model):
                                      'day': day,
                                      'slug': self.slug})
 
+    @models.permalink
+    def get_tag_url(self, tag):
+        return ('show_tag', (), {'slug': tag.slug})
+
     def get_tags_urls(self):
         """Takes each tag in self.tags and returns list of dictionaries
         containing name of tag and associated url of each tag.
         """
-
-        @models.permalink
-        def get_tag_url(tag):
-            return ('show_tag', (), {'slug': tag.slug})
-
         tags = []
         for tag in self.tags.all():
             tags.append({'name': tag.name,
-                         'url': get_tag_url(tag)})
+                         'url': self.get_tag_url(tag)})
         return tags
-
-    def get_cover_image(self):
-        """Return cover_image if it can be found.
-        """
-        try:
-            cover_image = CoverImage.objects.get(article=self.title)
-        except(CoverImage.DoesNotExist):
-            cover_image = None
-        return cover_image
-
-    def get_images(self):
-        """Return images if they can be found.
-        """
-        try:
-            images = Image.objects.filter(article=self.title)
-        except(Image.DoesNotExist):
-            images = None
-        return images
 
     def __str__(self):
         message =  "title: {0}, author: {1}"

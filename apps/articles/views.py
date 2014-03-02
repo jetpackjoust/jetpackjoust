@@ -15,15 +15,15 @@ class ArticleDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
         article = context['article']
-        context['tags'] = article.get_tags_urls()
-        context['cover_image'] = article.get_cover_image()
-        context['images'] = article.get_images()
+        context['tags_urls'] = article.get_tags_urls()
+        context['cover_image'] = Article.objects.cover_image(article)
+        context['images'] = Article.objects.images(article)
         return context
 
 
 class ArticleListView(ListView):
     model = Article
-    template_name = 'articles/index_articles.html'
+    template_name = 'articles/list_articles.html'
 
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
@@ -32,12 +32,14 @@ class ArticleListView(ListView):
 
 class AuthorDetailView(DetailView):
     model = Author
-    template_name = 'articles/index_contributors.html'
+    template_name = 'articles/show_contributor.html'
     slug_field = 'slug'
 
     def get_context_data(self, **kwargs):
         context = super(AuthorDetailView, self).get_context_data(**kwargs)
         context['articles'] = Article.objects.filter(author=context['author'])
+        context['tags_urls'] = {article: article.get_tags_urls()
+                                for article in context['articles']}
         context['cover_images'] = {article:
                                    CoverImage.objects.get(article=article)
                                    for article in context['articles']}
@@ -46,7 +48,7 @@ class AuthorDetailView(DetailView):
 
 class AuthorListView(ListView):
     model = Author
-    template_name = 'articles/index_contributors.html'
+    template_name = 'articles/list_contributors.html'
 
     def get_context_data(self, **kwargs):
         context = super(AuthorListView, self).get_context_data(**kwargs)
@@ -61,8 +63,10 @@ class TagDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(TagDetailView, self).get_context_data(**kwargs)
         tagged_articles = TaggedArticle.objects.filter(tag_id=
-                                                       context['tag'].pk)
+                                                       context['tag'])
         context['articles'] = Article.objects.filter(tags=tagged_articles)
+        context['tags_urls'] = {article: article.get_tags_urls()
+                                for article in context['articles']}
         context['cover_images'] = {article:
                                    CoverImage.objects.get(article=article)
                                    for article in context['articles']}
@@ -71,7 +75,7 @@ class TagDetailView(DetailView):
 
 class TagListView(ListView):
     model = Tag
-    template_name = 'articles/index_tags.html'
+    template_name = 'articles/list_tags.html'
 
     def get_context_data(self, **kwargs):
         context = super(TagListView, self).get_context_data(**kwargs)

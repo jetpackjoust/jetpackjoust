@@ -164,7 +164,9 @@ class TestArticleManager(unittest.TestCase):
     """Tests related to model manager for model articles.models.Article.
     """
     def setUp(self):
-        self.article = TaggedArticleThreeTagsFactory()
+        self.article = ArticleFactory()
+        self.cover_image = CoverImageFactory(article=self.article)
+        self.images = [ImageFactory(article=self.article) for i in range(3)]
         self.dates = {'year': self.article.published.year,
                       'month': self.article.published.month,
                       'day': self.article.published.day}
@@ -180,9 +182,24 @@ class TestArticleManager(unittest.TestCase):
         self.assertEqual(model_pks, manager_pks)
 
     def test_article_title(self):
-        model = models.Article.objects.filter(slug=self.article.slug)[0]
+        model = models.Article.objects.get(slug=self.article.slug)
         manager = models.Article.objects.article_title(**self.slugs)
         self.assertEqual(model.pk, manager.pk)
+
+    def test_cover_image(self):
+        model = models.CoverImage.objects.get(article=self.article)
+        manager = models.Article.objects.cover_image(article=self.article)
+        manager_empty = models.Article.objects.cover_image(article='Made up')
+        self.assertEqual(model.pk, manager.pk)
+        self.assertEqual(None, manager_empty)
+
+    def test_images(self):
+        model = models.Image.objects.filter(article=self.article)
+        manager = models.Article.objects.images(article=self.article)
+
+        manager_empty = models.Article.objects.images(article='Made up')
+        self.assertEqual([obj.pk for obj in model], [obj.pk for obj in manager])
+        self.assertEqual(manager_empty.exists(), False)
 
 
 class TestAuthor(unittest.TestCase):
