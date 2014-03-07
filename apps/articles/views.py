@@ -37,11 +37,11 @@ class AuthorDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(AuthorDetailView, self).get_context_data(**kwargs)
-        context['articles'] = Article.objects.filter(author=context['author'])
+        context['articles'] = Article.objects.author(author=context['author'])
         context['tags_urls'] = {article: article.get_tags_urls()
                                 for article in context['articles']}
         context['cover_images'] = {article:
-                                   CoverImage.objects.get(article=article)
+                                   Article.objects.cover_image(article=article)
                                    for article in context['articles']}
         return context
 
@@ -68,7 +68,7 @@ class TagDetailView(DetailView):
         context['tags_urls'] = {article: article.get_tags_urls()
                                 for article in context['articles']}
         context['cover_images'] = {article:
-                                   CoverImage.objects.get(article=article)
+                                   Article.objects.cover_image(article=article)
                                    for article in context['articles']}
         return context
 

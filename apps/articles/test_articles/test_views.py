@@ -44,6 +44,28 @@ class TestArticleDetailView(unittest.TestCase):
                                'day': "{0:02d}".format(self.published.day),
                                'slug': self.article.slug}
 
+    def test_missing_context(self):
+        """Make sure that if cover_image or images does not exist that
+        no errors occur.
+        """
+        tag = test.TagFactory()
+        tagged_article = test.TaggedArticleFactory(tag=tag)
+        queryset = models.TaggedArticle.objects.filter(tag_id=tag.id)
+        article = models.Article.objects.get(tags=queryset)
+        published = article.published
+
+        request = get_request(self.factory, self.url_name, urls,
+                              {'year': "{0:04d}".format(published.year),
+                               'month': "{0:02d}".format(published.month),
+                               'day': "{0:02d}".format(published.day),
+                               'slug': article.slug})
+
+        response = self.view(request, slug=article.slug)
+        context = response.context_data
+
+        self.assertEqual(None, context['cover_image'])
+        self.assertEqual(False, context['images'].exists())
+
     def test_context(self):
         """Test to be certain that view returns desired objects in
         context_data, correct template name, and returns a status code of
