@@ -170,7 +170,7 @@ class TestArticleManager(unittest.TestCase):
         self.dates = {'year': self.article.published.year,
                       'month': self.article.published.month,
                       'day': self.article.published.day}
-        self.slugs = {'slug': self.article.slug}
+        self.slug =  self.article.slug
 
     def test_published(self):
         model_set = models.Article.objects.filter(published__year=self.dates['year'],
@@ -181,10 +181,21 @@ class TestArticleManager(unittest.TestCase):
         manager_pks = [obj.pk for obj in manager_set]
         self.assertEqual(model_pks, manager_pks)
 
-    def test_article_title(self):
-        model = models.Article.objects.get(slug=self.article.slug)
-        manager = models.Article.objects.article_title(**self.slugs)
+    def test_article_slug(self):
+        model = models.Article.objects.get(slug=self.slug)
+        manager = models.Article.objects.article_slug(slug=self.slug)
+        manager_empty = models.Article.objects.article_slug(slug='made-up')
         self.assertEqual(model.pk, manager.pk)
+        self.assertEqual(None, manager_empty)
+
+    def test_author(self):
+        model = models.Article.objects.filter(author=self.article.author)
+        manager = models.Article.objects.author(author=self.article.author)
+        non_existant_pk = self.article.author.pk + 1
+        manager_empty = models.Article.objects.author(author=non_existant_pk)
+        self.assertEqual([obj.pk for obj in model],
+                         [obj.pk for obj in manager])
+        self.assertEqual(False, manager_empty.exists())
 
     def test_cover_image(self):
         model = models.CoverImage.objects.get(article=self.article)
@@ -199,7 +210,7 @@ class TestArticleManager(unittest.TestCase):
 
         manager_empty = models.Article.objects.images(article='Made up')
         self.assertEqual([obj.pk for obj in model], [obj.pk for obj in manager])
-        self.assertEqual(manager_empty.exists(), False)
+        self.assertEqual(False, manager_empty.exists())
 
 
 class TestAuthor(unittest.TestCase):

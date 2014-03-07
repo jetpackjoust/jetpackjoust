@@ -51,20 +51,28 @@ class ArticleManager(models.Manager):
     use_for_related_fields = True
 
     def published(self, **kwargs):
-        """kwargs contains potentially year, month, day as keys and their
-        values.  Return all articles with published date that matches
+        """kwargs contains potentially year, month, day strings as keys and
+        their values.  Return all articles with published date that matches
         key values.
         """
         parameters = {'published__{0}'.format(key):
                       int(kwargs[key]) for key in kwargs}
         return self.filter(**parameters)
 
-    def article_title(self, slug):
-        """Get set of objects that matches slug.  Since slug for article
-        should be unique, this should be a set with one element, so return
-        its only element.
+    def article_slug(self, slug):
+        """Get article object that matches string slug.  Since slug for article
+        should be unique, this should only match one article.
         """
-        return self.get(slug=slug)
+        try:
+            article = self.get(slug=slug)
+        except(Article.DoesNotExist):
+            article = None
+        return article
+
+    def author(self, author):
+        """Return Article queryset filtered on author object if it exists.
+        """
+        return self.filter(author=author)
 
     def cover_image(self, article):
         """Return CoverImage object related to article object if exists,
@@ -77,8 +85,7 @@ class ArticleManager(models.Manager):
         return cover_image
 
     def images(self, article):
-        """Return Image queryset filtered on article object if exists,
-        else return None.
+        """Return Image queryset filtered on article object if exists.
         """
         return Image.objects.filter(article=article)
 
