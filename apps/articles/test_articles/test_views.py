@@ -46,7 +46,7 @@ class TestArticleDetailView(unittest.TestCase):
 
     def test_missing_context(self):
         """Make sure that if cover_image or images does not exist that
-        no errors occur.
+        page loads as expected.
         """
         tag = test.TagFactory()
         tagged_article = test.TaggedArticleFactory(tag=tag)
@@ -95,7 +95,7 @@ class TestAuthorDetailView(unittest.TestCase):
         self.template_name = views.AuthorDetailView.template_name
 
         self.articles = [test.ArticleFactory(author=self.author) for
-                         i in range(5)]
+                         i in range(3)]
         self.tags_urls = {article: article.get_tags_urls()
                           for article in self.articles}
         self.cover_images = {article: test.CoverImageFactory(article=article)
@@ -105,6 +105,22 @@ class TestAuthorDetailView(unittest.TestCase):
         self.view = views.AuthorDetailView.as_view()
         self.url_name = 'show_contributor'
         self.url_parameters = {'slug': self.author.slug}
+
+    def test_missing_context(self):
+        """Make sure that if cover_images do not exist that page loads as
+        expected.
+        """
+        author = test.AuthorFactory()
+        articles = [test.ArticleFactory(author=author) for i in range(3)]
+
+        request = get_request(self.factory, self.url_name, urls,
+                              {'slug': author.slug})
+
+        response = self.view(request, slug=author.slug)
+        context = response.context_data
+
+        for article in context['cover_images']:
+            self.assertEqual(None, context['cover_images'][article])
 
     def test_context(self):
         """Test to be certain that view returns desired object in context_data,
@@ -136,8 +152,8 @@ class TestTagDetailView(unittest.TestCase):
         self.factory = RequestFactory()
         self.tag = test.TagFactory()
 
-        """Create 5 TaggedArticle instances with tag self.tag"""
-        for i in range(5):
+        """Create 3 TaggedArticle instances with tag - self.tag"""
+        for i in range(3):
             test.TaggedArticleFactory(tag=self.tag)
 
         self.tagged_articles = tagged_article.objects.filter(tag_id=
@@ -153,6 +169,28 @@ class TestTagDetailView(unittest.TestCase):
         self.view = views.TagDetailView.as_view()
         self.url_name = 'show_tag'
         self.url_parameters = {'slug': self.tag.slug}
+
+    def test_missing_context(self):
+        """Make sure that if cover_images do not exist that page loads as
+        expected.
+        """
+        tag = test.TagFactory()
+
+        """Create 3 instances of Tagged articles with tag - tag"""
+        for i in range(3):
+            test.TaggedArticleFactory(tag=tag)
+
+        tagged_articles = models.TaggedArticle.objects.filter(tag_id=tag.id)
+        articles = models.Article.objects.filter(tags=tagged_articles)
+
+        request = get_request(self.factory, self.url_name, urls,
+                              {'slug': tag.slug})
+
+        response = self.view(request, slug=tag.slug)
+        context = response.context_data
+
+        for article in context['cover_images']:
+            self.assertEqual(None, context['cover_images'][article])
 
     def test_context(self):
         """Test to be certain that view returns desired objects in
