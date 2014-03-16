@@ -1,9 +1,5 @@
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView
-
-
-from articles.models import Article, Author, TaggedArticle, CoverImage, Image
+from articles.models import Article, Author, TaggedArticle
 from taggit.models import Tag
 
 
@@ -80,4 +76,3 @@ class TagListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(TagListView, self).get_context_data(**kwargs)
         return context
-

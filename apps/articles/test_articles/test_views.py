@@ -27,7 +27,7 @@ class TestArticleDetailView(unittest.TestCase):
         self.tag = test.TagFactory()
         test.TaggedArticleFactory(tag=self.tag)
         self.tagged_articles = models.TaggedArticle.objects.filter(tag_id=
-                                                            self.tag.id)
+                                                                   self.tag.id)
         self.article = models.Article.objects.get(tags=self.tagged_articles)
 
         self.tags_urls = self.article.get_tags_urls()
@@ -49,7 +49,7 @@ class TestArticleDetailView(unittest.TestCase):
         page loads as expected.
         """
         tag = test.TagFactory()
-        tagged_article = test.TaggedArticleFactory(tag=tag)
+        test.TaggedArticleFactory(tag=tag)
         queryset = models.TaggedArticle.objects.filter(tag_id=tag.id)
         article = models.Article.objects.get(tags=queryset)
         published = article.published
@@ -111,7 +111,6 @@ class TestAuthorDetailView(unittest.TestCase):
         expected.
         """
         author = test.AuthorFactory()
-        articles = [test.ArticleFactory(author=author) for i in range(3)]
 
         request = get_request(self.factory, self.url_name, urls,
                               {'slug': author.slug})
@@ -175,13 +174,6 @@ class TestTagDetailView(unittest.TestCase):
         expected.
         """
         tag = test.TagFactory()
-
-        """Create 3 instances of Tagged articles with tag - tag"""
-        for i in range(3):
-            test.TaggedArticleFactory(tag=tag)
-
-        tagged_articles = models.TaggedArticle.objects.filter(tag_id=tag.id)
-        articles = models.Article.objects.filter(tags=tagged_articles)
 
         request = get_request(self.factory, self.url_name, urls,
                               {'slug': tag.slug})

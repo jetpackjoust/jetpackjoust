@@ -11,6 +11,12 @@ import taggit.models
 import apps.articles.models as models
 
 
+email_template = "{0}.{1}@example.com"
+slug_t = "{0}-{1}"
+cover_image = 'test image 1.jpg'
+image = 'test image 2.jpg'
+
+
 def random_word(n):
     letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ "
     return ''.join([random.choice(letters) for i in range(n)])
@@ -23,10 +29,12 @@ class AuthorFactory(factory.django.DjangoModelFactory):
 
     last_name = factory.Sequence(lambda n: "Test last name {0}".format(n))
     first_name = factory.Sequence(lambda n: "Test first name {0}".format(n))
-    email = factory.LazyAttribute(lambda n: "{0}.{1}@example.com".format(n.first_name,
-                                                                         n.last_name))
-    slug = factory.LazyAttribute(lambda n: slugify("{0}-{1}".format(n.first_name,
-                                                                    n.last_name)))
+
+    email = factory.LazyAttribute(lambda n: email_template.format(n.first_name,
+                                                                  n.last_name))
+
+    slug = factory.LazyAttribute(lambda n: slugify(slug_t.format(n.first_name,
+                                                                 n.last_name)))
 
 
 class ArticleFactory(factory.django.DjangoModelFactory):
@@ -60,7 +68,7 @@ class CoverImageFactory(factory.django.DjangoModelFactory):
     source = factory.django.ImageField(from_path=os.path.join(os.getcwd(),
                                                               'development',
                                                               'test_images',
-                                                              'test image 1.jpg'))
+                                                              cover_image))
     caption = factory.Sequence(lambda n: "Test caption {0}".format(n))
 
 
@@ -73,7 +81,7 @@ class ImageFactory(factory.django.DjangoModelFactory):
     source = factory.django.ImageField(from_path=os.path.join(os.getcwd(),
                                                               'development',
                                                               'test_images',
-                                                              'test image 2.jpg'))
+                                                              image))
     caption = factory.Sequence(lambda n: "Test caption {0}".format(n))
 
 
@@ -109,7 +117,6 @@ class TestPadDate(unittest.TestCase):
         self.date_1 = (2013, 1, 1)
         self.date_2 = (2013, 11, 11)
 
-
     def test_pad_date(self):
         padded_date_1 = models.pad_date(self.date_1)
         padded_date_2 = models.pad_date(self.date_2)
@@ -144,9 +151,9 @@ class TestArticle(unittest.TestCase):
 
     def test_get_absolute_url(self):
         url_parameters = [self.today.year,
-                         self.today.month,
-                         self.today.day,
-                         self.article.slug]
+                          self.today.month,
+                          self.today.day,
+                          self.article.slug]
         url = '/articles/{0}/{1:02d}/{2:02d}/{3}'.format(*url_parameters)
         self.assertEqual(url, self.article.get_absolute_url())
 
@@ -170,12 +177,10 @@ class TestArticleManager(unittest.TestCase):
         self.dates = {'year': self.article.published.year,
                       'month': self.article.published.month,
                       'day': self.article.published.day}
-        self.slug =  self.article.slug
+        self.slug = self.article.slug
 
     def test_published(self):
-        model_set = models.Article.objects.filter(published__year=self.dates['year'],
-                                                  published__month=self.dates['month'],
-                                                  published__day=self.dates['day'])
+        model_set = models.Article.objects.published(**self.dates)
         manager_set = models.Article.objects.published(**self.dates)
         model_pks = [obj.pk for obj in model_set]
         manager_pks = [obj.pk for obj in manager_set]
@@ -208,7 +213,8 @@ class TestArticleManager(unittest.TestCase):
         model = models.Image.objects.filter(article=self.article)
         manager = models.Article.objects.images(article=self.article)
         manager_empty = models.Article.objects.images(article='Made up')
-        self.assertEqual([obj.pk for obj in model], [obj.pk for obj in manager])
+        self.assertEqual([obj.pk for obj in model],
+                         [obj.pk for obj in manager])
         self.assertEqual(False, manager_empty.exists())
 
 
@@ -249,7 +255,8 @@ class TestCoverImage(unittest.TestCase):
         self.cover_image = CoverImageFactory()
 
     def test_get_image_path(self):
-        date_string = self.cover_image.article.published.date().strftime('%Y-%m-%d')
+        date_string = self.cover_image.article.published.date()
+        date_string = date_string.strftime('%Y-%m-%d')
         slug = self.cover_image.article.slug
         location = os.path.join('articles', 'images', date_string, slug,
                                 'cover_image', 'test-image-1.jpg')
@@ -270,6 +277,3 @@ class TestImage(unittest.TestCase):
                                 'test-image-2.jpg')
         result = self.image.get_image_path('test image 2.jpg')
         self.assertEqual(location, result)
-
-
-

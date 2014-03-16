@@ -1,7 +1,7 @@
 """Development settings and globals."""
 import os
 import sys
-from os.path import dirname, join, normpath, realpath
+from os.path import dirname, realpath
 
 from jetpackjoust.settings.common import *
 

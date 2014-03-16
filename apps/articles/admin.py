@@ -30,4 +30,3 @@ admin.site.register(Author)
 admin.site.register(CoverImage)
 admin.site.register(Image)
 admin.site.register(Article, ArticleAdmin)
-

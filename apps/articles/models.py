@@ -1,8 +1,5 @@
 import os
-import re
 
-from django.core.exceptions import ValidationError
-from django.conf import settings
 from django.utils.text import slugify
 from django.db import models
 
@@ -65,7 +62,7 @@ class ArticleManager(models.Manager):
         """
         try:
             article = self.get(slug=slug)
-        except(Article.DoesNotExist):
+        except Article.DoesNotExist:
             article = None
         return article
 
@@ -97,8 +94,8 @@ class Author(models.Model):
     first_name = models.CharField("first name of author", max_length=35)
     email = models.EmailField("email address submitted for author")
     slug = models.SlugField("slug to identify author",
-                                        editable=False,
-                                        max_length=71)
+                            editable=False,
+                            max_length=71)
     objects = AuthorManager()
 
     class Meta():
@@ -107,7 +104,7 @@ class Author(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify('{0}-{1}'.format(self.first_name,
-                                                         self.last_name))
+                                             self.last_name))
         super(Author, self).save(*args, **kwargs)
 
     @models.permalink
@@ -127,7 +124,7 @@ class TaggedArticle(TaggedItemBase):
     content_object = models.ForeignKey('Article')
 
     class Meta():
-        app_label  = 'articles'
+        app_label = 'articles'
 
 
 class Article(models.Model):
@@ -149,7 +146,7 @@ class Article(models.Model):
 
     class Meta():
         ordering = ['-published']
-        app_label  = 'articles'
+        app_label = 'articles'
 
     def save(self, *args, **kwargs):
         """Since title will only be created once, we can save the slug
@@ -185,7 +182,7 @@ class Article(models.Model):
         return tags
 
     def __str__(self):
-        message =  "title: {0}, author: {1}"
+        message = "title: {0}, author: {1}"
         return message.format(self.title, self.author)
 
 
@@ -218,7 +215,7 @@ class CoverImage(models.Model):
 
     def __str__(self):
         filename = str(self.source).split('/')[-1]
-        message =  "source: {0}, caption: {1}"
+        message = "source: {0}, caption: {1}"
         return message.format(filename, self.caption)
 
 
@@ -250,6 +247,5 @@ class Image(models.Model):
     def __str__(self):
         filename = str(self.source).split('/')[-1]
         title = str(self.article.title)
-        message =  "title: {0}, source: {1}, caption: {2}"
+        message = "title: {0}, source: {1}, caption: {2}"
         return message.format(title, filename, self.caption)
-

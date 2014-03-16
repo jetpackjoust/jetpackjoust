@@ -211,16 +211,19 @@ ROOT_URLCONF = '{}.urls'.format(SITE_NAME)
 # Try to load the SECRET_KEY from our SECRET_FILE. If that fails, then generate
 # a random SECRET_KEY and save it into our SECRET_FILE for future loading. If
 # everything fails, then just raise an exception.
+characters = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
 try:
     with open(SECRET_FILE, 'r') as f:
         SECRET_KEY = f.read().strip()
 except IOError:
     try:
         import random
-        SECRET_KEY = ''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)') for i in range(50)])
+        SECRET_KEY = ''.join([random.SystemRandom().choice(characters)
+                              for i in range(50)])
         with open(SECRET_FILE, 'w') as f:
             f.write(SECRET_KEY)
     except IOError:
-        raise Exception('Cannot open file `{}` for writing.'.format(SECRET_FILE))
+        message = 'Cannot open file `{}` for writing.'
+        raise Exception(message.format(SECRET_FILE))
 
 ########## END KEY CONFIGURATION
