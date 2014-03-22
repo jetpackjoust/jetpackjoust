@@ -98,7 +98,7 @@ DATETIME_FORMAT = 'Y-m-d H:m:s'
 MEDIA_ROOT = normpath(join(SITE_ROOT, 'media'))
 
 # URL that handles the media served from MEDIA_ROOT.
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 
 ########## END MEDIA CONFIGURATION
 

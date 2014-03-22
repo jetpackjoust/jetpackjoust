@@ -5,6 +5,7 @@ from os.path import dirname, realpath
 
 from jetpackjoust.settings.common import *
 
+
 ########## DEBUG CONFIGURATION
 
 DEBUG = True
@@ -27,13 +28,6 @@ ALLOWED_HOSTS = ['localhost']
 SITE_ID = 1
 
 ######## END SITE CONFIGURATION
-
-
-########## MEDIA CONFIGURATION
-
-MEDIA_URL = '/media/'
-
-########## END MEDIA CONFIGURATION
 
 
 ########## EMAIL CONFIGURATION

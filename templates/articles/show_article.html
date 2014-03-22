@@ -5,7 +5,9 @@
   <div class="container">
     <div class="row">
       <section class="col-lg-5">
-      	<!-- IMAGE GOES HERE -->
+	{% for image in images %}
+	  <img src={{MEDIA_URL}}{{ image.source }}>
+	{% endfor %}
       </section>
     </div>
   </div>
@@ -13,8 +15,14 @@
 <!-- Example row of columns -->
 <div class="row">
   <div class="col-lg-8 col-lg-offset-2">
-    <h2>Heading</h2>
-    <p>Post</p>
+    <h2>{{ article.title }}</h2>
+    <a href={{ article.author.get_absolute_url }}>
+      {{ article.author.first_name }} {{ article.author.last_name }}
+    </a>
+    <p>{{ article.content }}</p>
+    {% for tag in tags_urls %}
+      <a href={{ tag.url }}>{{ tag.name }}</a>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}
