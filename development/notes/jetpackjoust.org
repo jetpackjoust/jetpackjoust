@@ -1,11 +1,25 @@
 * Tasks
-** Add get_images() and get_cover_image() method to Article model.
-*** method will try to filter on Image and CoverImage models and return
+** DONE Add get_images() and get_cover_image() method to Article model.
+   CLOSED: [2014-05-28 Wed 22:24]
+   - CLOSING NOTE [2014-05-28 Wed 22:27] \\
+     Did not implement functions as designed.  Used managers instead to achieve desired functionality.
+*** DONE method will try to filter on Image and CoverImage models and return
+    CLOSED: [2014-05-28 Wed 22:27]
+    - CLOSING NOTE [2014-05-28 Wed 22:28]
     empty set if cannot be found.
 ** Complete articles.views
-*** Override get_queryset in all List views and in AuthorDetailView and TagDetail view.
-*** Add in tags to ArticleDetailView using get_queryset.
-*** Add pagination to all List views and views that return lists of objects.
+*** DONE Add in tags to ArticleDetailView using get_queryset.
+    CLOSED: [2014-05-28 Wed 22:28]
+    - CLOSING NOTE [2014-05-28 Wed 22:28]
+*** TODO Add pagination to all List views and views that return lists of objects.
+** Implement Image resizing at the model level
+*** DONE Install django-imagekit in virtual environment.
+    CLOSED: [2014-05-28 Wed 22:33]
+    - CLOSING NOTE [2014-05-28 Wed 22:33] \\
+      Thank you for being Python 3 compliant.
+*** Use django-imagekit to implement image resizing at the model level for CoverImage model.
+*** Get thumbnails to work and then test Image model resizing for home page.
+**** Resize Image model into decided boxes.
 * Site Requirements
 ** Python 3.2
 *** Django relies on Python 3.2.
