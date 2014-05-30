@@ -6,3 +6,4 @@ South==0.8
 Pillow==2.2.1
 factory_boy==2.2.1
 django-imagekit==3.2.1
+django-imagefit==0.4

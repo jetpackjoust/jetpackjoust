@@ -7,19 +7,22 @@
     CLOSED: [2014-05-28 Wed 22:27]
     - CLOSING NOTE [2014-05-28 Wed 22:28]
     empty set if cannot be found.
-** Complete articles.views
+** IN-PROGRESS Complete articles.views
 *** DONE Add in tags to ArticleDetailView using get_queryset.
     CLOSED: [2014-05-28 Wed 22:28]
     - CLOSING NOTE [2014-05-28 Wed 22:28]
 *** TODO Add pagination to all List views and views that return lists of objects.
-** Implement Image resizing at the model level
+** IN-PROGRESS Implement Image resizing at the model level
 *** DONE Install django-imagekit in virtual environment.
     CLOSED: [2014-05-28 Wed 22:33]
     - CLOSING NOTE [2014-05-28 Wed 22:33] \\
       Thank you for being Python 3 compliant.
-*** Use django-imagekit to implement image resizing at the model level for CoverImage model.
-*** Get thumbnails to work and then test Image model resizing for home page.
-**** Resize Image model into decided boxes.
+*** DONE Install django-imagefit in virtual environment and update requirements.
+    CLOSED: [2014-05-29 Thu 22:20]
+    - CLOSING NOTE [2014-05-29 Thu 22:20] \\
+      Installed django-imagefit version 0.4
+*** IN-PROGRESS Use django-imagefit in templates to dynamically create thumbnails.
+
 * Site Requirements
 ** Python 3.2
 *** Django relies on Python 3.2.
@@ -36,6 +39,10 @@
 *** Pure Python library that replaces default MySQL drivers.
 *** Needed to be able to use MySQL in Django.
 ** Pillow 2.2.1
+** django-imagekit
+*** Allows manipulation of photos at model/database level
+** django-imagefit
+*** Similar to thumbor.  Allows for resizing of photos on the fly using caching.
 * Site Overview
 Below is an overview of the different sections of the website and their
 functionality.
