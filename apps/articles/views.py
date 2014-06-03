@@ -21,6 +21,9 @@ class ArticleListView(ListView):
     model = Article
     template_name = 'articles/list_articles.html'
 
+    def get_queryset(self):
+        return Article.objects.published(**self.kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
         return context
