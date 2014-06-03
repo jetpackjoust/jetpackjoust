@@ -3,32 +3,16 @@
 
 {% block content %}
 
-{% for article in article_list %}
-   {{article}}
-{% endfor %}
 
 <div class="container">
-  <!-- Example row of columns -->
-  <div class="row">
-    <div class="col-lg-8 col-lg-offset-2">
-      <h2>Heading</h2>
-      <p>Post</p>
+  {% for article in article_list %}
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2">
+        <h2>{{ article.title }}</h2>
+        <p>{{ article.summary }}</p>
+      </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-lg-8 col-lg-offset-2">
-      <h2>Heading</h2>
-      <p>Post</p>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-lg-8 col-lg-offset-2">
-      <h2>Heading</h2>
-      <p>Post</p>
-    </div>
-  </div>
+  {% endfor %}
 </div>
 
 {% endblock %}

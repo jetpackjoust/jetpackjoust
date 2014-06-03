@@ -26,6 +26,10 @@ class ArticleListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
+        context['cover_images'] = {article:
+                                   Article.objects.cover_image(article)
+                                   for article in context['article_list']}
+        print(context['cover_images'])
         return context
 
 
