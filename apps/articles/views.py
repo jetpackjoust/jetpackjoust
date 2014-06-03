@@ -29,7 +29,6 @@ class ArticleListView(ListView):
         context['cover_images'] = {article:
                                    Article.objects.cover_image(article)
                                    for article in context['article_list']}
-        print(context['cover_images'])
         return context
 
 
