@@ -192,6 +192,9 @@ INSTALLED_APPS = (
     # South for database schema migrations.
     'south',
 
+    # Imagefit for dynamically resizing images at template level.
+    'imagefit',
+
     # apps used by website.
     'home',
     'articles'
@@ -205,6 +208,13 @@ INSTALLED_APPS = (
 ROOT_URLCONF = '{}.urls'.format(SITE_NAME)
 
 ########## END URL CONFIGURATION
+
+
+########## IMAGEFIT SETTINGS
+
+IMAGEFIT_ROOT = MEDIA_ROOT
+
+########## END IMAGEFIT SETTINGS
 
 
 ########## KEY CONFIGURATION

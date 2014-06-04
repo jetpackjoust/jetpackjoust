@@ -36,6 +36,14 @@ EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
 ########## END EMAIL CONFIGURATION
 
+
+########## IMAGEFIT CONFIGURATION
+
+IMAGEFIT_CACHE_ENABLED = False
+
+########## IMAGEFIT CONFIGURATION
+
+
 ########## DATABASE CONFIGURATION
 
 
