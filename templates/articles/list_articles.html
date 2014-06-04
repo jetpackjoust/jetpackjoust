@@ -8,6 +8,7 @@
   {% for article in article_list %}
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2">
+        {{ article.coverimage.source  }}
         <h2>{{ article.title }}</h2>
         <p>{{ article.summary }}</p>
       </div>

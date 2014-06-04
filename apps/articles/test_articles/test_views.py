@@ -31,7 +31,6 @@ class TestArticleDetailView(unittest.TestCase):
         self.article = models.Article.objects.get(tags=self.tagged_articles)
 
         self.tags_urls = self.article.get_tags_urls()
-        self.cover_image = test.CoverImageFactory(article=self.article)
         self.images = [test.ImageFactory(article=self.article)
                        for i in range(3)]
         self.published = self.article.published
@@ -43,28 +42,6 @@ class TestArticleDetailView(unittest.TestCase):
                                'month': "{0:02d}".format(self.published.month),
                                'day': "{0:02d}".format(self.published.day),
                                'slug': self.article.slug}
-
-    def test_missing_context(self):
-        """Make sure that if cover_image or images does not exist that
-        page loads as expected.
-        """
-        tag = test.TagFactory()
-        test.TaggedArticleFactory(tag=tag)
-        queryset = models.TaggedArticle.objects.filter(tag_id=tag.id)
-        article = models.Article.objects.get(tags=queryset)
-        published = article.published
-
-        request = get_request(self.factory, self.url_name, urls,
-                              {'year': "{0:04d}".format(published.year),
-                               'month': "{0:02d}".format(published.month),
-                               'day': "{0:02d}".format(published.day),
-                               'slug': article.slug})
-
-        response = self.view(request, slug=article.slug)
-        context = response.context_data
-
-        self.assertEqual(None, context['cover_image'])
-        self.assertEqual(False, context['images'].exists())
 
     def test_context(self):
         """Test to be certain that view returns desired objects in
@@ -81,7 +58,6 @@ class TestArticleDetailView(unittest.TestCase):
         self.assertEqual(response.template_name[0], self.template_name)
         self.assertEqual(context['article'].pk, self.article.pk)
         self.assertEqual(context['tags_urls'], self.tags_urls)
-        self.assertEqual(context['cover_image'], self.cover_image)
         self.assertEqual(set([i.pk for i in context['images']]),
                          set([i.pk for i in self.images]))
 
@@ -98,28 +74,11 @@ class TestAuthorDetailView(unittest.TestCase):
                          i in range(3)]
         self.tags_urls = {article: article.get_tags_urls()
                           for article in self.articles}
-        self.cover_images = {article: test.CoverImageFactory(article=article)
-                             for article in self.articles}
 
         self.template_name = 'articles/show_contributor.html'
         self.view = views.AuthorDetailView.as_view()
         self.url_name = 'show_contributor'
         self.url_parameters = {'slug': self.author.slug}
-
-    def test_missing_context(self):
-        """Make sure that if cover_images do not exist that page loads as
-        expected.
-        """
-        author = test.AuthorFactory()
-
-        request = get_request(self.factory, self.url_name, urls,
-                              {'slug': author.slug})
-
-        response = self.view(request, slug=author.slug)
-        context = response.context_data
-
-        for article in context['cover_images']:
-            self.assertEqual(None, context['cover_images'][article])
 
     def test_context(self):
         """Test to be certain that view returns desired object in context_data,
@@ -138,7 +97,6 @@ class TestAuthorDetailView(unittest.TestCase):
         self.assertEqual(set([a.pk for a in context['articles']]),
                          set([a.pk for a in self.articles]))
         self.assertEqual(context['tags_urls'], self.tags_urls)
-        self.assertEqual(context['cover_images'], self.cover_images)
 
 
 class TestTagDetailView(unittest.TestCase):
@@ -160,29 +118,11 @@ class TestTagDetailView(unittest.TestCase):
         self.articles = article.objects.filter(tags=self.tagged_articles)
         self.tags_urls = {article: article.get_tags_urls()
                           for article in self.articles}
-        self.cover_images = {article:
-                             test.CoverImageFactory(article=article)
-                             for article in self.articles}
 
         self.template_name = 'articles/show_tag.html'
         self.view = views.TagDetailView.as_view()
         self.url_name = 'show_tag'
         self.url_parameters = {'slug': self.tag.slug}
-
-    def test_missing_context(self):
-        """Make sure that if cover_images do not exist that page loads as
-        expected.
-        """
-        tag = test.TagFactory()
-
-        request = get_request(self.factory, self.url_name, urls,
-                              {'slug': tag.slug})
-
-        response = self.view(request, slug=tag.slug)
-        context = response.context_data
-
-        for article in context['cover_images']:
-            self.assertEqual(None, context['cover_images'][article])
 
     def test_context(self):
         """Test to be certain that view returns desired objects in
@@ -201,4 +141,3 @@ class TestTagDetailView(unittest.TestCase):
         self.assertEqual(set([a.pk for a in context['articles']]),
                          set([a.pk for a in self.articles]))
         self.assertEqual(context['tags_urls'], self.tags_urls)
-        self.assertEqual(context['cover_images'], self.cover_images)

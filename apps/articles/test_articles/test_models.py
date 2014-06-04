@@ -202,13 +202,6 @@ class TestArticleManager(unittest.TestCase):
                          [obj.pk for obj in manager])
         self.assertEqual(False, manager_empty.exists())
 
-    def test_cover_image(self):
-        model = models.CoverImage.objects.get(article=self.article)
-        manager = models.Article.objects.cover_image(article=self.article)
-        manager_empty = models.Article.objects.cover_image(article='Made up')
-        self.assertEqual(model.pk, manager.pk)
-        self.assertEqual(None, manager_empty)
-
     def test_images(self):
         model = models.Image.objects.filter(article=self.article)
         manager = models.Article.objects.images(article=self.article)

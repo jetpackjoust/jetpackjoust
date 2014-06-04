@@ -71,16 +71,6 @@ class ArticleManager(models.Manager):
         """
         return self.filter(author=author)
 
-    def cover_image(self, article):
-        """Return CoverImage object related to article object if exists,
-        else return None.
-        """
-        try:
-            cover_image = CoverImage.objects.get(article=article)
-        except(CoverImage.DoesNotExist):
-            cover_image = None
-        return cover_image
-
     def images(self, article):
         """Return Image queryset filtered on article object if exists.
         """

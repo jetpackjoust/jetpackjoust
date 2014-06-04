@@ -12,8 +12,8 @@ class ArticleDetailView(DetailView):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
         article = context['article']
         context['tags_urls'] = article.get_tags_urls()
-        context['cover_image'] = Article.objects.cover_image(article)
         context['images'] = Article.objects.images(article)
+
         return context
 
 
@@ -26,9 +26,7 @@ class ArticleListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
-        context['cover_images'] = {article:
-                                   Article.objects.cover_image(article)
-                                   for article in context['article_list']}
+
         return context
 
 
@@ -42,9 +40,7 @@ class AuthorDetailView(DetailView):
         context['articles'] = Article.objects.author(author=context['author'])
         context['tags_urls'] = {article: article.get_tags_urls()
                                 for article in context['articles']}
-        context['cover_images'] = {article:
-                                   Article.objects.cover_image(article=article)
-                                   for article in context['articles']}
+
         return context
 
 
@@ -69,9 +65,7 @@ class TagDetailView(DetailView):
         context['articles'] = Article.objects.filter(tags=tagged_articles)
         context['tags_urls'] = {article: article.get_tags_urls()
                                 for article in context['articles']}
-        context['cover_images'] = {article:
-                                   Article.objects.cover_image(article=article)
-                                   for article in context['articles']}
+
         return context
 
 
