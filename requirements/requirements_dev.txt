@@ -1,13 +1,16 @@
 Django==1.6
-Pillow==2.2.1
+Pillow==2.4.0
 PyMySQL==0.6.1
 South==0.8
 django-appconf==0.6
--e git+https://github.com/vinyll/django-imagefit.git@35debc69ae14f1d8b27948412d0277ba29df3e1f#egg=django_imagefit-master
+-e git+https://github.com/jetpackjoust/django-imagefit.git@9189494f1b4295adedb81ecf4c77853418adbbaf#egg=django_imagefit-origin/master
 django-imagekit==3.2.1
 django-taggit==0.10
 django-taggit-templatetags==0.2.5
 django-templatetag-sugar==0.1
 factory-boy==2.2.1
+pep8==1.4.6
 pilkit==1.1.9
+pyflakes==0.7.3
+six==1.6.1
 wsgiref==0.1.2
