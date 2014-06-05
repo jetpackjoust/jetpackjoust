@@ -12,6 +12,9 @@
     CLOSED: [2014-05-28 Wed 22:28]
     - CLOSING NOTE [2014-05-28 Wed 22:28]
 *** TODO Add pagination to all List views and views that return lists of objects.
+*** Update AuthorDetailView to be ListView (model after ArticleListView)
+*** Include tags_urls for each article in ArticleListView
+*** Implement dictionary lookup template filter.
 ** IN-PROGRESS Implement Image resizing at the view level
 *** DONE Install django-imagekit in virtual environment.
     CLOSED: [2014-05-28 Wed 22:33]
