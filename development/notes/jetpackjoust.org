@@ -22,34 +22,21 @@
     - CLOSING NOTE [2014-05-29 Thu 22:20] \\
       Installed django-imagefit version 0.4
 *** IN-PROGRESS Use django-imagefit in templates to dynamically create thumbnails.
-** Create custom template tag to get dictionary access in tempates:
-*** Create directory called "templatetags" in articles app directory
-*** Add __init__ and file to contain extra tags.
-*** Add following function to file
-    @register.filter
-    def get_item(dictionary, key):
-        return dictionary.get(key)
-*** USAGE: {{ mydict|get_item:item.NAME }}
-* Site Requirements
-** Python 3.2
-*** Django relies on Python 3.2.
-** Django 1.6
-*** Site is built using the web framework Django.
-** django-taggit 0.10
-*** Package that handles tagging system on site.
-** django-taggit-templatetags 0.2.5
-*** Package that server as syntactic sugar for django taggit.
-** South 0.8
-*** Package that handles database schema migrations and changes.
-*** Future versions of Django will have schema migration ability by default.
-** PyMySQL 0.6.1
-*** Pure Python library that replaces default MySQL drivers.
-*** Needed to be able to use MySQL in Django.
-** Pillow 2.2.1
-** django-imagekit
-*** Allows manipulation of photos at model/database level
-** django-imagefit
-*** Similar to thumbor.  Allows for resizing of photos on the fly using caching.
+** Update jetpackjoust settings for django-imagefit thumbnail options
+*** Visit django-imagefit docs to see how to update
+jetpackjoust/settings/common.py to include thumbnail settings and other
+image resizing options e.g. the ones for the boxes etc.
+
+
+
+
+
+
+
+
+
+
+
 * Site Overview
 Below is an overview of the different sections of the website and their
 functionality.
