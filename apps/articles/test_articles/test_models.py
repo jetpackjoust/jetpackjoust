@@ -64,6 +64,7 @@ class CoverImageFactory(factory.django.DjangoModelFactory):
     """Factory for model Cover Image in articles app
     """
     FACTORY_FOR = models.CoverImage
+
     article = factory.SubFactory(ArticleFactory)
     source = factory.django.ImageField(from_path=os.path.join(os.getcwd(),
                                                               'development',

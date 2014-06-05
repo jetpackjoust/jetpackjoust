@@ -1,9 +1,10 @@
 from django.core.management.base import BaseCommand
 from optparse import make_option
 
-from articles.test_articles.test_models import TaggedArticleTwoTagsFactory
-from articles.test_articles.test_models import AuthorFactory
+
+from articles.test_articles.test_models import TaggedArticleFactory
 from articles.test_articles.test_models import TagFactory
+from articles.test_articles.test_models import CoverImageFactory
 from articles.test_articles.test_models import ImageFactory
 
 
@@ -22,11 +23,16 @@ class Command(BaseCommand):
         """
         rows = options['rows']
 
-        author = AuthorFactory()
         tag_1 = TagFactory()
         tag_2 = TagFactory()
 
         for i in range(rows):
-            ImageFactory(article=TaggedArticleTwoTagsFactory(tag_1=tag_1,
-                                                             tag_2=tag_2,
-                                                             author=author))
+            if i % 2 == 0:
+                tag = tag_1
+            else:
+                tag = tag_2
+
+            t = TaggedArticleFactory(tag=tag)
+            i = ImageFactory(article=t.content_object)
+
+            CoverImageFactory(article=i.article)
