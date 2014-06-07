@@ -32,16 +32,19 @@ class ArticleListView(ListView):
         return context
 
 
-class AuthorDetailView(DetailView):
+class AuthorDetailView(ListView):
     model = Author
-    template_name = 'articles/show_contributor.html'
-    slug_field = 'slug'
+    template_name = 'articles/list_articles.html'
+
+    def get_queryset(self):
+        author = Author.objects.contributor(**self.kwargs)
+        return Article.objects.author(author=author)
 
     def get_context_data(self, **kwargs):
         context = super(AuthorDetailView, self).get_context_data(**kwargs)
-        context['articles'] = Article.objects.author(author=context['author'])
+        print(context)
         context['tags_urls'] = {article: article.get_tags_urls()
-                                for article in context['articles']}
+                                for article in context['article_list']}
 
         return context
 

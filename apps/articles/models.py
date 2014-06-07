@@ -69,7 +69,7 @@ class ArticleManager(models.Manager):
     def author(self, author):
         """Return Article queryset filtered on author object if it exists.
         """
-        return self.filter(author=author)
+        return self.filter(author=author).order_by('-published')
 
     def images(self, article):
         """Return Image queryset filtered on article object if exists.
