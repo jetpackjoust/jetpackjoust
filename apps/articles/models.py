@@ -54,7 +54,7 @@ class ArticleManager(models.Manager):
         """
         parameters = {'published__{0}'.format(key):
                       int(kwargs[key]) for key in kwargs}
-        return self.filter(**parameters)
+        return self.filter(**parameters).order_by('-published')
 
     def article_slug(self, slug):
         """Get article object that matches string slug.  Since slug for article
