@@ -42,7 +42,6 @@ class AuthorDetailView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(AuthorDetailView, self).get_context_data(**kwargs)
-        print(context)
         context['tags_urls'] = {article: article.get_tags_urls()
                                 for article in context['article_list']}
 
