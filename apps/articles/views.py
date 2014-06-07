@@ -58,18 +58,19 @@ class AuthorListView(ListView):
         return context
 
 
-class TagDetailView(DetailView):
+class TagDetailView(ListView):
     model = Tag
-    template_name = 'articles/show_tag.html'
-    slug_field = 'slug'
+    template_name = 'articles/list_articles.html'
+
+    def get_queryset(self):
+        tag = Tag.objects.filter(slug=self.kwargs['slug'])
+        articles = Article.objects.filter(tags=tag)
+        return articles
 
     def get_context_data(self, **kwargs):
         context = super(TagDetailView, self).get_context_data(**kwargs)
-        tagged_articles = TaggedArticle.objects.filter(tag_id=
-                                                       context['tag'])
-        context['articles'] = Article.objects.filter(tags=tagged_articles)
         context['tags_urls'] = {article: article.get_tags_urls()
-                                for article in context['articles']}
+                                for article in context['article_list']}
 
         return context
 
