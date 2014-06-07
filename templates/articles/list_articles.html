@@ -11,6 +11,9 @@
       <div class="col-lg-8 col-lg-offset-2">
         <img src="{{ article.coverimage.source|media_resize:'thumbnail' }}">
         <h2>{{ article.title }}</h2>
+        <a href={{ article.author.get_absolute_url }}>
+          {{ article.author.first_name}} {{ article.author.last_name }}
+        </a>
         <p>{{ article.summary }}</p>
         {% for tag in tags_urls|keyvalue:article %}
           <li><a href={{ tag.url }}>{{ tag.name }}</a>
