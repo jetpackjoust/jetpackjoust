@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2">
         <img src="{{ article.coverimage.source|media_resize:'thumbnail' }}">
-        <h2>{{ article.title }}</h2>
+        <h2><a href={{ article.get_absolute_url }}>{{ article.title }}</a></h2>
         <a href={{ article.author.get_absolute_url }}>
           {{ article.author.first_name}} {{ article.author.last_name }}
         </a>
