@@ -1,5 +1,5 @@
 from django.views.generic import DetailView, ListView
-from articles.models import Article, Author, TaggedArticle
+from articles.models import Article, Author
 from taggit.models import Tag
 
 
@@ -64,8 +64,7 @@ class TagDetailView(ListView):
 
     def get_queryset(self):
         tag = Tag.objects.filter(slug=self.kwargs['slug'])
-        articles = Article.objects.filter(tags=tag)
-        return articles
+        return Article.objects.filter(tags=tag)
 
     def get_context_data(self, **kwargs):
         context = super(TagDetailView, self).get_context_data(**kwargs)
