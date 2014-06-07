@@ -12,10 +12,26 @@
     CLOSED: [2014-05-28 Wed 22:28]
     - CLOSING NOTE [2014-05-28 Wed 22:28]
 *** TODO Add pagination to all List views and views that return lists of objects.
-*** Update AuthorDetailView to be ListView (model after ArticleListView)
-*** Include tags_urls for each article in ArticleListView
-*** Implement dictionary lookup template filter.
-** IN-PROGRESS Implement Image resizing at the view level
+*** DONE Update AuthorDetailView to be ListView (model after ArticleListView)
+    CLOSED: [2014-06-07 Sat 13:47]
+    - CLOSING NOTE [2014-06-07 Sat 13:48] \\
+      View now shows article filtered on author
+*** DONE Update TagDetailView to be ListView (model after ArticleListView)
+    CLOSED: [2014-06-07 Sat 13:48]
+    - CLOSING NOTE [2014-06-07 Sat 13:48] \\
+      view now shows articles filtered on tag
+*** DONE Include tags_urls for each article in ArticleListView
+    CLOSED: [2014-06-07 Sat 13:48]
+    - CLOSING NOTE [2014-06-07 Sat 13:48] \\
+      view now shows tags for each article
+*** DONE Implement dictionary lookup template filter.
+    CLOSED: [2014-06-07 Sat 13:48]
+    - CLOSING NOTE [2014-06-07 Sat 13:49] \\
+      dictionary templatetag 'keyvalue' can be found in apps/articles/templatetags/article_extras.py
+** DONE Implement Image resizing at the view level
+   CLOSED: [2014-06-07 Sat 13:50]
+   - CLOSING NOTE [2014-06-07 Sat 13:50] \\
+     done
 *** DONE Install django-imagekit in virtual environment.
     CLOSED: [2014-05-28 Wed 22:33]
     - CLOSING NOTE [2014-05-28 Wed 22:33] \\
@@ -24,7 +40,21 @@
     CLOSED: [2014-05-29 Thu 22:20]
     - CLOSING NOTE [2014-05-29 Thu 22:20] \\
       Installed django-imagefit version 0.4
-*** IN-PROGRESS Use django-imagefit in templates to dynamically create thumbnails.
+*** DONE Use django-imagefit in templates to dynamically create thumbnails.
+    CLOSED: [2014-06-07 Sat 13:49]
+    - CLOSING NOTE [2014-06-07 Sat 13:49] \\
+      django-imagefit now dynamically resizes thumbnails
+** TODO Complete testing of all views in articles app.
+*** Add/update test for ArticleDetailView
+*** Add/update test for ArticleListView
+*** Add/update test for AuthorDetailView
+
+
+
+*** Add/update test for AuthorListView
+*** Add/update test for TagDetailView
+*** Add/update test for TagListView
+
 ** Update jetpackjoust settings for django-imagefit thumbnail options
 *** Visit django-imagefit docs to see how to update
 jetpackjoust/settings/common.py to include thumbnail settings and other
