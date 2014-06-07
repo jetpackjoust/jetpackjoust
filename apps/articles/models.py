@@ -54,7 +54,7 @@ class ArticleManager(models.Manager):
         """
         parameters = {'published__{0}'.format(key):
                       int(kwargs[key]) for key in kwargs}
-        return self.filter(**parameters).order_by('-published')
+        return self.filter(**parameters)
 
     def article_slug(self, slug):
         """Get article object that matches string slug.  Since slug for article
@@ -69,7 +69,7 @@ class ArticleManager(models.Manager):
     def author(self, author):
         """Return Article queryset filtered on author object if it exists.
         """
-        return self.filter(author=author).order_by('-published')
+        return self.filter(author=author)
 
     def images(self, article):
         """Return Image queryset filtered on article object if exists.
