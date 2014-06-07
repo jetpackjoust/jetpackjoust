@@ -26,6 +26,8 @@ class ArticleListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleListView, self).get_context_data(**kwargs)
+        context['tags_urls'] = {article: article.get_tags_urls()
+                                for article in context['article_list']}
 
         return context
 

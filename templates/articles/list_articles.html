@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load imagefit %}
+{% load article_extras %}
 
 {% block content %}
 
@@ -11,6 +12,9 @@
         <img src="{{ article.coverimage.source|media_resize:'thumbnail' }}">
         <h2>{{ article.title }}</h2>
         <p>{{ article.summary }}</p>
+        {% for tag in tags_urls|keyvalue:article %}
+          <li><a href={{ tag.url }}>{{ tag.name }}</a>
+        {% endfor %}
       </div>
     </div>
   {% endfor %}
