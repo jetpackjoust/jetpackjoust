@@ -20,6 +20,7 @@ class ArticleDetailView(DetailView):
 class ArticleListView(ListView):
     model = Article
     template_name = 'articles/list_articles.html'
+    paginate_by = 10
 
     def get_queryset(self):
         return Article.objects.published(**self.kwargs)

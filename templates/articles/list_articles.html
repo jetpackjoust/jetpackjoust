@@ -6,21 +6,40 @@
 {% block content %}
 
 <div class="container">
-  {% for article in article_list %}
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2">
-        <img src="{{ article.coverimage.source|media_resize:'thumbnail' }}">
-        <h2><a href={{ article.get_absolute_url }}>{{ article.title }}</a></h2>
-        <a href={{ article.author.get_absolute_url }}>
-          {{ article.author.first_name}} {{ article.author.last_name }}
-        </a>
-        <p>{{ article.summary }}</p>
-        {% for tag in tags_urls|keyvalue:article %}
-          <li><a href={{ tag.url }}>{{ tag.name }}</a>
-        {% endfor %}
+  {% if article_list%}
+    {% for article in article_list %}
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+          <img src="{{ article.coverimage.source|media_resize:'thumbnail' }}">
+          <h2><a href={{ article.get_absolute_url }}>{{ article.title }}</a></h2>
+          <a href={{ article.author.get_absolute_url }}>
+            {{ article.author.first_name}} {{ article.author.last_name }}
+          </a>
+          <p>{{ article.summary }}</p>
+          {% for tag in tags_urls|keyvalue:article %}
+            <li><a href={{ tag.url }}>{{ tag.name }}</a>
+          {% endfor %}
+        </div>
       </div>
-    </div>
-  {% endfor %}
+    {% endfor %}
+    {% if is_paginated %}
+      <div class="pagination">
+        <span class="page-links">
+          {% if page_obj.has_previous %}
+            <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+          {% endif %}
+          <span class="page-current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+          </span>
+          {% if page_obj.has_next %}
+          <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+          {% endif %}
+        </span>
+      </div>
+    {% endif %}
+  {% else %}
+    <p>No articles listed.</p>
+  {% endif %}
 </div>
 
 {% endblock %}
