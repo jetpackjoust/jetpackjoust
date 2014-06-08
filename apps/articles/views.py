@@ -2,6 +2,9 @@ from django.views.generic import DetailView, ListView
 from articles.models import Article, Author
 from taggit.models import Tag
 
+# number of objects to include per page in paginated ListViews.
+PAGINATION = 10
+
 
 class ArticleDetailView(DetailView):
     model = Article
@@ -20,7 +23,7 @@ class ArticleDetailView(DetailView):
 class ArticleListView(ListView):
     model = Article
     template_name = 'articles/list_articles.html'
-    paginate_by = 10
+    paginate_by = PAGINATION
 
     def get_queryset(self):
         return Article.objects.published(**self.kwargs)
@@ -36,6 +39,7 @@ class ArticleListView(ListView):
 class AuthorDetailView(ListView):
     model = Author
     template_name = 'articles/list_articles.html'
+    paginate_by = PAGINATION
 
     def get_queryset(self):
         author = Author.objects.contributor(**self.kwargs)
@@ -61,6 +65,7 @@ class AuthorListView(ListView):
 class TagDetailView(ListView):
     model = Tag
     template_name = 'articles/list_articles.html'
+    paginate_by = PAGINATION
 
     def get_queryset(self):
         tag = Tag.objects.filter(slug=self.kwargs['slug'])
