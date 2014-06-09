@@ -11,7 +11,8 @@
 *** DONE Add in tags to ArticleDetailView using get_queryset.
     CLOSED: [2014-05-28 Wed 22:28]
     - CLOSING NOTE [2014-05-28 Wed 22:28]
-*** TODO Add pagination to all List views and views that return lists of objects.
+*** IN-PROGRESS Add pagination to all List views and views that return lists of objects.
+*** TODO Make pagination prettier in all List views.
 *** DONE Update AuthorDetailView to be ListView (model after ArticleListView)
     CLOSED: [2014-06-07 Sat 13:47]
     - CLOSING NOTE [2014-06-07 Sat 13:48] \\
@@ -28,6 +29,11 @@
     CLOSED: [2014-06-07 Sat 13:48]
     - CLOSING NOTE [2014-06-07 Sat 13:49] \\
       dictionary templatetag 'keyvalue' can be found in apps/articles/templatetags/article_extras.py
+*** TODO Create tag cloud for tags
+**** Install django-tag-tools and freeze pip installation to requirements/requirements_dev.py
+**** Update jetpackjoust/settings/common.py to make django-tag-tools explicit.
+**** Use generic tagged_object_list view to implement tag cloud
+
 ** DONE Implement Image resizing at the view level
    CLOSED: [2014-06-07 Sat 13:50]
    - CLOSING NOTE [2014-06-07 Sat 13:50] \\
