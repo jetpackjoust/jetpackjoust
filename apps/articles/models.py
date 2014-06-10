@@ -1,5 +1,6 @@
 import os
 
+from django.core.urlresolvers import reverse
 from django.utils.text import slugify
 from django.db import models
 
@@ -97,11 +98,11 @@ class Author(models.Model):
                                              self.last_name))
         super(Author, self).save(*args, **kwargs)
 
-    @models.permalink
+    #@models.permalink
     def get_absolute_url(self):
         """Return absolute url of all articles written by author.
         """
-        return ('show_contributor', (), {'slug': self.slug})
+        return reverse('show_contributor', kwargs={'slug': self.slug})
 
     def __str__(self):
         message = "last name: {0}, first name: {1}"
@@ -146,20 +147,18 @@ class Article(models.Model):
         self.slug = slugify(self.title)
         super(Article, self).save(*args, **kwargs)
 
-    @models.permalink
     def get_absolute_url(self):
         """Return absolute url of article.
         """
         date = self.published.date().timetuple()[:3]
         year, month, day = pad_date(date)
-        return ('show_article', (), {'year': year,
-                                     'month': month,
-                                     'day': day,
-                                     'slug': self.slug})
+        return reverse('show_article', kwargs={'year': year,
+                                               'month': month,
+                                               'day': day,
+                                               'slug': self.slug})
 
-    @models.permalink
     def get_tag_url(self, tag):
-        return ('show_tag', (), {'slug': tag.slug})
+        return reverse('show_tag', kwargs={'slug': tag.slug})
 
     def get_tags_urls(self):
         """Takes each tag in self.tags and returns list of dictionaries
