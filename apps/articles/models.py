@@ -8,6 +8,14 @@ from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
 
+def get_tag_url(tag):
+    """Object tag is instance of taggit Tag.
+
+    Returns url for instance of Tag object based off of tag's slug.
+    """
+    return reverse('show_tag', kwargs={'slug': tag.slug})
+
+
 def pad_date(date):
     """The variable date is a three-tuple of integers in the order year,
     month, and day.  Function pads year, month, and day with zeroes where
@@ -98,7 +106,6 @@ class Author(models.Model):
                                              self.last_name))
         super(Author, self).save(*args, **kwargs)
 
-    #@models.permalink
     def get_absolute_url(self):
         """Return absolute url of all articles written by author.
         """
@@ -157,9 +164,6 @@ class Article(models.Model):
                                                'day': day,
                                                'slug': self.slug})
 
-    def get_tag_url(self, tag):
-        return reverse('show_tag', kwargs={'slug': tag.slug})
-
     def get_tags_urls(self):
         """Takes each tag in self.tags and returns list of dictionaries
         containing name of tag and associated url of each tag.
@@ -167,7 +171,7 @@ class Article(models.Model):
         tags = []
         for tag in self.tags.all():
             tags.append({'name': tag.name,
-                         'url': self.get_tag_url(tag)})
+                         'url': get_tag_url(tag)})
         return tags
 
     def __str__(self):
