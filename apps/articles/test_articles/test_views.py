@@ -75,7 +75,7 @@ class TestAuthorDetailView(unittest.TestCase):
         self.tags_urls = {article: article.get_tags_urls()
                           for article in self.articles}
 
-        self.template_name = 'articles/show_contributor.html'
+        self.template_name = 'articles/list_articles.html'
         self.view = views.AuthorDetailView.as_view()
         self.url_name = 'show_contributor'
         self.url_parameters = {'slug': self.author.slug}
@@ -93,8 +93,7 @@ class TestAuthorDetailView(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template_name[0], self.template_name)
-        self.assertEqual(context['author'], self.author)
-        self.assertEqual(set([a.pk for a in context['articles']]),
+        self.assertEqual(set([a.pk for a in context['article_list']]),
                          set([a.pk for a in self.articles]))
         self.assertEqual(context['tags_urls'], self.tags_urls)
 
@@ -119,7 +118,7 @@ class TestTagDetailView(unittest.TestCase):
         self.tags_urls = {article: article.get_tags_urls()
                           for article in self.articles}
 
-        self.template_name = 'articles/show_tag.html'
+        self.template_name = 'articles/list_articles.html'
         self.view = views.TagDetailView.as_view()
         self.url_name = 'show_tag'
         self.url_parameters = {'slug': self.tag.slug}
@@ -137,7 +136,6 @@ class TestTagDetailView(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.template_name[0], self.template_name)
-        self.assertEqual(context['tag'], self.tag)
-        self.assertEqual(set([a.pk for a in context['articles']]),
+        self.assertEqual(set([a.pk for a in context['article_list']]),
                          set([a.pk for a in self.articles]))
         self.assertEqual(context['tags_urls'], self.tags_urls)
