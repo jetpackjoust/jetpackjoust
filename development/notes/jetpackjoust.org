@@ -32,7 +32,10 @@
     CLOSED: [2014-06-07 Sat 13:48]
     - CLOSING NOTE [2014-06-07 Sat 13:49] \\
       dictionary templatetag 'keyvalue' can be found in apps/articles/templatetags/article_extras.py
-*** TODO Create tag list for tags
+*** DONE Create tag list for tags
+    CLOSED: [2014-06-10 Tue 01:14]
+    - CLOSING NOTE [2014-06-10 Tue 01:14] \\
+      Good enough for now
 **** Use list fo all tags on website and then bars representing counts of articles
      to each associated tag (think bar chart)
 
@@ -56,9 +59,6 @@
 *** Add/update test for ArticleDetailView
 *** Add/update test for ArticleListView
 *** Add/update test for AuthorDetailView
-
-
-
 *** Add/update test for AuthorListView
 *** Add/update test for TagDetailView
 *** Add/update test for TagListView
@@ -67,16 +67,6 @@
 *** Visit django-imagefit docs to see how to update
 jetpackjoust/settings/common.py to include thumbnail settings and other
 image resizing options e.g. the ones for the boxes etc.
-
-
-
-
-
-
-
-
-
-
 
 * Site Overview
 Below is an overview of the different sections of the website and their
