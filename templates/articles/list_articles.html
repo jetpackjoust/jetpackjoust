@@ -1,12 +1,11 @@
-{% extends "base.html" %}
+{% extends "articles/pagination_base.html" %}
 
 {% load imagefit %}
 {% load article_extras %}
 
-{% block content %}
+{% block list %}
 
-<div class="container">
-  {% if article_list%}
+  {% if article_list %}
     {% for article in article_list %}
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
@@ -22,24 +21,8 @@
         </div>
       </div>
     {% endfor %}
-    {% if is_paginated %}
-      <div class="pagination">
-        <span class="page-links">
-          {% if page_obj.has_previous %}
-            <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
-          {% endif %}
-          <span class="page-current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-          </span>
-          {% if page_obj.has_next %}
-          <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
-          {% endif %}
-        </span>
-      </div>
-    {% endif %}
   {% else %}
-    <p>No articles listed.</p>
+      <p>No articles listed</p>
   {% endif %}
-</div>
 
 {% endblock %}

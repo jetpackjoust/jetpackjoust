@@ -1,1 +1,18 @@
-{% extends "base.html" %}
+{% extends "articles/pagination_base.html" %}
+
+{% load article_extras %}
+
+{% block list%}
+
+  {% if author_list %}
+   {% for author in author_list %}
+      <li>
+        <a href={{ author.get_absolute_url }}>{{ author }}</a>
+      </li>
+    {% endfor %}
+  {% else %}
+    <p>No authors listed.</p>
+  {% endif %}
+
+{% endblock %}
+
