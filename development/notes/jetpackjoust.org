@@ -68,6 +68,15 @@
 jetpackjoust/settings/common.py to include thumbnail settings and other
 image resizing options e.g. the ones for the boxes etc.
 
+** IN-PROGRESS Create most recent 8 articles section of article list templates.
+*** IN-PROGRESS Update settings/common.py to create different image sizing.
+*** Create function for Article Model manager to select N most recent articles.
+*** Update tests to test Article Model manager function.
+*** Update list article views to incorporate new function and return list object
+    in context
+*** Update tests to test new view.
+*** Update list_articles.html template to use new context object and create
+    image cluster linking to (most likely) 8 most recent articles
 * Site Overview
 Below is an overview of the different sections of the website and their
 functionality.
