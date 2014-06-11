@@ -57,10 +57,11 @@ class AuthorDetailView(ListView):
 class AuthorListView(ListView):
     model = Author
     template_name = 'articles/list_contributors.html'
+    paginate_by = PAGINATION
 
     def get_context_data(self, **kwargs):
         context = super(AuthorListView, self).get_context_data(**kwargs)
-
+        print(context.keys())
         return context
 
 
@@ -103,6 +104,6 @@ class TagListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(TagListView, self).get_context_data(**kwargs)
-        context['tags_urls'] = self.get_sorted_tags()
+        context['tags_list'] = self.get_sorted_tags()
 
         return context

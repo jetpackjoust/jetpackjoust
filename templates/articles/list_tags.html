@@ -5,10 +5,10 @@
 {% block content %}
 
 <div class="container">
-  {% if tags_urls %}
-    {% for tag in tags_urls %}
+  {% if tags_list %}
+    {% for tag in tags_list %}
       <li>
-        <a href={{ tags_urls|keyvalue:tag }}>{{ tag }}</a>
+        <a href={{ tags_list|keyvalue:tag }}>{{ tag }}</a>
       </li>
     {% endfor %}
     {% if is_paginated %}
