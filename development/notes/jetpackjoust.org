@@ -63,7 +63,7 @@
 *** Add/update test for TagDetailView
 *** Add/update test for TagListView
 
-** Update jetpackjoust settings for django-imagefit thumbnail options
+** TODO Update jetpackjoust settings for django-imagefit thumbnail options
 *** Visit django-imagefit docs to see how to update
 jetpackjoust/settings/common.py to include thumbnail settings and other
 image resizing options e.g. the ones for the boxes etc.
