@@ -70,8 +70,13 @@ image resizing options e.g. the ones for the boxes etc.
 
 ** IN-PROGRESS Create most recent 8 articles section of article list templates.
 *** IN-PROGRESS Update settings/common.py to create different image sizing.
-*** Create function for Article Model manager to select N most recent articles.
-*** Update tests to test Article Model manager function.
+*** DONE Create function for Article Model manager to select N most recent articles.
+    CLOSED: [2014-06-12 Thu 00:21]
+    - CLOSING NOTE [2014-06-12 Thu 00:21]
+*** DONE Update tests to test Article Model manager function.
+    CLOSED: [2014-06-12 Thu 00:21]
+    - CLOSING NOTE [2014-06-12 Thu 00:21] \\
+      Test complete and up to date
 *** Update list article views to incorporate new function and return list object
     in context
 *** Update tests to test new view.
