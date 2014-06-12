@@ -1,6 +1,7 @@
 from datetime import datetime
 import os
 import random
+import time
 import unittest
 
 from django.utils.text import slugify
@@ -179,6 +180,7 @@ class TestArticleManager(unittest.TestCase):
                       'month': self.article.published.month,
                       'day': self.article.published.day}
         self.slug = self.article.slug
+        self.count = 8
 
     def test_published(self):
         model_set = models.Article.objects.published(**self.dates)
@@ -210,6 +212,23 @@ class TestArticleManager(unittest.TestCase):
         self.assertEqual([obj.pk for obj in model],
                          [obj.pk for obj in manager])
         self.assertEqual(False, manager_empty.exists())
+
+    def test_most_recent_max_less(self):
+        for i in range(self.count + 1):
+            ArticleFactory()
+        model = models.Article.objects.all()[:self.count]
+        manager = models.Article.objects.most_recent(self.count)
+        self.assertEqual([obj.pk for obj in model],
+                         [obj.pk for obj in manager])
+
+    def test_most_recent_max_greater(self):
+        models.Article.objects.all().delete()
+        for i in range(self.count - 1):
+            ArticleFactory()
+        model = models.Article.objects.all()
+        manager = models.Article.objects.most_recent(self.count)
+        self.assertEqual([obj.pk for obj in model],
+                         [obj.pk for obj in manager])
 
 
 class TestAuthor(unittest.TestCase):
