@@ -85,6 +85,13 @@ class ArticleManager(models.Manager):
         """
         return Image.objects.filter(article=article)
 
+    def most_recent(self, count):
+        """Return number of most recent articles equal to count.
+        """
+        max_rows = Article.objects.count()
+        slice = count if count < max_rows else max_rows
+        return Article.objects.all()[:slice]
+
 
 class Author(models.Model):
     """Model that represents author of instance of Article model class.
