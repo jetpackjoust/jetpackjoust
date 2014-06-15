@@ -5,6 +5,8 @@ from taggit.models import Tag
 
 # number of objects to include per page in paginated ListViews.
 PAGINATION = 10
+# number of most recent articles to grab
+MOST_RECENT = 8
 
 
 class ArticleDetailView(DetailView):
@@ -33,6 +35,7 @@ class ArticleListView(ListView):
         context = super(ArticleListView, self).get_context_data(**kwargs)
         context['tags_urls'] = {article: article.get_tags_urls()
                                 for article in context['article_list']}
+        context['most_recent'] = Article.objects.most_recent(MOST_RECENT)
 
         return context
 

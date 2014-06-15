@@ -74,7 +74,8 @@ image resizing options e.g. the ones for the boxes etc.
     CLOSED: [2014-06-12 Thu 00:21]
     - CLOSING NOTE [2014-06-12 Thu 00:21]
 *** DONE Update tests to test Article Model manager function.
-    CLOSED: [2014-06-12 Thu 00:21]
+    CLOSED: [2014-06-12 Thu 23:10]
+    - CLOSING NOTE [2014-06-12 Thu 23:10]
     - CLOSING NOTE [2014-06-12 Thu 00:21] \\
       Test complete and up to date
 *** Update list article views to incorporate new function and return list object
