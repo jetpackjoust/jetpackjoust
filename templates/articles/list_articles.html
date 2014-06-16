@@ -5,7 +5,23 @@
 
 {% block list %}
 
-  {% if article_list %}
+{% if most_recent %}
+  <div class="row">
+    <a href={{ most_recent|keyvalue:'tile_view_0'|keyvalue:0 }}>
+      <img src="{{ most_recent|keyvalue:'tile_view_0'|keyvalue:1|resize:'tile_view_0' }}">
+    </a>
+    <div>
+      <a href={{ most_recent|keyvalue:'tile_view_1'|keyvalue:0 }}>
+        <img src="{{ most_recent|keyvalue:'tile_view_1'|keyvalue:1|resize:'tile_view_1' }}">
+      </a>
+      <a href={{ most_recent|keyvalue:'tile_view_2'|keyvalue:0 }}>
+        <img src="{{ most_recent|keyvalue:'tile_view_2'|keyvalue:1|resize:'tile_view_2' }}">
+      </a>
+    </div>
+  </div>
+{% endif %}
+
+{% if article_list %}
     {% for article in article_list %}
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
@@ -16,8 +32,8 @@
           </a>
           <p>{{ article.summary }}</p>
           {% for tag in tags_urls|keyvalue:article %}
-            <li><a href={{ tag.url }}>{{ tag.name }}</a>
-          {% endfor %}
+          <li><a href={{ tag.url }}>{{ tag.name }}</a>
+            {% endfor %}
         </div>
       </div>
     {% endfor %}

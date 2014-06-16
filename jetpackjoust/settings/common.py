@@ -216,7 +216,7 @@ IMAGEFIT_ROOT = 'media'
 
 IMAGEFIT_PRESETS = {
     'thumbnail': {'width': 150, 'height': 100, 'crop': True},
-    'tile_view_0': {'width': 500, 'height': 300, 'crop': True},
+    'tile_view_0': {'width': 300, 'height': 500, 'crop': True},
     'tile_view_1': {'width': 150, 'height': 200, 'crop': True},
     'tile_view_2': {'width': 150, 'height': 200, 'crop': True},
     'tile_view_3': {'width': 250, 'height': 300, 'crop': True},
