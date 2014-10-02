@@ -1,7 +1,6 @@
 from datetime import datetime
 import os
 import random
-import time
 import unittest
 
 from django.utils.text import slugify
@@ -116,8 +115,8 @@ class TestPadDate(unittest.TestCase):
     and returns tuple of strings with padded zeroes to create pretty dates.
     """
     def setUp(self):
-        self.date_1 = (2013, 1, 1)
-        self.date_2 = (2013, 11, 11)
+        self.date_1 = datetime(2013, 1, 1)
+        self.date_2 = datetime(2013, 11, 11)
 
     def test_pad_date(self):
         padded_date_1 = models.pad_date(self.date_1)

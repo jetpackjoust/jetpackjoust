@@ -17,16 +17,13 @@ def get_tag_url(tag):
 
 
 def pad_date(date):
-    """The variable date is a three-tuple of integers in the order year,
-    month, and day.  Function pads year, month, and day with zeroes where
-    appropriate and returns three-tuple of strings in same order.
-
-    The function was created to be used in conjunction with datetime tuples.
+    """The variable date is a datetime date object. Function pads year, month,
+    and day with zeroes where appropriate and returns three-tuple of strings in
+    same order.
     """
-    year, month, day = date
-    year = "{0:04d}".format(year)
-    month = "{0:02d}".format(month)
-    day = "{0:02d}".format(day)
+    year = "{0:04d}".format(date.year)
+    month = "{0:02d}".format(date.month)
+    day = "{0:02d}".format(date.day)
     return (year, month, day)
 
 
@@ -164,12 +161,13 @@ class Article(models.Model):
     def get_absolute_url(self):
         """Return absolute url of article.
         """
-        date = self.published.date().timetuple()[:3]
+        date = self.published.date()
         year, month, day = pad_date(date)
-        return reverse('show_article', kwargs={'year': year,
-                                               'month': month,
-                                               'day': day,
-                                               'slug': self.slug})
+        article_kwargs = {'year': year,
+                          'month': month,
+                          'day': day,
+                          'slug': self.slug}
+        return reverse('show_article', kwargs=article_kwargs)
 
     def get_tags_urls(self):
         """Takes each tag in self.tags and returns list of dictionaries
