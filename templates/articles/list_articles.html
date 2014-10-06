@@ -7,15 +7,15 @@
 
 {% if most_recent %}
   <div class="row">
-    <a href={{ most_recent|keyvalue:'tile_view_0'|keyvalue:0 }}>
-      <img src="{{ most_recent|keyvalue:'tile_view_0'|keyvalue:1|resize:'tile_view_0' }}">
+    <a href={{ most_recent.0.get_absolute_url }}>
+      <img src="{{ most_recent.0.coverimage.source|resize:'300x500,C' }}">
     </a>
     <div>
-      <a href={{ most_recent|keyvalue:'tile_view_1'|keyvalue:0 }}>
-        <img src="{{ most_recent|keyvalue:'tile_view_1'|keyvalue:1|resize:'tile_view_1' }}">
+      <a href={{ most_recent.1.get_absolute_url }}>
+        <img src="{{ most_recent.1.coverimage.source|resize:'150x200,C' }}">
       </a>
-      <a href={{ most_recent|keyvalue:'tile_view_2'|keyvalue:0 }}>
-        <img src="{{ most_recent|keyvalue:'tile_view_2'|keyvalue:1|resize:'tile_view_2' }}">
+      <a href={{ most_recent.2.get_absolute_url }}>
+        <img src="{{ most_recent.2.coverimage.source|resize:'150x200,C' }}">
       </a>
     </div>
   </div>

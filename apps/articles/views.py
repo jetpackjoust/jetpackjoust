@@ -36,10 +36,7 @@ class ArticleListView(ListView):
         context['tags_urls'] = {article: article.get_tags_urls()
                                 for article in context['article_list']}
         # Get most recent articles i.e. article url and article coverimage.
-        most_recent = {'tile_view_{}'.format(i):
-                       (article.get_absolute_url(),
-                        article.coverimage.source) for i, article in
-                       enumerate(Article.objects.most_recent(MOST_RECENT))}
+        most_recent = Article.objects.most_recent(MOST_RECENT)
         context['most_recent'] = most_recent
 
         return context
