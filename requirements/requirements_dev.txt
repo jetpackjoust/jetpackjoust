@@ -13,4 +13,3 @@ pep8==1.4.6
 pilkit==1.1.9
 pyflakes==0.7.3
 six==1.6.1
-wsgiref==0.1.2
