@@ -8,37 +8,38 @@
 {% if most_recent %}
   <div class="row">
     <a href={{ most_recent.0.get_absolute_url }}>
-      <img src="{{ most_recent.0.coverimage.source|resize:'300x500,C' }}">
+      <img src="{{ most_recent.0.coverimage.source|resize:'700x1000' }}">
     </a>
-    <div>
-      <a href={{ most_recent.1.get_absolute_url }}>
-        <img src="{{ most_recent.1.coverimage.source|resize:'150x200,C' }}">
+    <div class="column">
+    {% for article in most_recent|slice:"1:" %}
+      <a href={{ article.get_absolute_url }}>
+        <img src="{{ article.coverimage.source|resize:'300x400' }}">
       </a>
-      <a href={{ most_recent.2.get_absolute_url }}>
-        <img src="{{ most_recent.2.coverimage.source|resize:'150x200,C' }}">
-      </a>
+    {% endfor %}
     </div>
   </div>
 {% endif %}
 
+
+
 {% if article_list %}
-    {% for article in article_list %}
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2">
-          <img src="{{ article.coverimage.source|resize:'thumbnail' }}">
-          <h2><a href={{ article.get_absolute_url }}>{{ article.title }}</a></h2>
-          <a href={{ article.author.get_absolute_url }}>
-            {{ article.author.first_name}} {{ article.author.last_name }}
-          </a>
-          <p>{{ article.summary }}</p>
-          {% for tag in tags_urls|keyvalue:article %}
+  {% for article in article_list %}
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2">
+        <img src="{{ article.coverimage.source|resize:'thumbnail' }}">
+        <h2><a href={{ article.get_absolute_url }}>{{ article.title }}</a></h2>
+        <a href={{ article.author.get_absolute_url }}>
+          {{ article.author.first_name}} {{ article.author.last_name }}
+        </a>
+        <p>{{ article.summary }}</p>
+        {% for tag in tags_urls|keyvalue:article %}
           <li><a href={{ tag.url }}>{{ tag.name }}</a>
-            {% endfor %}
-        </div>
+        {% endfor %}
       </div>
-    {% endfor %}
-  {% else %}
-      <p>No articles listed</p>
-  {% endif %}
+    </div>
+  {% endfor %}
+{% else %}
+  <p>No articles listed</p>
+{% endif %}
 
 {% endblock %}

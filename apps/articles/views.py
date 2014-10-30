@@ -6,7 +6,7 @@ from taggit.models import Tag
 # number of objects to include per page in paginated ListViews.
 PAGINATION = 10
 # number of most recent articles to grab
-MOST_RECENT = 8
+MOST_RECENT = 4
 
 
 class ArticleDetailView(DetailView):
